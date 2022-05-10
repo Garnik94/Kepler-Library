@@ -1,0 +1,98 @@
+body {
+    background-image: url('../graphic/mainWallpaper.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+}
+
+.mainLabel {
+    text-align: center;
+    text-shadow: -5px 0 black, 0 5px black, 5px 0 black, 0 -5px black;
+    font-size: 50px;
+    color: antiquewhite;
+    font-family: cursive;
+    letter-spacing: 10px;
+}
+
+.formDivStyle {
+    margin-top: 100px;
+}
+
+.textStyle {
+    text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+    color: black;
+    font-size: x-large;
+    font-family: cursive;
+    letter-spacing: 1px;
+}
+
+.inputAreaStyle {
+    text-align: center;
+    padding-left: 10px;
+    font-size: medium;
+    font-family: cursive;
+    border-color: black;
+    border-radius: 50px;
+    height: 30px;
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.loginButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 50px;
+    width: 220px;
+    height: 40px;
+    background: rgba(65, 105, 225, 0.88);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: medium;
+    font-family: cursive;
+    margin-bottom: 10px;
+}
+
+.registrationButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 50px;
+    width: 220px;
+    height: 40px;
+    background: rgba(65, 105, 225, 0.88);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: medium;
+    font-family: cursive;
+}
+
+.bookSectionButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 20px;
+    width: 220px;
+    height: 100px;
+    background: rgba(37, 255, 0, 0.88);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: xx-large;
+    font-family: cursive;
+    margin-top: 20px;
+}
+
+.articleSectionButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 20px;
+    width: 220px;
+    height: 100px;
+    background: rgba(0, 255, 175, 0.88);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: xx-large;
+    font-family: cursive;
+    margin-top: 20px;
+}
+
+.userWelcomeMessage {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    color: antiquewhite;
+    font-size: medium;
+    text-align: right;
+}
