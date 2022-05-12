@@ -19,9 +19,19 @@
     "Hi " + session.getAttribute("username")
     %>
 </span>
-<form action="login" method="get">
-    <input type="submit" value="Logout">
-</form>
+    <form action="login" method="get">
+        <input type="submit" value="Logout">
+    </form>
+<%
+    if (request.getAttribute("adminMode") != null) {
+%>
+    <form action="adminProfile" method="get">
+        <input type="submit" value="Admin profile">
+    </form>
+<%
+    }
+%>
+
 <span class="textStyle">Choose section</span><br>
 <form>
     <input class="bookSectionButtonStyle" type="submit" value="Books"><br>

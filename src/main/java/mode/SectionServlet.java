@@ -21,6 +21,9 @@ public class SectionServlet extends HttpServlet {
         request.setAttribute("invalidLogin", "false");
         try {
             if (new UserValidatorService().validateUser(username, password)) {
+                if (username.equals("admin")) {
+                    request.setAttribute("adminMode", true);
+                }
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
                 session.setAttribute("password", password);

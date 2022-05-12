@@ -44,6 +44,15 @@
         <url-pattern>/chooseSection</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Admin profile</servlet-name>
+        <servlet-class>mode.AdminProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Admin profile</servlet-name>
+        <url-pattern>/adminProfile</url-pattern>
+    </servlet-mapping>
+
     <error-page>
         <error-code>404</error-code>
         <location>/404Error.jsp</location>
