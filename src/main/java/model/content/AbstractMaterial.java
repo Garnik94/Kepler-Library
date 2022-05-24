@@ -2,27 +2,32 @@ package model.content;
 
 public abstract class AbstractMaterial {
 
+    private int Id;
     private Author author;
     private String title;
     private Category category;
     private Language language;
     private int year;
     private DocumentType documentType;
+    private String downloadUrl;
 
-    public AbstractMaterial() { }
+    public AbstractMaterial() {
+    }
 
     public AbstractMaterial(Author author,
                             String title,
                             Category category,
                             Language language,
                             int year,
-                            DocumentType documentType) {
+                            DocumentType documentType,
+                            String downloadUrl) {
         this.author = author;
         this.title = title;
         this.category = category;
         this.language = language;
         this.year = year;
         this.documentType = documentType;
+        this.downloadUrl = downloadUrl;
     }
 
     public Author getAuthor() {
@@ -71,6 +76,22 @@ public abstract class AbstractMaterial {
 
     public void setDocumentType(DocumentType documentType) {
         this.documentType = documentType;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }
 

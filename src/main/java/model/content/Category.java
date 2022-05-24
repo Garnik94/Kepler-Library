@@ -2,6 +2,7 @@ package model.content;
 
 public class Category {
 
+    private int Id;
     private String categoryName;
 
     public Category(String categoryName) {
@@ -14,5 +15,13 @@ public class Category {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }

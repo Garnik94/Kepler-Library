@@ -13,8 +13,17 @@ public class Book extends AbstractMaterial {
                 Language language,
                 int year,
                 DocumentType documentType,
-                int pages) {
-        super(author, title, category, language, year, documentType);
+                int pages,
+                String downloadUrl) {
+        super(author, title, category, language, year, documentType, downloadUrl);
+        this.pages = pages;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
         this.pages = pages;
     }
 }

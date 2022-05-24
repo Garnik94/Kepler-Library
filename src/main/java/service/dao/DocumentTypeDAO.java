@@ -21,13 +21,45 @@ public class DocumentTypeDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 return new DocumentType(resultSet.getString("Type"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static int getDocumentTypeIdByName(DocumentType documentType) {
+        try {
+            String query = "SELECT * FROM Document_Types WHERE Type = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, documentType.getType());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int addNewDocumentType(DocumentType documentType) {
+        int categoryId = getDocumentTypeIdByName(documentType);
+        if (categoryId != -1) {
+            return categoryId;
+        }
+        try {
+            String query = "INSERT INTO Document_Types VALUES (?)";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, documentType.getType());
+            preparedStatement.executeUpdate();
+            categoryId = getDocumentTypeIdByName(documentType);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryId;
     }
 
 }

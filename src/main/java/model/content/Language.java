@@ -2,6 +2,7 @@ package model.content;
 
 public class Language {
 
+    private int Id;
     private String language;
 
     public Language(String language) {
@@ -14,5 +15,13 @@ public class Language {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }

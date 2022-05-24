@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    if (session.getAttribute("username") != null || session.getAttribute("password") != null) {
+        request.getRequestDispatcher("Welcome.jsp").forward(request, response);
+    }
+%>
 <html>
 <head>
     <meta charset="UTF-8">

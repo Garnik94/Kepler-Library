@@ -2,12 +2,22 @@ package model;
 
 public class User {
 
+    private int Id;
     private String username;
     private String password;
     private String email;
 
     public User() {
 
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public User(String username, String password, String email) {
@@ -38,6 +48,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 
     @Override

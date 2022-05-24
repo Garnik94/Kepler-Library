@@ -20,13 +20,45 @@ public class AuthorDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 return new Author(resultSet.getString("Name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static int getAuthorIdByName(Author author) {
+        try {
+            String query = "SELECT * FROM Authors WHERE name = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, author.getAuthorName());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int addNewAuthor(Author author) {
+        int authorId = getAuthorIdByName(author);
+        if (authorId != -1){
+            return authorId;
+        }
+        try {
+            String query = "INSERT INTO Authors VALUES (?)";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, author.getAuthorName());
+            preparedStatement.executeUpdate();
+            authorId = getAuthorIdByName(author);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return authorId;
     }
 
 }

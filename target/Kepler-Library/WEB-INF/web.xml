@@ -8,18 +8,18 @@
         <welcome-file>Login.jsp</welcome-file>
     </welcome-file-list>
 
-    <servlet>
-        <servlet-name>Default page</servlet-name>
-        <servlet-class>mode.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Default page</servlet-name>
-        <url-pattern></url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>Default page</servlet-name>-->
+<!--        <servlet-class>servlet.LoginServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>Default page</servlet-name>-->
+<!--        <url-pattern></url-pattern>-->
+<!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>Login page</servlet-name>
-        <servlet-class>mode.LoginServlet</servlet-class>
+        <servlet-class>servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login page</servlet-name>
@@ -27,8 +27,17 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Registration page</servlet-name>
-        <servlet-class>mode.RegistrationServlet</servlet-class>
+        <servlet-class>servlet.RegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Registration page</servlet-name>
@@ -36,12 +45,75 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Choose Section page</servlet-name>
-        <servlet-class>mode.SectionServlet</servlet-class>
+        <servlet-name>Welcome page</servlet-name>
+        <servlet-class>servlet.WelcomeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Choose Section page</servlet-name>
-        <url-pattern>/chooseSection</url-pattern>
+        <servlet-name>Welcome page</servlet-name>
+        <url-pattern>/welcome</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Admin Profile</servlet-name>
+        <servlet-class>servlet.adminActionServlet.AdminProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Admin Profile</servlet-name>
+        <url-pattern>/adminProfile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Add new book</servlet-name>
+        <servlet-class>servlet.adminActionServlet.AddBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Add new book</servlet-name>
+        <url-pattern>/addNewBook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Add new article</servlet-name>
+        <servlet-class>servlet.adminActionServlet.AddArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Add new article</servlet-name>
+        <url-pattern>/addNewArticle</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Search deletable user</servlet-name>
+        <servlet-class>servlet.adminActionServlet.SearchDeletableUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Search deletable user</servlet-name>
+        <url-pattern>/searchDeletableUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete user</servlet-name>
+        <servlet-class>servlet.adminActionServlet.DeleteUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete user</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Book section</servlet-name>
+        <servlet-class>servlet.BookSectionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Book section</servlet-name>
+        <url-pattern>/books</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Article section</servlet-name>
+        <servlet-class>servlet.ArticleSectionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Article section</servlet-name>
+        <url-pattern>/articles</url-pattern>
     </servlet-mapping>
 
     <error-page>

@@ -1,6 +1,7 @@
 package service.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
+import exceptions.AbsentUserException;
 import model.User;
 
 import java.sql.*;
@@ -14,21 +15,23 @@ public class UserDAO {
         return DriverManager.getConnection(url);
     }
 
-    public static User getUser(String username) {
+    public static User getUser(User user) throws AbsentUserException {
         try {
             String query = "SELECT * FROM Users WHERE Username = ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, user.getUsername());
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                return new User(resultSet.getString("Username"),
+            if (resultSet.next()) {
+                User foundUser = new User(resultSet.getString("Username"),
                         resultSet.getString("Password"),
                         resultSet.getString("Email"));
+                foundUser.setId(resultSet.getInt("ID"));
+                return foundUser;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new AbsentUserException();
     }
 
     public static void addNewUser(String username, String password, String email) {
@@ -44,11 +47,11 @@ public class UserDAO {
         }
     }
 
-    public static void deleteUser(String username) {
+    public static void deleteUser(User user) {
         try {
-            String query = "DELETE FROM Users WHERE Username = ?";
+            String query = "DELETE FROM Users WHERE ID = ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, username);
+            preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

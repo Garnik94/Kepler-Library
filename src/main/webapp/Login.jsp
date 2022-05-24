@@ -1,5 +1,3 @@
-<%@ page import="mode.LoginServlet" %>
-<%@ page import="mode.SectionServlet" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" %>
 <%
@@ -24,7 +22,8 @@
 <div class="formDivStyle">
 
     <%
-        if (request.getAttribute("invalidLogin").equals("true")) {
+        if (request.getAttribute("invalidLogin") != null &&
+                request.getAttribute("invalidLogin").equals("true")) {
     %>
     <span class="errorMessageStyle">Username or password is wrong</span>
     <%
@@ -39,7 +38,7 @@
         <label class="textStyle">
             <input name="inputPassword" class="inputAreaStyle" type="password">
         </label><br>
-        <input formmethod="post" formaction="chooseSection" class="loginButtonStyle" type="submit" value="Login"><br>
+        <input formmethod="post" formaction="welcome" class="loginButtonStyle" type="submit" value="Login"><br>
         <input formmethod="get" formaction="registration" class="registrationButtonStyle" type="submit"
                value="Registration">
     </form>

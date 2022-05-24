@@ -2,17 +2,26 @@ package model.content;
 
 public class Author {
 
-    private String name;
+    private int Id;
+    private String authorName;
 
     public Author(String name) {
-        this.name = name;
+        this.authorName = name;
     }
 
-    public String getName() {
-        return name;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }

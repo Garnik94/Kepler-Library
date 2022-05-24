@@ -14,8 +14,9 @@ public class Article extends AbstractMaterial {
                    Language language,
                    int year,
                    DocumentType documentType,
-                   Journal journal) {
-        super(author, title, category, language, year, documentType);
+                   Journal journal,
+                   String downloadUrl) {
+        super(author, title, category, language, year, documentType, downloadUrl);
         this.journal = journal;
     }
 

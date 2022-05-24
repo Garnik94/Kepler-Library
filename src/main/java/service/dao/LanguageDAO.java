@@ -21,13 +21,45 @@ public class LanguageDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 return new Language(resultSet.getString("Language"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static int getLanguageIdByName(Language language) {
+        try {
+            String query = "SELECT * FROM Languages WHERE Language = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, language.getLanguage());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int addNewLanguage(Language language) {
+        int categoryId = getLanguageIdByName(language);
+        if (categoryId != -1) {
+            return categoryId;
+        }
+        try {
+            String query = "INSERT INTO Languages VALUES (?)";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, language.getLanguage());
+            preparedStatement.executeUpdate();
+            categoryId = getLanguageIdByName(language);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryId;
     }
 
 }
