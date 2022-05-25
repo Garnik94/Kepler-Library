@@ -18,12 +18,7 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         UserDAO.addNewUser(username, password, email);
-        RequestDispatcher rd = request.getRequestDispatcher("Registration.jsp");
-        rd.forward(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("Registration.jsp");
+        response.sendRedirect("Login.jsp");
     }
 
 }

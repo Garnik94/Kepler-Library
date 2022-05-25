@@ -49,11 +49,16 @@ public class AdminActionService {
         return UserDAO.getUser(user);
     }
 
-    public static void deleteUser(HttpServletRequest request) throws AbsentUserException {
-//        User user = UserDAO.getUser(new User(request.getParameter("searchingUser")));
+    public static void deleteUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("deletableUser");
+        User user = (User) session.getAttribute("ManageableUser");
         UserDAO.deleteUser(user);
+    }
+
+    public static void permitUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("ManageableUser");
+        UserDAO.permitUser(user);
     }
 
 

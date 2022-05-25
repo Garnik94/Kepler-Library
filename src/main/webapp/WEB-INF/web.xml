@@ -81,12 +81,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Search deletable user</servlet-name>
-        <servlet-class>servlet.adminActionServlet.SearchDeletableUserServlet</servlet-class>
+        <servlet-name>Search manageable user</servlet-name>
+        <servlet-class>servlet.adminActionServlet.SearchManageableUserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Search deletable user</servlet-name>
-        <url-pattern>/searchDeletableUser</url-pattern>
+        <servlet-name>Search manageable user</servlet-name>
+        <url-pattern>/searchManageableUser</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -96,6 +96,15 @@
     <servlet-mapping>
         <servlet-name>Delete user</servlet-name>
         <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Permit user</servlet-name>
+        <servlet-class>servlet.adminActionServlet.PermitUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Permit user</servlet-name>
+        <url-pattern>/permitUser</url-pattern>
     </servlet-mapping>
 
     <servlet>

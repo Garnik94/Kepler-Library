@@ -6,6 +6,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private int hasEditPermission;
 
     public User() {
 
@@ -56,6 +57,14 @@ public class User {
 
     public void setId(int id) {
         Id = id;
+    }
+
+    public int isHasEditPermission() {
+        return hasEditPermission;
+    }
+
+    public void setHasEditPermission(int hasEditPermission) {
+        this.hasEditPermission = hasEditPermission;
     }
 
     @Override

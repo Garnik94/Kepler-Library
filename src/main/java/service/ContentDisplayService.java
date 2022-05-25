@@ -1,5 +1,6 @@
 package service;
 
+import model.content.Author;
 import model.content.Book;
 
 import java.util.ArrayList;
@@ -17,5 +18,8 @@ public class ContentDisplayService {
 //        }
 //    }
 
+    public static void filterBooksByAuthor(Author author) {
+
+    }
 
 }

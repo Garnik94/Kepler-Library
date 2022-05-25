@@ -24,7 +24,7 @@
     <input type="submit" value="Delete book">
     <input type="submit" formaction="AddArticle.jsp" formmethod="get" value="Add new article">
     <input type="submit" value="Delete article">
-    <input type="submit" formaction="DeleteUser.jsp" formmethod="get" value="Delete user">
+    <input type="submit" formaction="ManageUser.jsp" formmethod="get" value="Delete user">
 </form>
 </body>
 </html>

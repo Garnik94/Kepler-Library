@@ -26,6 +26,7 @@ public class UserDAO {
                         resultSet.getString("Password"),
                         resultSet.getString("Email"));
                 foundUser.setId(resultSet.getInt("ID"));
+                foundUser.setHasEditPermission(resultSet.getInt("Has_Edit_Permission"));
                 return foundUser;
             }
         } catch (SQLException e) {
@@ -36,11 +37,12 @@ public class UserDAO {
 
     public static void addNewUser(String username, String password, String email) {
         try {
-            String query = "INSERT INTO Users VALUES (?, ?, ?)";
+            String query = "INSERT INTO Users VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
+            preparedStatement.setInt(4, 0);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,6 +52,17 @@ public class UserDAO {
     public static void deleteUser(User user) {
         try {
             String query = "DELETE FROM Users WHERE ID = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void permitUser(User user) {
+        try {
+            String query = "UPDATE Users SET Has_Edit_Permission = 1 WHERE ID = ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
