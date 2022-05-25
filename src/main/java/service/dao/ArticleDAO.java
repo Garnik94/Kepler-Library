@@ -65,7 +65,7 @@ public class ArticleDAO {
         int languageId = LanguageDAO.addNewLanguage(article.getLanguage());
         int year = article.getYear();
         int documentTypeId = DocumentTypeDAO.addNewDocumentType(article.getDocumentType());
-        int journal = JournalDAO.getJournalIdByName(article.getJournal());
+        int journal = JournalDAO.addNewJournal(article.getJournal());
         String downloadUrl = article.getDownloadUrl();
         try {
             String query = "INSERT INTO Articles VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

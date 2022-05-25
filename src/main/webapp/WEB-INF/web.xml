@@ -53,14 +53,14 @@
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Admin Profile</servlet-name>
-        <servlet-class>servlet.adminActionServlet.AdminProfileServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Admin Profile</servlet-name>
-        <url-pattern>/adminProfile</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>Admin Profile</servlet-name>-->
+<!--        <servlet-class>servlet.adminActionServlet.AdminProfileServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>Admin Profile</servlet-name>-->
+<!--        <url-pattern>/adminProfile</url-pattern>-->
+<!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>Add new book</servlet-name>

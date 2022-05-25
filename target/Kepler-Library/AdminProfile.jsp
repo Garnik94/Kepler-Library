@@ -1,19 +1,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    response.setDateHeader("Expires", 0); // Proxies.
+
+    if (session.getAttribute("username") == null || session.getAttribute("password") == null) {
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
+    }
+
+%>
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
 
 <form>
-    <input type="submit" formaction="addNewBook" formmethod="get" value="Add new book">
+    <input type="submit" formaction="AddBook.jsp" formmethod="get" value="Add new book">
     <input type="submit" value="Delete book">
-    <input type="submit" formaction="addNewArticle" formmethod="get" value="Add new article">
+    <input type="submit" formaction="AddArticle.jsp" formmethod="get" value="Add new article">
     <input type="submit" value="Delete article">
-    <input type="submit" formaction="deleteUser" formmethod="get" value="Delete user">
+    <input type="submit" formaction="DeleteUser.jsp" formmethod="get" value="Delete user">
 </form>
 </body>
 </html>

@@ -29,7 +29,7 @@
     <%
         if (session.getAttribute("username").equals("admin")) {
     %>
-    <form action="adminProfile" method="get">
+    <form action="AdminProfile.jsp">
         <input type="submit" value="Admin profile">
     </form>
     <%

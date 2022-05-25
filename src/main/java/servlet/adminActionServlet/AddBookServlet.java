@@ -17,7 +17,7 @@ public class AddBookServlet extends HttpServlet {
         response.sendRedirect("AdminProfile.jsp");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("AddBook.jsp");
-    }
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        response.sendRedirect("AddBook.jsp");
+//    }
 }

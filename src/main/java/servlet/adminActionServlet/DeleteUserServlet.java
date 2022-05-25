@@ -26,21 +26,21 @@ public class DeleteUserServlet extends HttpServlet {
         response.sendRedirect("AdminProfile.jsp");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("DeleteUser.jsp");
-//        HttpSession session = request.getSession();
-//        try {
-//            User user = AdminActionService.getUserFromDb(request);
-//            session.setAttribute("deletableUser", user);
-//            if(session.getAttribute("searchingUserNotFound") != null){
-//                session.removeAttribute("searchingUserNotFound");
-//            }
-//            response.sendRedirect("DeleteUser.jsp");
-//        } catch (AbsentUserException e) {
-//            session.setAttribute("searchingUserNotFound", "true");
-//            response.sendRedirect("DeleteUser.jsp");
-//        }
-
-    }
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        response.sendRedirect("AdminActions/DeleteUser.jsp");
+////        HttpSession session = request.getSession();
+////        try {
+////            User user = AdminActionService.getUserFromDb(request);
+////            session.setAttribute("deletableUser", user);
+////            if(session.getAttribute("searchingUserNotFound") != null){
+////                session.removeAttribute("searchingUserNotFound");
+////            }
+////            response.sendRedirect("DeleteUser.jsp");
+////        } catch (AbsentUserException e) {
+////            session.setAttribute("searchingUserNotFound", "true");
+////            response.sendRedirect("DeleteUser.jsp");
+////        }
+//
+//    }
 
 }
