@@ -39,7 +39,7 @@
             <input name="inputPassword" class="inputAreaStyle" type="password">
         </label><br>
         <input formmethod="post" formaction="welcome" class="loginButtonStyle" type="submit" value="Login"><br>
-        <input formmethod="get" formaction="registration" class="registrationButtonStyle" type="submit"
+        <input formmethod="get" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
                value="Registration">
     </form>
 </div>

@@ -32,7 +32,7 @@
 </form>
 <%
     if (session.getAttribute("username").equals("admin")) { %>
-<form action="adminProfile" method="get">
+<form action="AdminProfile.jsp" method="get">
     <input type="submit" value="Admin profile">
 </form>
 <%
@@ -63,14 +63,12 @@
     <form>
         <%
             for (int i = 1; i < 10; i++) {
-                String url = "books?page=" + i;
+                String url = "BookSection.jsp?page=" + i;
         %>
-        <a href="books?page=<%=url%>"><%=i%></a>
+        <a href="<%=url%>"><%=i%></a>
         <%
         }
         %>
-
-
     </form>
 
 </div>

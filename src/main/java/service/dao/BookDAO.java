@@ -36,9 +36,24 @@ public class BookDAO {
         return books;
     }
 
-    public static List<Book> getBooksByTitle(String title) {
+//    SELECT Id, Col1
+//    FROM TableName
+//    ORDER BY Id
+//    OFFSET 20 ROWS FETCH NEXT 20 ROWS ONLY;
+
+//    SELECT * FROM Customers
+//    ORDER BY Country DESC;
+
+//    SELECT *
+//    FROM Users
+//    ORDER BY (SELECT NULL)
+//    OFFSET 1 ROWS FETCH NEXT 2 ROWS ONLY;
+
+    public static List<Book> getBooksByTitle(String title, String offset) {
         try {
-            String query = "SELECT * FROM Books WHERE Title = ?";
+            int offsetRows = Integer.parseInt(offset) * 10;
+            String query = "SELECT * FROM Books WHERE Title = ? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";
+//            String query = "SELECT * FROM Books WHERE Title = ?";
             return getBooks(title, query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,9 +61,11 @@ public class BookDAO {
         return null;
     }
 
-    public static List<Book> getBooksByAuthor(Author author) {
+    public static List<Book> getBooksByAuthor(Author author, String offset) {
         try {
-            String query = "SELECT * FROM Books WHERE Name = ?";
+            int offsetRows = Integer.parseInt(offset) * 10;
+            String query = "SELECT * FROM Books WHERE Title = ? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";
+//            String query = "SELECT * FROM Books WHERE Name = ?";
             return getBooks(author.getAuthorName(), query);
         } catch (SQLException e) {
             e.printStackTrace();

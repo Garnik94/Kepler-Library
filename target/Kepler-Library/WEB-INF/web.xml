@@ -108,6 +108,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Forbid user</servlet-name>
+        <servlet-class>servlet.adminActionServlet.ForbidUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Forbid user</servlet-name>
+        <url-pattern>/forbidUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Book section</servlet-name>
         <servlet-class>servlet.BookSectionServlet</servlet-class>
     </servlet>

@@ -36,6 +36,10 @@
     <input type="submit" value="Permit user">
 </form>
 
+<form action="forbidUser" method="post">
+    <input type="submit" value="Forbid user">
+</form>
+
 <form action="deleteUser" method="post">
     <input type="submit" value="Delete user">
 </form>

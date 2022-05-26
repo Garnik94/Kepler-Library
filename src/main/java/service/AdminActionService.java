@@ -61,5 +61,11 @@ public class AdminActionService {
         UserDAO.permitUser(user);
     }
 
+    public static void forbidUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("ManageableUser");
+        UserDAO.forbidUser(user);
+    }
+
 
 }

@@ -71,4 +71,15 @@ public class UserDAO {
         }
     }
 
+    public static void forbidUser(User user) {
+        try {
+            String query = "UPDATE Users SET Has_Edit_Permission = 0 WHERE ID = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
