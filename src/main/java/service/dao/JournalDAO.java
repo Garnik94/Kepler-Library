@@ -4,10 +4,27 @@ import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import model.content.Category;
 import model.content.DocumentType;
 import model.content.Journal;
+import model.content.Language;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JournalDAO {
+
+    static {
+        setJournals(getAllJournals());
+    }
+
+    private static List<Journal> journals = new ArrayList<>();
+
+    public static List<Journal> getJournals() {
+        return new ArrayList<>(journals);
+    }
+
+    public static void setJournals(List<Journal> journals) {
+        JournalDAO.journals = journals;
+    }
 
     public static Connection getConnection() throws SQLException {
         DriverManager.registerDriver(new SQLServerDriver());
@@ -16,48 +33,76 @@ public class JournalDAO {
         return DriverManager.getConnection(url);
     }
 
-    public static Journal getJournalById(int id) {
+    public static List<Journal> getAllJournals() {
+        List<Journal> journals = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Journals WHERE ID = ?";
+            String query = "SELECT * FROM Journals";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new Journal(resultSet.getString("Journal"));
+            while (resultSet.next()) {
+                Journal journal = new Journal(resultSet.getString("Journal"));
+                journal.setId(resultSet.getInt("ID"));
+                journals.add(journal);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return journals;
+    }
+
+    public static Journal getJournalById(int id) {
+        for (Journal currentJournal : journals) {
+            if (currentJournal.getId() == id) {
+                return currentJournal;
+            }
+        }
+//        try {
+//            String query = "SELECT * FROM Journals WHERE ID = ?";
+//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+//            preparedStatement.setString(1, Integer.toString(id));
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                return new Journal(resultSet.getString("Journal"));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 
     public static int getJournalIdByName(Journal journal) {
-        try {
-            String query = "SELECT * FROM Journals WHERE Journal = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, journal.getJournal());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {return resultSet.getInt("ID");}
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (Journal currentJournal : journals) {
+            if (currentJournal.getJournal().equals(journal.getJournal())) {
+                return currentJournal.getId();
+            }
         }
+//        try {
+//            String query = "SELECT * FROM Journals WHERE Journal = ?";
+//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+//            preparedStatement.setString(1, journal.getJournal());
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {return resultSet.getInt("ID");}
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return -1;
     }
 
     public static int addNewJournal(Journal journal) {
-        int categoryId = getJournalIdByName(journal);
-        if (categoryId != -1){
-            return categoryId;
+        int journalId = getJournalIdByName(journal);
+        if (journalId != -1){
+            return journalId;
         }
         try {
             String query = "INSERT INTO Journals VALUES (?)";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, journal.getJournal());
             preparedStatement.executeUpdate();
-            categoryId =  getJournalIdByName(journal);
+            setJournals(getAllJournals());
+            journalId =  getJournalIdByName(journal);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return categoryId;
+        return journalId;
     }
 }

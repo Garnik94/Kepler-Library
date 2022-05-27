@@ -1,12 +1,28 @@
 package service.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-import model.content.Category;
 import model.content.DocumentType;
+import model.content.Journal;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DocumentTypeDAO {
+
+    static {
+        setDocumentTypes(getAllDocumentTypes());
+    }
+
+    private static List<DocumentType> documentTypes = new ArrayList<>();
+
+    public static List<DocumentType> getDocumentTypes() {
+        return new ArrayList<>(documentTypes);
+    }
+
+    public static void setDocumentTypes(List<DocumentType> documentTypes) {
+        DocumentTypeDAO.documentTypes = documentTypes;
+    }
 
     public static Connection getConnection() throws SQLException {
         DriverManager.registerDriver(new SQLServerDriver());
@@ -15,51 +31,78 @@ public class DocumentTypeDAO {
         return DriverManager.getConnection(url);
     }
 
-    public static DocumentType getDocumentTypeById(int id) {
+    public static List<DocumentType> getAllDocumentTypes() {
+        List<DocumentType> documentTypes = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Document_Types WHERE ID = ?";
+            String query = "SELECT * FROM Document_Types";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new DocumentType(resultSet.getString("Type"));
+            while (resultSet.next()) {
+                DocumentType documentType = new DocumentType(resultSet.getString("Type"));
+                documentType.setId(resultSet.getInt("ID"));
+                documentTypes.add(documentType);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return documentTypes;
+    }
+
+    public static DocumentType getDocumentTypeById(int id) {
+        for (DocumentType currentDocumentType : documentTypes) {
+            if (currentDocumentType.getId() == id) {
+                return currentDocumentType;
+            }
+        }
+//        try {
+//            String query = "SELECT * FROM Document_Types WHERE ID = ?";
+//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+//            preparedStatement.setString(1, Integer.toString(id));
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                return new DocumentType(resultSet.getString("Type"));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 
     public static int getDocumentTypeIdByName(DocumentType documentType) {
-        try {
-            String query = "SELECT * FROM Document_Types WHERE Type = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, documentType.getType());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("ID");
+        for (DocumentType currentDocumentType : documentTypes) {
+            if (currentDocumentType.getType().equals(documentType.getType())) {
+                return currentDocumentType.getId();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+//        try {
+//            String query = "SELECT * FROM Document_Types WHERE Type = ?";
+//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+//            preparedStatement.setString(1, documentType.getType());
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                return resultSet.getInt("ID");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return -1;
     }
 
     public static int addNewDocumentType(DocumentType documentType) {
-        int categoryId = getDocumentTypeIdByName(documentType);
-        if (categoryId != -1) {
-            return categoryId;
+        int documentTypeId = getDocumentTypeIdByName(documentType);
+        if (documentTypeId != -1) {
+            return documentTypeId;
         }
         try {
             String query = "INSERT INTO Document_Types VALUES (?)";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, documentType.getType());
             preparedStatement.executeUpdate();
-            categoryId = getDocumentTypeIdByName(documentType);
+            setDocumentTypes(getAllDocumentTypes());
+            documentTypeId = getDocumentTypeIdByName(documentType);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return categoryId;
+        return documentTypeId;
     }
-
 }

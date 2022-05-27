@@ -3,10 +3,27 @@ package service.dao;
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import model.content.Author;
 import model.content.Category;
+import model.content.DocumentType;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryDAO {
+
+    static {
+        setCategories(getAllCategories());
+    }
+
+    private static List<Category> categories = new ArrayList<>();
+
+    public static List<Category> getCategories() {
+        return new ArrayList<>(categories);
+    }
+
+    public static void setCategories(List<Category> categories) {
+        CategoryDAO.categories = categories;
+    }
 
     public static Connection getConnection() throws SQLException {
         DriverManager.registerDriver(new SQLServerDriver());
@@ -15,33 +32,60 @@ public class CategoryDAO {
         return DriverManager.getConnection(url);
     }
 
-    public static Category getCategoryById(int id) {
+    public static List<Category> getAllCategories() {
+        List<Category> categories = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Categories WHERE ID = ?";
+            String query = "SELECT * FROM Categories";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new Category(resultSet.getString("Category"));
+            while (resultSet.next()) {
+                Category category = new Category(resultSet.getString("Category"));
+                category.setId(resultSet.getInt("ID"));
+                categories.add(category);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return categories;
+    }
+
+    public static Category getCategoryById(int id) {
+        for (Category currentCategory : categories) {
+            if (currentCategory.getId() == id) {
+                return currentCategory;
+            }
+        }
+//        try {
+//            String query = "SELECT * FROM Categories WHERE ID = ?";
+//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+//            preparedStatement.setString(1, Integer.toString(id));
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                return new Category(resultSet.getString("Category"));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 
     public static int getCategoryIdByName(Category category) {
-        try {
-            String query = "SELECT * FROM Categories WHERE Category = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, category.getCategoryName());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("ID");
+        for (Category currentCategory : categories) {
+            if (currentCategory.getCategoryName().equals(category.getCategoryName())) {
+                return currentCategory.getId();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+//        try {
+//            String query = "SELECT * FROM Categories WHERE Category = ?";
+//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+//            preparedStatement.setString(1, category.getCategoryName());
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                return resultSet.getInt("ID");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return -1;
     }
 
@@ -55,6 +99,7 @@ public class CategoryDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, category.getCategoryName());
             preparedStatement.executeUpdate();
+            setCategories(getAllCategories());
             categoryId = getCategoryIdByName(category);
         } catch (SQLException e) {
             e.printStackTrace();
