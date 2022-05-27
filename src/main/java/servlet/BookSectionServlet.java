@@ -20,5 +20,6 @@ public class BookSectionServlet extends HttpServlet {
 //        pw.println(request.getParameter("page"));
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
         requestDispatcher.forward(request, response);
+//        response.sendRedirect("BookSection.jsp");
     }
 }

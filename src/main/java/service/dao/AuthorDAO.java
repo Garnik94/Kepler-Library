@@ -4,6 +4,8 @@ import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import model.content.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuthorDAO {
 
@@ -44,9 +46,27 @@ public class AuthorDAO {
         return -1;
     }
 
+    public static List<Author> getAuthorsByCoincidence(String searchingArg) {
+        List<Author> authors = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Authors WHERE Name LIKE = " + "'%" + "?" + "%'";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, searchingArg);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Author author = new Author(resultSet.getString("Name"));
+                author.setId(resultSet.getInt("ID"));
+                authors.add(author);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return authors;
+    }
+
     public static int addNewAuthor(Author author) {
         int authorId = getAuthorIdByName(author);
-        if (authorId != -1){
+        if (authorId != -1) {
             return authorId;
         }
         try {

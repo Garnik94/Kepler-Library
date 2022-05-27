@@ -3,6 +3,8 @@ package service.dao;
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import model.content.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +18,8 @@ public class BookDAO {
         return DriverManager.getConnection(url);
     }
 
-    private static List<Book> getBooks(String searchParameter, String query) throws SQLException {
+    private static List<Book> getBooks(PreparedStatement preparedStatement) throws SQLException {
         List<Book> books = new ArrayList<>();
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, searchParameter);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Book book = new Book(AuthorDAO.getAuthorById(resultSet.getInt("Author")),
@@ -52,25 +52,42 @@ public class BookDAO {
     public static List<Book> getBooksByTitle(String title, String offset) {
         try {
             int offsetRows = Integer.parseInt(offset) * 10;
-            String query = "SELECT * FROM Books WHERE Title = ? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";
-//            String query = "SELECT * FROM Books WHERE Title = ?";
-            return getBooks(title, query);
+            String query = "SELECT * FROM Books WHERE Title LIKE " + "'%" + "?" + "%'"; /*? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";*/
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            return getBooks(preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static List<Book> getBooksByAuthor(Author author, String offset) {
-        try {
-            int offsetRows = Integer.parseInt(offset) * 10;
-            String query = "SELECT * FROM Books WHERE Title = ? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";
-//            String query = "SELECT * FROM Books WHERE Name = ?";
-            return getBooks(author.getAuthorName(), query);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static List<Book> getBooksByAuthor(String searchArg, String offset, HttpServletRequest request) {
+        List<Author> authors = AuthorDAO.getAuthorsByCoincidence(searchArg);
+        if (!authors.isEmpty()) {
+            PreparedStatement preparedStatement;
+            try {
+                StringBuilder subQuery = new StringBuilder();
+                for (int i = 0; i < authors.size(); i++) {
+                    if (i == 0) {
+                        subQuery.append("ID = ? ");
+                    } else {
+                        subQuery.append("OR ID = ? ");
+                    }
+                    subQuery.append(authors.get(i).getId());
+                }
+//                String query = "SELECT * FROM Books WHERE Title = ? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";
+                String query = "SELECT * FROM Books WHERE " + subQuery;
+//                int offsetRows = Integer.parseInt(offset) * 10;
+                preparedStatement = getConnection().prepareStatement(query);
+                for (int i = 0; i < authors.size(); i++) {
+                    preparedStatement.setInt(i + 1, authors.get(i).getId());
+                }
+                return getBooks(preparedStatement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public static void addNewBook(Book book) {

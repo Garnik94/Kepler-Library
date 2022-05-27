@@ -20,6 +20,10 @@
 </head>
 <body>
 
+    <%
+        User user = UserDAO.getUser(new User((String) session.getAttribute("username")));
+    %>
+
     <span class="userWelcomeMessage">
         <%=
         "Hi " + session.getAttribute("username")
@@ -29,12 +33,20 @@
         <input type="submit" value="Logout">
     </form>
     <%
-        User user = UserDAO.getUser( new User((String) session.getAttribute("username")));
-
         if (user.isHasEditPermission() == 1) {
     %>
     <form action="AdminProfile.jsp">
         <input type="submit" value="Admin profile">
+    </form>
+    <%
+        }
+    %>
+
+    <%
+        if (user.getId() != 1) {
+    %>
+    <form action="AdminProfile.jsp">
+        <input type="submit" value="Delete my profile">
     </form>
     <%
         }

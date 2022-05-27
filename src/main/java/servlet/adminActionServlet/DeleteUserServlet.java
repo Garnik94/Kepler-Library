@@ -18,8 +18,12 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AdminActionService.deleteUser(request);
         HttpSession session = request.getSession();
-        session.removeAttribute("ManageableUser");
-        response.sendRedirect("AdminProfile.jsp");
+//        if (session.getAttribute("ManageableUser") != null) {
+            session.removeAttribute("ManageableUser");
+            response.sendRedirect("AdminProfile.jsp");
+//        } else if (session.getAttribute("selfDeleteUser") != null) {
+//
+//        }
     }
 
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
