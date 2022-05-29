@@ -4,14 +4,17 @@ import exceptions.AbsentUserException;
 import model.User;
 import service.dao.UserDAO;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 public class UserValidatorService {
 
-    public boolean validateUser(String username, String password) throws AbsentUserException {
+    public boolean validateUser(String username, String password, HttpServletRequest request)
+            throws AbsentUserException {
         User user = UserDAO.getUser(new User(username, password));
-//        if (user != null){
-            return user.getUsername().equals(username) && user.getPassword().equals(password);
-//        }
-//        throw new AbsentUserException();
+        HttpSession session = request.getSession();
+        session.setAttribute("CurrentUser", user);
+        return user.getUsername().equals(username) && user.getPassword().equals(password);
     }
 
 }

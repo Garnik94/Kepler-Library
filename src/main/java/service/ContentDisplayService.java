@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ContentDisplayService {
 
-    private static List<Book> bookList = new ArrayList<>();
+    public static List<Book> bookList = new ArrayList<>();
 
 //    public List<Book> getAllBooks() {
 //        try {
@@ -21,9 +21,12 @@ public class ContentDisplayService {
 //        }
 //    }
 
-    public static void searchBooksByAuthor(HttpServletRequest request, String currentPage) {
-        Author author = new Author(request.getParameter("searchingUser"));
-        bookList = BookDAO.getBooksByAuthor(author, currentPage);
+    public static void searchBooksByAuthor(String searchingArg, int currentPage) {
+//        Author author = new Author(request.getParameter("searchingUser"));
+        //TODO: logic of caching
+        if (currentPage % 3 == 0 || currentPage == 1) {
+            bookList = BookDAO.getBooksByAuthor(searchingArg, currentPage);
+        }
     }
 
 }

@@ -38,8 +38,8 @@ public class LanguageDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Language language = new Language(resultSet.getString("Language"));
-                language.setId(resultSet.getInt("ID"));
+                Language language = new Language(resultSet.getString("Language_Name"));
+                language.setId(resultSet.getInt("Language_Id"));
                 languages.add(language);
             }
         } catch (SQLException e) {

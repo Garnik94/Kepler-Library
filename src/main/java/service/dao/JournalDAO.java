@@ -40,8 +40,8 @@ public class JournalDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Journal journal = new Journal(resultSet.getString("Journal"));
-                journal.setId(resultSet.getInt("ID"));
+                Journal journal = new Journal(resultSet.getString("Journal_Name"));
+                journal.setId(resultSet.getInt("Journal_Id"));
                 journals.add(journal);
             }
         } catch (SQLException e) {

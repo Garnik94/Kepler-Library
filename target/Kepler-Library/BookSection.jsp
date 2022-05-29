@@ -1,12 +1,12 @@
 <%@ page import="model.User" %>
-<%@ page import="service.dao.UserDAO" %>
+<%@ page import="service.ContentDisplayService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     response.setDateHeader("Expires", 0); // Proxies.
 
-    if (session.getAttribute("username") == null || session.getAttribute("password") == null) {
+    if (session.getAttribute("CurrentUser") == null /*|| session.getAttribute("password") == null*/) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 %>
@@ -20,9 +20,9 @@
 </head>
 <body>
 
-<%
-    User user = UserDAO.getUser(new User((String) session.getAttribute("username")));
-%>
+<%--<%--%>
+<%--    User user = UserDAO.getUser(new User((String) session.getAttribute("username")));--%>
+<%--%>--%>
 
 <h1>
     <%= request.getParameter("page")%>
@@ -36,18 +36,35 @@
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
-<% if (user.isHasEditPermission() == 1) { %>
-        <form action="AdminProfile.jsp" method="get">
-            <input type="submit" value="Admin profile">
-        </form>
+<%
+    User user = (User) session.getAttribute("CurrentUser");
+    if (user.isHasEditPermission() == 1) { %>
+<form action="AdminProfile.jsp" method="get">
+    <input type="submit" value="Admin profile">
+</form>
 <% } %>
 
 <div class="bigContainer">
     <div class="bigContainer">
-        <label>
-            <span>Search</span><br>
-            <input class="inputAreaStyle" type="text">
-        </label>
+        <form action="books" method="get">
+            <label>
+                <span>Search</span><br>
+<%--                <%--%>
+<%--                    String searchingArg = null;--%>
+<%--                    if (request.getParameter("searchBook") != null) {--%>
+<%--                        searchingArg = request.getParameter("searchBook");--%>
+<%--                    }--%>
+<%--                %>--%>
+                <input class="inputAreaStyle" name="searchBook" type="text" value="<%=session.getAttribute("searchBook")%>">
+                <%
+                    if (session.getAttribute("searchBook") == null) {
+                        session.setAttribute("searchBook", request.getParameter("searchBook"));
+                    }
+                %>
+            </label>
+            <input type="submit" value="Search">
+        </form>
+
     </div>
 
     <label>Search<br>
@@ -61,10 +78,29 @@
         <div class="contentWindow"></div>
     </div>
 
+    <%
+        for (int i = 0; i < ContentDisplayService.bookList.size(); i++) {
+    %>
+    <p><%= ContentDisplayService.bookList.get(i)%>
+    </p>
+    <%
+        if (user.isHasEditPermission() == 1) {
+    %>
+    <form>
+        <input type="submit" value="Edit book">
+    </form>
+    <%
+        }
+    %>
+
+    <%
+        }
+    %>
+
     <form>
         <%
             for (int i = 1; i < 10; i++) {
-                String url = "books?page=" + i;
+                String url = "booksPagination?page=" + i;
         %>
         <a href="<%=url%>"><%=i%>
         </a>

@@ -1,6 +1,7 @@
 package servlet;
 
 import exceptions.AbsentUserException;
+import model.User;
 import service.UserValidatorService;
 
 import javax.servlet.RequestDispatcher;
@@ -19,10 +20,9 @@ public class WelcomeServlet extends HttpServlet {
         String username = request.getParameter("inputUsername");
         String password = request.getParameter("inputPassword");
         try {
-            if (new UserValidatorService().validateUser(username, password)) {
-                HttpSession session = request.getSession();
-                session.setAttribute("username", username);
-                session.setAttribute("password", password);
+            if (new UserValidatorService().validateUser(username, password, request)) {
+//                session.setAttribute("username", username);
+//                session.setAttribute("password", password);
                 response.sendRedirect("Welcome.jsp");
             } else {
                 request.setAttribute("invalidLogin", "true");

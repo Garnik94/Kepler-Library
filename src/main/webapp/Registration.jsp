@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (session.getAttribute("username") != null || session.getAttribute("password") != null) {
+    if (session.getAttribute("CurrentUser") != null /*|| session.getAttribute("password") != null*/) {
         request.getRequestDispatcher("Welcome.jsp").forward(request, response);
     }
 %>

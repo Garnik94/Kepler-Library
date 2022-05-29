@@ -38,8 +38,8 @@ public class DocumentTypeDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                DocumentType documentType = new DocumentType(resultSet.getString("Type"));
-                documentType.setId(resultSet.getInt("ID"));
+                DocumentType documentType = new DocumentType(resultSet.getString("Document_Type_Name"));
+                documentType.setId(resultSet.getInt("Document_Type_Id"));
                 documentTypes.add(documentType);
             }
         } catch (SQLException e) {

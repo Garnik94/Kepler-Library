@@ -26,4 +26,11 @@ public class Book extends AbstractMaterial {
     public void setPages(int pages) {
         this.pages = pages;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" + super.toString() +
+                "pages=" + pages +
+                '}';
+    }
 }

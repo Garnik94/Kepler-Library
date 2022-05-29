@@ -93,5 +93,19 @@ public abstract class AbstractMaterial {
     public void setId(int id) {
         Id = id;
     }
+
+    @Override
+    public String toString() {
+        return "AbstractMaterial{" +
+                "Id=" + Id +
+                ", author=" + author +
+                ", title='" + title + '\'' +
+                ", category=" + category +
+                ", language=" + language +
+                ", year=" + year +
+                ", documentType=" + documentType +
+                ", downloadUrl='" + downloadUrl + '\'' +
+                '}';
+    }
 }
 

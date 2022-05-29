@@ -5,7 +5,7 @@
     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     response.setDateHeader("Expires", 0); // Proxies.
 
-    if (session.getAttribute("username") == null || session.getAttribute("password") == null) {
+    if (session.getAttribute("CurrentUser") == null /*|| session.getAttribute("password") == null*/) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 %>

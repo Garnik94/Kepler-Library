@@ -22,16 +22,26 @@ public class BookDAO {
         List<Book> books = new ArrayList<>();
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            Book book = new Book(AuthorDAO.getAuthorById(resultSet.getInt("Author")),
+            Book book = new Book(new Author(resultSet.getString("AuthorName")),
                     resultSet.getString("Title"),
-                    CategoryDAO.getCategoryById(resultSet.getInt("Category")),
-                    LanguageDAO.getLanguageById(resultSet.getInt("Language")),
+                    new Category(resultSet.getString("Category_Name")),
+                    new Language(resultSet.getString("Language_Name")),
                     resultSet.getInt("Year"),
-                    DocumentTypeDAO.getDocumentTypeById(resultSet.getInt("Document_Type")),
+                    new DocumentType(resultSet.getString("Document_Type_Name")),
                     resultSet.getInt("Pages"),
                     resultSet.getString("Download_Url"));
-            book.setId(resultSet.getInt("ID"));
+            book.setId(resultSet.getInt("Book_Id"));
             books.add(book);
+//            Book book = new Book(AuthorDAO.getAuthorById(resultSet.getInt("Author")),
+//                    resultSet.getString("Title"),
+//                    CategoryDAO.getCategoryById(resultSet.getInt("Category")),
+//                    LanguageDAO.getLanguageById(resultSet.getInt("Language")),
+//                    resultSet.getInt("Year"),
+//                    DocumentTypeDAO.getDocumentTypeById(resultSet.getInt("Document_Type")),
+//                    resultSet.getInt("Pages"),
+//                    resultSet.getString("Download_Url"));
+//            book.setId(resultSet.getInt("Book_Id"));
+//            books.add(book);
         }
         return books;
     }
@@ -52,7 +62,7 @@ public class BookDAO {
     public static List<Book> getBooksByTitle(String title, String offset) {
         try {
             int offsetRows = Integer.parseInt(offset) * 10;
-            String query = "SELECT * FROM Books WHERE Title LIKE " + "'%" + "?" + "%'"; /*? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";*/
+            String query = "SELECT * FROM Books WHERE Title LIKE '%?%'"; /*? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";*/
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             return getBooks(preparedStatement);
         } catch (SQLException e) {
@@ -61,27 +71,34 @@ public class BookDAO {
         return null;
     }
 
-    public static List<Book> getBooksByAuthor(String searchArg, String offset, HttpServletRequest request) {
+    public static List<Book> getBooksByAuthor(String searchArg, int offset/*, HttpServletRequest request*/) {
         List<Author> authors = AuthorDAO.getAuthorsByCoincidence(searchArg);
+        List<Book> books = new ArrayList<>();
         if (!authors.isEmpty()) {
-            PreparedStatement preparedStatement;
             try {
                 StringBuilder subQuery = new StringBuilder();
                 for (int i = 0; i < authors.size(); i++) {
                     if (i == 0) {
-                        subQuery.append("ID = ? ");
+                        subQuery.append("Author = ?");
                     } else {
-                        subQuery.append("OR ID = ? ");
+                        subQuery.append(" OR Author = ? ");
                     }
-                    subQuery.append(authors.get(i).getId());
+//                    subQuery += authors.get(i).getId();
                 }
 //                String query = "SELECT * FROM Books WHERE Title = ? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";
-                String query = "SELECT * FROM Books WHERE " + subQuery;
 //                int offsetRows = Integer.parseInt(offset) * 10;
-                preparedStatement = getConnection().prepareStatement(query);
-                for (int i = 0; i < authors.size(); i++) {
+                String query = "SELECT * FROM Books " +
+                        "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
+                        "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
+                        "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
+                        "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE " + subQuery +
+                        " ORDER BY (SELECT NULL) OFFSET " + (3 * offset) + " ROWS FETCH NEXT 3 ROWS ONLY";
+                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+                int i;
+                for (i = 0; i < authors.size(); i++) {
                     preparedStatement.setInt(i + 1, authors.get(i).getId());
                 }
+
                 return getBooks(preparedStatement);
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -39,8 +39,8 @@ public class CategoryDAO {
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Category category = new Category(resultSet.getString("Category"));
-                category.setId(resultSet.getInt("ID"));
+                Category category = new Category(resultSet.getString("Category_Name"));
+                category.setId(resultSet.getInt("Category_Id"));
                 categories.add(category);
             }
         } catch (SQLException e) {
