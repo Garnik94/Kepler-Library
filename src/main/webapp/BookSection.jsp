@@ -79,7 +79,13 @@
     </div>
 
     <%
-        for (int i = 0; i < ContentDisplayService.bookList.size(); i++) {
+        int currentPage;
+        if (request.getParameter("page") == null) {
+            currentPage = 1;
+        } else {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+        for (int i = currentPage * 10; i <  currentPage * 10 + 10; i++) {
     %>
     <p><%= ContentDisplayService.bookList.get(i)%>
     </p>

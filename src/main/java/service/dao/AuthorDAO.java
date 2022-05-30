@@ -49,7 +49,7 @@ public class AuthorDAO {
     public static List<Author> getAuthorsByCoincidence(String searchingArg) {
         List<Author> authors = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Authors WHERE AuthorName LIKE ?"/* + "'%" + "?" + "%'"*/;
+            String query = "SELECT * FROM Authors WHERE AuthorName LIKE ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, "%" + searchingArg + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
