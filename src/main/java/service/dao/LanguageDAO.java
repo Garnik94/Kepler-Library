@@ -14,7 +14,7 @@ public class LanguageDAO {
         setLanguages(getAllLanguages());
     }
 
-    private static List<Language> languages = new ArrayList<>();
+    private static List<Language> languages;
 
     public static List<Language> getLanguages() {
         return new ArrayList<>(languages);

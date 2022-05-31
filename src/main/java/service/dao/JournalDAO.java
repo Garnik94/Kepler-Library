@@ -16,7 +16,7 @@ public class JournalDAO {
         setJournals(getAllJournals());
     }
 
-    private static List<Journal> journals = new ArrayList<>();
+    private static List<Journal> journals;
 
     public static List<Journal> getJournals() {
         return new ArrayList<>(journals);

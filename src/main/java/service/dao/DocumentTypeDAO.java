@@ -14,7 +14,7 @@ public class DocumentTypeDAO {
         setDocumentTypes(getAllDocumentTypes());
     }
 
-    private static List<DocumentType> documentTypes = new ArrayList<>();
+    private static List<DocumentType> documentTypes;
 
     public static List<DocumentType> getDocumentTypes() {
         return new ArrayList<>(documentTypes);

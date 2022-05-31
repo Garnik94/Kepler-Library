@@ -15,7 +15,7 @@ public class CategoryDAO {
         setCategories(getAllCategories());
     }
 
-    private static List<Category> categories = new ArrayList<>();
+    private static List<Category> categories;
 
     public static List<Category> getCategories() {
         return new ArrayList<>(categories);
