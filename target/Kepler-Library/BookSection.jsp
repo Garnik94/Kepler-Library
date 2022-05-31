@@ -4,6 +4,9 @@
 <%@ page import="service.dao.LanguageDAO" %>
 <%@ page import="model.content.DocumentType" %>
 <%@ page import="service.dao.DocumentTypeDAO" %>
+<%@ page import="model.SearchingOption" %>
+<%@ page import="model.content.Category" %>
+<%@ page import="model.content.Language" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -56,11 +59,11 @@
                 <input class="inputAreaStyle" name="searchBook" type="text">
             </label><br>
             <label>By author<br>
-                <input type="checkbox" name="author" value="authorChecked">
+                <select name="searchBy">
+                    <option>Author</option>
+                    <option>Title</option>
+                </select>
             </label>
-            <label>By title<br>
-                <input type="checkbox" name="title" value="titleChecked"><br>
-            </label><br>
             <label>
                 <select name="selectedCategory">
                     <option value="blankCategory" disabled selected>Select category</option>
@@ -103,12 +106,17 @@
             <input type="submit" value="Search">
         </form>
 
-        <%="book " + request.getParameter("searchBook")%>
-        <%="author " + request.getParameter("author")%>
-        <%="title " + request.getParameter("title")%>
-        <%="category " + request.getParameter("selectedCategory")%>
-        <%="language " + request.getParameter("selectedLanguage")%>
-        <%="document type " + request.getParameter("selectedDocumentType")%>
+        <%
+            SearchingOption searchingOption = new SearchingOption(request.getParameter("searchBook"),
+                    request.getParameter("searchBy"),
+                    new Category(request.getParameter("selectedCategory")),
+                    new DocumentType(request.getParameter("selectedLanguage")),
+                    new Language(request.getParameter("selectedDocumentType")));
+
+            session.setAttribute("searchingOption", searchingOption);
+        %>
+
+        <%=searchingOption%>
 
     </div>
 

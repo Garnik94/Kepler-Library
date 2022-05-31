@@ -25,9 +25,9 @@ public class ContentDisplayService {
         HttpSession session = request.getSession();
         SearchingOption searchingOption = (SearchingOption) session.getAttribute("searchingOption");
 //        if (searchingOption.get)
-            if (searchingOption.isAuthorSelected() && searchingOption.isTitleSelected()) {
-
-            }
+//            if (searchingOption.isAuthorSelected() && searchingOption.isTitleSelected()) {
+//
+//            }
 
     }
 

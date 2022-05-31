@@ -59,11 +59,11 @@
                 <input class="inputAreaStyle" name="searchBook" type="text">
             </label><br>
             <label>By author<br>
-                <input type="checkbox" name="author" value="authorChecked">
+                <select name="searchBy">
+                    <option>Author</option>
+                    <option>Title</option>
+                </select>
             </label>
-            <label>By title<br>
-                <input type="checkbox" name="title" value="titleChecked"><br>
-            </label><br>
             <label>
                 <select name="selectedCategory">
                     <option value="blankCategory" disabled selected>Select category</option>
@@ -108,8 +108,7 @@
 
         <%
             SearchingOption searchingOption = new SearchingOption(request.getParameter("searchBook"),
-                    request.getParameter("title"),
-                    request.getParameter("author"),
+                    request.getParameter("searchBy"),
                     new Category(request.getParameter("selectedCategory")),
                     new DocumentType(request.getParameter("selectedLanguage")),
                     new Language(request.getParameter("selectedDocumentType")));

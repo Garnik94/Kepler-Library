@@ -8,22 +8,19 @@ import model.content.Language;
 public class SearchingOption {
 
     private String inputSearchOption;
-    private boolean isTitleSelected;
-    private boolean isAuthorSelected;
+    private String searchBy;
     private Category category;
     private DocumentType documentType;
     private Journal journal;
     private Language language;
 
-    public SearchingOption(String inputArgument,
-                           String isTitleSelected,
-                           String isAuthorSelected,
+    public SearchingOption(String inputSearchOption,
+                           String searchBy,
                            Category category,
                            DocumentType documentType,
                            Language language) {
-        this.inputSearchOption = inputArgument;
-        setTitleSelected(isTitleSelected);
-        setAuthorSelected(isAuthorSelected);
+        this.inputSearchOption = inputSearchOption;
+        this.searchBy = searchBy;
         this.category = category;
         this.documentType = documentType;
         this.language = language;
@@ -35,22 +32,6 @@ public class SearchingOption {
 
     public void setInputSearchOption(String inputSearchOption) {
         this.inputSearchOption = inputSearchOption;
-    }
-
-    public boolean isTitleSelected() {
-        return isTitleSelected;
-    }
-
-    public void setTitleSelected(String titleSelected) {
-        isTitleSelected = titleSelected.equals("checked");
-    }
-
-    public boolean isAuthorSelected() {
-        return isAuthorSelected;
-    }
-
-    public void setAuthorSelected(String authorSelected) {
-        isAuthorSelected = authorSelected.equals("checked");
     }
 
     public Category getCategory() {
@@ -85,12 +66,19 @@ public class SearchingOption {
         this.language = language;
     }
 
+    public String getSearchBy() {
+        return searchBy;
+    }
+
+    public void setSearchBy(String searchBy) {
+        this.searchBy = searchBy;
+    }
+
     @Override
     public String toString() {
         return "SearchingOption{" +
-                "inputArgument='" + inputSearchOption + '\'' +
-                ", isTitleSelected=" + isTitleSelected +
-                ", isAuthorSelected=" + isAuthorSelected +
+                "inputSearchOption='" + inputSearchOption + '\'' +
+                ", searchBy='" + searchBy + '\'' +
                 ", category=" + category +
                 ", documentType=" + documentType +
                 ", journal=" + journal +
