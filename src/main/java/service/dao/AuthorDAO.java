@@ -23,7 +23,7 @@ public class AuthorDAO {
             preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new Author(resultSet.getString("AuthorName"));
+                return new Author(resultSet.getString("Author_Name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,7 +33,7 @@ public class AuthorDAO {
 
     public static int getAuthorIdByName(Author author) {
         try {
-            String query = "SELECT * FROM Authors WHERE AuthorName = ?";
+            String query = "SELECT * FROM Authors WHERE Author_Name = ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, author.getAuthorName());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -49,12 +49,12 @@ public class AuthorDAO {
     public static List<Author> getAuthorsByCoincidence(String searchingArg) {
         List<Author> authors = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Authors WHERE AuthorName LIKE ?";
+            String query = "SELECT * FROM Authors WHERE Author_Name LIKE ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, "%" + searchingArg + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Author author = new Author(resultSet.getString("AuthorName"));
+                Author author = new Author(resultSet.getString("Author_Name"));
                 author.setId(resultSet.getInt("Author_Id"));
                 authors.add(author);
             }

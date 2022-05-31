@@ -21,11 +21,21 @@ public class ContentDisplayService {
 //        }
 //    }
 
+    public static void mainSearch() {
+
+//        searchBooksByAuthor();
+//        searchBooksByTitle();
+    }
+
     public static void searchBooksByAuthor(String searchingArg, int currentPage) {
-//        Author author = new Author(request.getParameter("searchingUser"));
-        //TODO: logic of caching
-        if (currentPage % 3 == 0 || currentPage == 1) {
-            bookList = BookDAO.getBooksByAuthor(searchingArg, currentPage);
+        if ((currentPage - 1) % 3 == 0 || currentPage == 1) {
+            bookList = BookDAO.getBooksByAuthor(searchingArg, currentPage - 1);
+        }
+    }
+
+    public static void searchBooksByTitle(String searchingArg, int currentPage) {
+        if ((currentPage - 1) % 3 == 0 || currentPage == 1) {
+            bookList = BookDAO.getBooksByTitle(searchingArg, currentPage - 1);
         }
     }
 

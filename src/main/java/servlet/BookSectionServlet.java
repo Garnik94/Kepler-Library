@@ -30,33 +30,20 @@ public class BookSectionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchingArg = request.getParameter("searchBook");
         HttpSession session = request.getSession();
-        if (session.getAttribute("searchingOption") == null) {
+//        if (session.getAttribute("searchingOption") == null) {
             session.setAttribute("searchingOption", searchingArg);
-        }
+//        }
         int currentPage;
         if (request.getParameter("page") == null) {
             currentPage = 1;
         } else {
             currentPage = Integer.parseInt(request.getParameter("page"));
         }
-        ContentDisplayService.searchBooksByAuthor((String) session.getAttribute("searchingOption"),
-                currentPage - 1);
-//        HttpSession session = request.getSession();
-//        session.setAttribute("found");
+//        ContentDisplayService.searchBooksByAuthor((String) session.getAttribute("searchingOption"),
+//                currentPage);
+        ContentDisplayService.searchBooksByTitle((String) session.getAttribute("searchingOption"),
+                currentPage);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
         requestDispatcher.forward(request, response);
-//        String searchingArg = request.getParameter("searchBook");
-//        int currentPage;
-//        if (request.getParameter("page") == null){
-//            currentPage = 1;
-//        } else {
-//            currentPage = Integer.parseInt(request.getParameter("page"));
-//        }
-//        ContentDisplayService.searchBooksByAuthor(searchingArg, currentPage - 1);
-////        HttpSession session = request.getSession();
-////        session.setAttribute("found");
-//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
-//        requestDispatcher.forward(request, response);
-//        response.sendRedirect("BookSection.jsp");
     }
 }

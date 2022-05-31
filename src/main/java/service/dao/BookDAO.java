@@ -22,7 +22,7 @@ public class BookDAO {
         List<Book> books = new ArrayList<>();
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            Book book = new Book(new Author(resultSet.getString("AuthorName")),
+            Book book = new Book(new Author(resultSet.getString("Author_Name")),
                     resultSet.getString("Title"),
                     new Category(resultSet.getString("Category_Name")),
                     new Language(resultSet.getString("Language_Name")),
@@ -59,21 +59,25 @@ public class BookDAO {
 //    ORDER BY (SELECT NULL)
 //    OFFSET 1 ROWS FETCH NEXT 2 ROWS ONLY;
 
-    public static List<Book> getBooksByTitle(String title, String offset) {
+    public static List<Book> getBooksByTitle(String title, int offset) {
         try {
-            int offsetRows = Integer.parseInt(offset) * 10;
-            String query = "SELECT * FROM Books WHERE Title LIKE '%?%'"; /*? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";*/
+            String query = "SELECT * FROM Books " +
+                    "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
+                    "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
+                    "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
+                    "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE Title LIKE ?" +
+                    " ORDER BY (SELECT NULL) OFFSET " + (9 * offset) + " ROWS FETCH NEXT 9 ROWS ONLY";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, "%" + title + "%");
             return getBooks(preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public static List<Book> getBooksByAuthor(String searchArg, int offset/*, HttpServletRequest request*/) {
         List<Author> authors = AuthorDAO.getAuthorsByCoincidence(searchArg);
-        List<Book> books = new ArrayList<>();
         if (!authors.isEmpty()) {
             try {
                 StringBuilder subQuery = new StringBuilder();
@@ -83,22 +87,18 @@ public class BookDAO {
                     } else {
                         subQuery.append(" OR Author = ? ");
                     }
-//                    subQuery += authors.get(i).getId();
                 }
-//                String query = "SELECT * FROM Books WHERE Title = ? OFFSET " + offsetRows + " FETCH NEXT 10 ROWS ONLY";
-//                int offsetRows = Integer.parseInt(offset) * 10;
                 String query = "SELECT * FROM Books " +
                         "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
                         "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
                         "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
                         "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE " + subQuery +
-                        " ORDER BY (SELECT NULL) OFFSET " + (3 * offset) + " ROWS FETCH NEXT 3 ROWS ONLY";
+                        " ORDER BY (SELECT NULL) OFFSET " + (9 * offset) + " ROWS FETCH NEXT 9 ROWS ONLY";
                 PreparedStatement preparedStatement = getConnection().prepareStatement(query);
                 int i;
                 for (i = 0; i < authors.size(); i++) {
                     preparedStatement.setInt(i + 1, authors.get(i).getId());
                 }
-
                 return getBooks(preparedStatement);
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -20,7 +20,8 @@ public class ContentPaginationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int currentPage = Integer.parseInt(request.getParameter("page"));
         HttpSession session = request.getSession();
-        ContentDisplayService.searchBooksByAuthor((String) session.getAttribute("searchingOption"), currentPage - 1);
+//        ContentDisplayService.searchBooksByAuthor((String) session.getAttribute("searchingOption"), currentPage);
+        ContentDisplayService.searchBooksByTitle((String) session.getAttribute("searchingOption"), currentPage);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
         requestDispatcher.forward(request, response);
     }

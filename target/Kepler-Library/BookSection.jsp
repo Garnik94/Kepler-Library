@@ -47,21 +47,33 @@
 <div class="bigContainer">
     <div class="bigContainer">
         <form action="books" method="get">
+            <span>Search</span><br>
             <label>
-                <span>Search</span><br>
-<%--                <%--%>
-<%--                    String searchingArg = null;--%>
-<%--                    if (request.getParameter("searchBook") != null) {--%>
-<%--                        searchingArg = request.getParameter("searchBook");--%>
-<%--                    }--%>
-<%--                %>--%>
-                <input class="inputAreaStyle" name="searchBook" type="text" value="<%=session.getAttribute("searchBook")%>">
-                <%
-                    if (session.getAttribute("searchBook") == null) {
-                        session.setAttribute("searchBook", request.getParameter("searchBook"));
-                    }
-                %>
+                <input class="inputAreaStyle" name="searchBook" type="text">
             </label>
+            <label>By author<br>
+                <input type="radio" name="action"><br>
+                By title<br>
+                <input type="radio" name="action"><br>
+            </label><br>
+            <label>
+                <select>
+                    <option>Category</option>
+                </select>
+            </label><br>
+            <label>
+                <select>
+                    <option>Language</option>
+                </select>
+            </label><br>
+            <label>
+                <select>
+                    <option>Document Type</option>
+                </select>
+            </label><br>
+            <%
+
+            %>
             <input type="submit" value="Search">
         </form>
 
@@ -79,13 +91,26 @@
     </div>
 
     <%
+        if (session.getAttribute("searchingOption") != null) {
+    %>
+
+    <%
         int currentPage;
         if (request.getParameter("page") == null) {
             currentPage = 1;
         } else {
             currentPage = Integer.parseInt(request.getParameter("page"));
         }
-        for (int i = currentPage * 10; i <  currentPage * 10 + 10; i++) {
+        int coefficient;
+        if (currentPage == 1) {
+            coefficient = 0;
+        } else {
+            coefficient = 3;
+        }
+        for (int i = (currentPage - 1) * coefficient; i <= (currentPage - 1) * coefficient + 3 - 1; i++) {
+    %>
+    <%
+        if (i < ContentDisplayService.bookList.size()) {
     %>
     <p><%= ContentDisplayService.bookList.get(i)%>
     </p>
@@ -98,6 +123,12 @@
     <%
         }
     %>
+    <%
+        }
+    %>
+    <%
+        }
+    %>
 
     <%
         }
@@ -105,7 +136,7 @@
 
     <form>
         <%
-            for (int i = 1; i < 10; i++) {
+            for (int i = 1; i <= ContentDisplayService.bookList.size() / 3 + 1; i++) {
                 String url = "booksPagination?page=" + i;
         %>
         <a href="<%=url%>"><%=i%>
