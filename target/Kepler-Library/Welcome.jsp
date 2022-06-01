@@ -55,7 +55,7 @@
 
     <span class="textStyle">Choose section</span><br>
     <form>
-        <input class="bookSectionButtonStyle" formaction="books" formmethod="get" type="submit" value="Books"><br>
+        <input class="bookSectionButtonStyle" formaction="BookSection.jsp" formmethod="get" type="submit" value="Books"><br>
         <input class="articleSectionButtonStyle" formaction="articles" formmethod="post" type="submit" value="Articles"><br>
     </form>
 </body>

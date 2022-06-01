@@ -21,7 +21,7 @@ public class ContentPaginationServlet extends HttpServlet {
         int currentPage = Integer.parseInt(request.getParameter("page"));
         HttpSession session = request.getSession();
 //        ContentDisplayService.searchBooksByAuthor((String) session.getAttribute("searchingOption"), currentPage);
-        ContentDisplayService.searchBooksByTitle((String) session.getAttribute("searchingOption"), currentPage);
+        ContentDisplayService.mainSearch(request, currentPage);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
         requestDispatcher.forward(request, response);
     }

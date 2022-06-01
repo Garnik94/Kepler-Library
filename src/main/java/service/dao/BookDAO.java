@@ -22,26 +22,20 @@ public class BookDAO {
         List<Book> books = new ArrayList<>();
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
+            Language language = new Language(resultSet.getString("Language_Name"));
+            language.setId(LanguageDAO.getLanguageIdByName(language));
+            DocumentType documentType = new DocumentType(resultSet.getString("Document_Type_Name"));
+            documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
             Book book = new Book(new Author(resultSet.getString("Author_Name")),
                     resultSet.getString("Title"),
                     new Category(resultSet.getString("Category_Name")),
-                    new Language(resultSet.getString("Language_Name")),
+                    language,
                     resultSet.getInt("Year"),
-                    new DocumentType(resultSet.getString("Document_Type_Name")),
+                    documentType,
                     resultSet.getInt("Pages"),
                     resultSet.getString("Download_Url"));
             book.setId(resultSet.getInt("Book_Id"));
             books.add(book);
-//            Book book = new Book(AuthorDAO.getAuthorById(resultSet.getInt("Author")),
-//                    resultSet.getString("Title"),
-//                    CategoryDAO.getCategoryById(resultSet.getInt("Category")),
-//                    LanguageDAO.getLanguageById(resultSet.getInt("Language")),
-//                    resultSet.getInt("Year"),
-//                    DocumentTypeDAO.getDocumentTypeById(resultSet.getInt("Document_Type")),
-//                    resultSet.getInt("Pages"),
-//                    resultSet.getString("Download_Url"));
-//            book.setId(resultSet.getInt("Book_Id"));
-//            books.add(book);
         }
         return books;
     }

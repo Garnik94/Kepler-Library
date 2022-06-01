@@ -107,16 +107,8 @@
         </form>
 
         <%
-            SearchingOption searchingOption = new SearchingOption(request.getParameter("searchBook"),
-                    request.getParameter("searchBy"),
-                    new Category(request.getParameter("selectedCategory")),
-                    new DocumentType(request.getParameter("selectedLanguage")),
-                    new Language(request.getParameter("selectedDocumentType")));
-
-            session.setAttribute("searchingOption", searchingOption);
+            session.getAttribute("searchingOption");
         %>
-
-        <%=searchingOption%>
 
     </div>
 
@@ -173,14 +165,48 @@
 
     <form>
         <%
-            int condition = ContentDisplayService.bookList.size() % 3 == 1 ?
+            int condition = ContentDisplayService.bookList.size() % 3 >= 1 ?
                     ContentDisplayService.bookList.size() / 3 + 1 : ContentDisplayService.bookList.size() / 3;
 
             for (int i = 1; i <= condition; i++) {
-                String url = "booksPagination?page=" + i;
+                String url = "BookSection.jsp?page=" + i;
         %>
-        <a href="<%=url%>"><%=i%>
+        <%
+            int currentPage;
+            if (request.getParameter("page") == null) {
+                currentPage = 1;
+            } else {
+                currentPage = Integer.parseInt(request.getParameter("page"));
+            }
+            if (i == currentPage) {
+        %>
+        <a style="font: bold 11px Arial;
+                    text-decoration: none;
+                    background-color: blue;
+                    color: antiquewhite;
+                    padding: 2px 6px 2px 6px;
+                    border-top: 1px solid #CCCCCC;
+                    border-right: 1px solid #333333;
+                    border-bottom: 1px solid #333333;
+                    border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%>
         </a>
+        <%
+            } else {
+        %>
+        <a style="font: bold 11px Arial;
+                    text-decoration: none;
+                    background-color: white;
+                    color: antiquewhite;
+                    padding: 2px 6px 2px 6px;
+                    border-top: 1px solid #CCCCCC;
+                    border-right: 1px solid #333333;
+                    border-bottom: 1px solid #333333;
+                    border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%>
+        </a>
+
+        <%
+            }
+        %>
         <%
             }
         %>

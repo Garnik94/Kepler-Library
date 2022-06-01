@@ -106,3 +106,27 @@ body {
     font-family: cursive;
     font-weight: bold;
 }
+
+.paginationButton{
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: white;
+    color: antiquewhite;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+.selectedPage{
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: blue;
+    color: antiquewhite;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
