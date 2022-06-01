@@ -29,8 +29,6 @@ public class Book extends AbstractMaterial {
 
     @Override
     public String toString() {
-        return "Book{" + super.toString() +
-                "pages=" + pages +
-                '}';
+        return super.toString() + "\n" + pages;
     }
 }

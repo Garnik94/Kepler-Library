@@ -24,4 +24,9 @@ public class DocumentType {
     public void setId(int id) {
         Id = id;
     }
+
+    @Override
+    public String toString() {
+        return type;
+    }
 }

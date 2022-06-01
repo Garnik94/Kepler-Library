@@ -36,12 +36,12 @@ public class BookSectionServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (request.getParameter("searchBook").length() < 3) {
-            session.setAttribute("inputValidationError", true);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
-            requestDispatcher.forward(request, response);
-            return;
-        }
+//        if (request.getParameter("searchBook").length() < 3) {
+//            session.setAttribute("inputValidationError", true);
+//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+//            requestDispatcher.forward(request, response);
+//            return;
+//        }
         session.removeAttribute("inputValidationError");
         Category category = null;
         if (request.getParameter("selectedCategory") != null) {

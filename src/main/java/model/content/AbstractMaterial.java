@@ -96,16 +96,13 @@ public abstract class AbstractMaterial {
 
     @Override
     public String toString() {
-        return "AbstractMaterial{" +
-                "Id=" + Id +
-                ", author=" + author +
-                ", title='" + title + '\'' +
-                ", category=" + category +
-                ", language=" + language +
-                ", year=" + year +
-                ", documentType=" + documentType +
-                ", downloadUrl='" + downloadUrl + '\'' +
-                '}';
+        return author + "\n" +
+                title + "\n" +
+                category + "\n" +
+                language + "\n" +
+                year + "\n" +
+                documentType + "\n" +
+                downloadUrl;
     }
 }
 

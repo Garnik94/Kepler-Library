@@ -10,7 +10,11 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="graphic/icon.png"
+          type="image/x-icon">
+    <title>Kepler library</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 

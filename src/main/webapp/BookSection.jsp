@@ -7,6 +7,7 @@
 <%@ page import="model.SearchingOption" %>
 <%@ page import="model.content.Category" %>
 <%@ page import="model.content.Language" %>
+<%@ page import="model.content.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -23,17 +24,9 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<%--<%--%>
-<%--    User user = UserDAO.getUser(new User((String) session.getAttribute("username")));--%>
-<%--%>--%>
-
-<h1>
-    <%= request.getParameter("page")%>
-</h1>
 
 <span class="userWelcomeMessage">
         <%=
@@ -76,7 +69,7 @@
                         }
                     %>
                 </select>
-            </label><br>
+            </label>
             <label>
                 <select name="selectedLanguage">
                     <option value="blankLanguage" disabled selected>Select language</option>
@@ -89,7 +82,7 @@
                         }
                     %>
                 </select>
-            </label><br>
+            </label>
             <label>
                 <select name="selectedDocumentType">
                     <option value="blankDocumentType" disabled selected>Select Document type</option>
@@ -102,7 +95,7 @@
                         }
                     %>
                 </select>
-            </label><br>
+            </label>
             <input type="submit" value="Search">
         </form>
 
@@ -110,13 +103,6 @@
             session.getAttribute("searchingOption");
         %>
 
-    </div>
-
-    <div class="contentContainer">
-        <%
-
-        %>
-        <div class="contentWindow"></div>
     </div>
 
     <%
@@ -139,6 +125,9 @@
 
     </form>
 
+    <div class="contentContainer">
+
+
     <%
         int currentPage;
         if (request.getParameter("page") == null) {
@@ -150,23 +139,34 @@
         if (currentPage == 1) {
             coefficient = 0;
         } else {
-            coefficient = 3;
+            coefficient = 10;
         }
-        for (int i = (currentPage - 1) * coefficient; i <= (currentPage - 1) * coefficient + 3 - 1; i++) {
+        for (int i = (currentPage - 1) * coefficient; i <= (currentPage - 1) * coefficient + 10 - 1; i++) {
     %>
     <%
         if (i < ContentDisplayService.bookList.size()) {
     %>
-    <p><%= ContentDisplayService.bookList.get(i)%></p>
-    <%
-        if (user.isHasEditPermission() == 1) {
-    %>
-    <form>
-        <input type="submit" value="Edit book">
-    </form>
-    <%
-        }
-    %>
+        <div class="contentWindow">
+            <div style="margin-top: 20px">
+                <%Book book = ContentDisplayService.bookList.get(i);%>
+                <%=book.getAuthor()%><br>
+                <%=book.getTitle()%><br>
+                <%="Category: " + book.getCategory()%><br>
+                <%="Language: " + book.getLanguage()%><br>
+                <%="Year: " + book.getYear()%><br>
+                <%="Pages: " + book.getPages()%><br>
+                <%=book.getDownloadUrl()%><br>
+            </div>
+            <%
+                if (user.isHasEditPermission() == 1) {
+            %>
+            <form>
+                <input type="submit" value="Edit book">
+            </form>
+            <%
+                }
+            %>
+        </div>
     <%
         }
     %>
@@ -174,10 +174,13 @@
         }
     %>
 
+    </div>
+
+
     <form>
         <%
-            int condition = ContentDisplayService.bookList.size() % 3 >= 1 ?
-                    ContentDisplayService.bookList.size() / 3 + 1 : ContentDisplayService.bookList.size() / 3;
+            int condition = ContentDisplayService.bookList.size() % 10 >= 1 ?
+                    ContentDisplayService.bookList.size() / 10 + 1 : ContentDisplayService.bookList.size() / 10;
 
             for (int i = 1; i <= condition; i++) {
                 String url = "BookSection.jsp?page=" + i;
@@ -185,27 +188,11 @@
                 <%
                     if (i == currentPage) {
                 %>
-                        <a style="font: bold 11px Arial;
-                            text-decoration: none;
-                            background-color: blue;
-                            color: antiquewhite;
-                            padding: 2px 6px 2px 6px;
-                            border-top: 1px solid #CCCCCC;
-                            border-right: 1px solid #333333;
-                            border-bottom: 1px solid #333333;
-                            border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%></a>
+                        <a class="selectedPage" href="<%=url%>"><%=i%></a>
                 <%
                 } else {
                 %>
-                        <a style="font: bold 11px Arial;
-                            text-decoration: none;
-                            background-color: white;
-                            color: antiquewhite;
-                            padding: 2px 6px 2px 6px;
-                            border-top: 1px solid #CCCCCC;
-                            border-right: 1px solid #333333;
-                            border-bottom: 1px solid #333333;
-                            border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%></a>
+                        <a class="paginationButton" href="<%=url%>"><%=i%></a>
                 <%
                     }
                 %>
@@ -218,7 +205,7 @@
     <%
         } else if (session.getAttribute("inputValidationError") != null){
     %>
-        <h1>input value min length must be more than 3</h1>
+        <h1 class="errorMessageStyle">input value min length must be more than 3</h1>
     <%
         }
     %>

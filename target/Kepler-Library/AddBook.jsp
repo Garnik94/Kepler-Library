@@ -10,7 +10,11 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="graphic/icon.png"
+          type="image/x-icon">
+    <title>Kepler library</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <form action="logout" method="post">
@@ -18,32 +22,43 @@
 </form>
 
 <form action="addNewBook" method="post">
-    <label>Author<br>
-        <input type="text" name="author">
-    </label><br>
-    <label>Title<br>
-        <input type="text" name="title">
-    </label><br>
-    <label>Category<br>
-        <input type="text" name="category">
-    </label><br>
-    <label>Language<br>
-        <input type="text" name="language">
-    </label><br>
-    <label>Year<br>
-        <input type="text" name="year">
-    </label><br>
-    <label>Document Type<br>
-        <input type="text" name="documentType">
-    </label><br>
-    <label>Pages<br>
-        <input type="text" name="pages">
-    </label><br>
-    <label>Download Url<br>
-        <input type="text" name="downloadUrl">
-    </label><br>
-    <input type="submit" value="Add book">
+
+    <div>
+        <div style="display: inline-block; margin-right: 20px">
+            <label class="textStyle">Author<br>
+                <input class="inputAreaStyle" type="text" name="author">
+            </label><br>
+            <label class="textStyle">Title<br>
+                <input class="inputAreaStyle" type="text" name="title">
+            </label><br>
+            <label class="textStyle">Category<br>
+                <input class="inputAreaStyle" type="text" name="category">
+            </label><br>
+            <label class="textStyle">Language<br>
+                <input class="inputAreaStyle" type="text" name="language">
+            </label><br>
+        </div>
+
+        <div style="display: inline-block; margin-left: 20px"<%--style="float: right; margin-right: 450px"--%>>
+            <label class="textStyle">Year<br>
+                <input class="inputAreaStyle" type="text" name="year">
+            </label><br>
+            <label class="textStyle">Document Type<br>
+                <input class="inputAreaStyle" type="text" name="documentType">
+            </label><br>
+            <label class="textStyle">Pages<br>
+                <input class="inputAreaStyle" type="text" name="pages">
+            </label><br>
+            <label class="textStyle">Download Url<br>
+                <input class="inputAreaStyle" type="text" name="downloadUrl">
+            </label><br>
+        </div>
+    </div>
+
+    <input  type="submit" value="Add book">
+
 </form>
+
 
 </body>
 </html>

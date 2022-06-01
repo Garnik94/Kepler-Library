@@ -27,4 +27,9 @@ public class Article extends AbstractMaterial {
     public void setJournal(Journal journal) {
         this.journal = journal;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n" + journal;
+    }
 }

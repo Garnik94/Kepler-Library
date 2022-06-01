@@ -24,4 +24,9 @@ public class Language {
     public void setId(int id) {
         Id = id;
     }
+
+    @Override
+    public String toString() {
+        return language;
+    }
 }
