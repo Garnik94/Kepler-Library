@@ -126,13 +126,15 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Book pagination</servlet-name>
-        <servlet-class>servlet.ContentPaginationServlet</servlet-class>
+        <servlet-name>Sort content</servlet-name>
+        <servlet-class>servlet.SortContentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Book pagination</servlet-name>
-        <url-pattern>/booksPagination</url-pattern>
+        <servlet-name>Sort content</servlet-name>
+        <url-pattern>/sorting</url-pattern>
     </servlet-mapping>
+
+
 
     <servlet>
         <servlet-name>Article section</servlet-name>

@@ -9,9 +9,7 @@ import service.dao.BookDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ContentDisplayService {
 
@@ -25,55 +23,30 @@ public class ContentDisplayService {
 //        }
 //    }
 
-    public static void mainSearch(HttpServletRequest request, int currentPage) {
+    public static void mainSearch(HttpServletRequest request) {
         HttpSession session = request.getSession();
-//        Category category;
-//        if (request.getParameter("selectedCategory") != null &&
-//                request.getParameter("selectedCategory").equals("blankCategory")) {
-//            category = null;
-//        } else {
-//            category = new Category(request.getParameter("selectedCategory"));
-//        }
-//        DocumentType documentType;
-//        if (request.getParameter("selectedDocumentType") != null &&
-//                request.getParameter("selectedDocumentType").equals("blankDocumentType")) {
-//            documentType = null;
-//        } else {
-//            documentType = new DocumentType(request.getParameter("blankDocumentType"));
-//        }
-//        Language language;
-//        if (request.getParameter("selectedLanguage") != null &&
-//                request.getParameter("selectedLanguage").equals("blankLanguage")) {
-//            language = null;
-//        } else {
-//            language = new Language(request.getParameter("selectedLanguage"));
-//        }
-//        SearchingOption searchingOption = new SearchingOption(request.getParameter("searchBook"),
-//                request.getParameter("searchBy"),
-//                category,
-//                documentType,
-//                language);
         SearchingOption searchingOption = (SearchingOption) session.getAttribute("searchingOption");
-
-        if (searchingOption.getSearchBy().equals("Author")){
-            searchBooksByAuthor(searchingOption.getInputSearchOption(), currentPage);
-        } else {
-            searchBooksByTitle(searchingOption.getInputSearchOption(), currentPage);
+        if (searchingOption.getSearchBy().equals("Author")) {
+            searchBooksByAuthor(searchingOption.getInputSearchOption());
+        } else if (searchingOption.getSearchBy().equals("Title")) {
+            searchBooksByTitle(searchingOption.getInputSearchOption());
         }
         filterBooksByLanguage(searchingOption.getLanguage());
+        filterBooksByCategory(searchingOption.getCategory());
         filterBooksByDocumentType(searchingOption.getDocumentType());
     }
 
-    public static void searchBooksByAuthor(String author, int currentPage) {
-        if ((currentPage - 1) % 3 == 0 || currentPage == 1) {
-            bookList = BookDAO.getBooksByAuthor(author, currentPage - 1);
-        }
+
+    public static void searchBooksByAuthor(String author) {
+//        if ((currentPage - 1) % 3 == 0 || currentPage == 1) {
+        bookList = BookDAO.getBooksByAuthor(author);
+//        }
     }
 
-    public static void searchBooksByTitle(String title, int currentPage) {
-        if ((currentPage - 1) % 3 == 0 || currentPage == 1) {
-            bookList = BookDAO.getBooksByTitle(title, currentPage - 1);
-        }
+    public static void searchBooksByTitle(String title) {
+//        if ((currentPage - 1) % 3 == 0 || currentPage == 1) {
+        bookList = BookDAO.getBooksByTitle(title);
+//        }
     }
 
     public static void filterBooksByLanguage(Language language) {
@@ -82,6 +55,18 @@ public class ContentDisplayService {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 if (book.getLanguage().getId() != language.getId()) {
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
+    public static void filterBooksByCategory(Category category) {
+        if (category != null) {
+            Iterator<Book> iterator = bookList.iterator();
+            while (iterator.hasNext()) {
+                Book book = iterator.next();
+                if (book.getCategory().getId() != category.getId()) {
                     iterator.remove();
                 }
             }
@@ -98,6 +83,69 @@ public class ContentDisplayService {
                 }
             }
         }
+    }
+
+    public static void sortBooksByTitle(int askDesk) {
+        if (askDesk == 1) {
+            Collections.sort(bookList, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getTitle().compareTo(o2.getTitle());
+                }
+            });
+        } else if (askDesk == -1) {
+            Collections.sort(bookList, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o2.getTitle().compareTo(o1.getTitle());
+                }
+            });
+        }
+    }
+
+    public static void sortBooksByPage(int askDesk) {
+        if (askDesk == 1) {
+            Collections.sort(bookList, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getPages() - o2.getPages();
+                }
+            });
+        } else if (askDesk == -1) {
+            Collections.sort(bookList, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o2.getPages() - o1.getPages();
+                }
+            });
+        }
+    }
+
+    public static void sortBooksByYear(int askDesk) {
+        if (askDesk == 1) {
+            Collections.sort(bookList, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o1.getYear() - o2.getYear();
+                }
+            });
+        } else if (askDesk == -1) {
+            Collections.sort(bookList, new Comparator<Book>() {
+                @Override
+                public int compare(Book o1, Book o2) {
+                    return o2.getYear() - o1.getYear();
+                }
+            });
+        }
+    }
+
+    public static void sortBooksByRecentlyAdded() {
+        Collections.sort(bookList, new Comparator<Book>() {
+            @Override
+            public int compare(Book o1, Book o2) {
+                return o1.getId() - o2.getId();
+            }
+        });
     }
 
 }

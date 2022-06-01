@@ -21,40 +21,40 @@ import java.io.IOException;
 @WebServlet(name = "BookSectionServlet")
 public class BookSectionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String searchingArg = request.getParameter("searchBook");
-        int currentPage;
-        if (request.getParameter("page") == null) {
-            currentPage = 1;
-        } else {
-            currentPage = Integer.parseInt(request.getParameter("page"));
-        }
-        ContentDisplayService.searchBooksByAuthor(searchingArg, currentPage - 1);
-//        HttpSession session = request.getSession();
-//        session.setAttribute("found");
-        response.sendRedirect("BookSection.jsp");
+//        String searchingArg = request.getParameter("searchBook");
+//        int currentPage;
+//        if (request.getParameter("page") == null) {
+//            currentPage = 1;
+//        } else {
+//            currentPage = Integer.parseInt(request.getParameter("page"));
+//        }
+//        ContentDisplayService.searchBooksByAuthor(searchingArg, currentPage - 1);
+////        HttpSession session = request.getSession();
+////        session.setAttribute("found");
+//        response.sendRedirect("BookSection.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String searchingArg = request.getParameter("searchBook");
         HttpSession session = request.getSession();
-        Category category;
-        if (request.getParameter("selectedCategory") == null) {
-            category = null;
-        } else {
+        if (request.getParameter("searchBook").length() < 3) {
+            session.setAttribute("inputValidationError", true);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+            requestDispatcher.forward(request, response);
+            return;
+        }
+        session.removeAttribute("inputValidationError");
+        Category category = null;
+        if (request.getParameter("selectedCategory") != null) {
             category = new Category(request.getParameter("selectedCategory"));
             category.setId(CategoryDAO.getCategoryIdByName(category));
         }
-        DocumentType documentType;
-        if (request.getParameter("selectedDocumentType") == null) {
-            documentType = null;
-        } else {
+        DocumentType documentType = null;
+        if (request.getParameter("selectedDocumentType") != null) {
             documentType = new DocumentType(request.getParameter("selectedDocumentType"));
             documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
         }
-        Language language;
-        if (request.getParameter("selectedLanguage") == null) {
-            language = null;
-        } else {
+        Language language = null;
+        if (request.getParameter("selectedLanguage") != null) {
             language = new Language(request.getParameter("selectedLanguage"));
             language.setId(LanguageDAO.getLanguageIdByName(language));
         }
@@ -64,18 +64,7 @@ public class BookSectionServlet extends HttpServlet {
                 documentType,
                 language);
         session.setAttribute("searchingOption", searchingOption);
-
-        int currentPage;
-        if (request.getParameter("page") == null) {
-            currentPage = 1;
-        } else {
-            currentPage = Integer.parseInt(request.getParameter("page"));
-        }
-//        ContentDisplayService.searchBooksByAuthor((String) session.getAttribute("searchingOption"),
-//                currentPage);
-        ContentDisplayService.mainSearch(request, currentPage);
-//        ContentDisplayService.searchBooksByTitle((String) session.getAttribute("searchingOption"),
-//                currentPage);
+        ContentDisplayService.mainSearch(request);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
         requestDispatcher.forward(request, response);
     }

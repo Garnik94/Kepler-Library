@@ -22,13 +22,15 @@ public class BookDAO {
         List<Book> books = new ArrayList<>();
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
+            Category category = new Category(resultSet.getString("Category_Name"));
+            category.setId(CategoryDAO.getCategoryIdByName(category));
             Language language = new Language(resultSet.getString("Language_Name"));
             language.setId(LanguageDAO.getLanguageIdByName(language));
             DocumentType documentType = new DocumentType(resultSet.getString("Document_Type_Name"));
             documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
             Book book = new Book(new Author(resultSet.getString("Author_Name")),
                     resultSet.getString("Title"),
-                    new Category(resultSet.getString("Category_Name")),
+                    category,
                     language,
                     resultSet.getInt("Year"),
                     documentType,
@@ -40,27 +42,13 @@ public class BookDAO {
         return books;
     }
 
-//    SELECT Id, Col1
-//    FROM TableName
-//    ORDER BY Id
-//    OFFSET 20 ROWS FETCH NEXT 20 ROWS ONLY;
-
-//    SELECT * FROM Customers
-//    ORDER BY Country DESC;
-
-//    SELECT *
-//    FROM Users
-//    ORDER BY (SELECT NULL)
-//    OFFSET 1 ROWS FETCH NEXT 2 ROWS ONLY;
-
-    public static List<Book> getBooksByTitle(String title, int offset) {
+    public static List<Book> getBooksByTitle(String title) {
         try {
             String query = "SELECT * FROM Books " +
                     "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
                     "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
                     "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
-                    "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE Title LIKE ?" +
-                    " ORDER BY (SELECT NULL) OFFSET " + (9 * offset) + " ROWS FETCH NEXT 9 ROWS ONLY";
+                    "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE Title LIKE ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, "%" + title + "%");
             return getBooks(preparedStatement);
@@ -70,7 +58,7 @@ public class BookDAO {
         return new ArrayList<>();
     }
 
-    public static List<Book> getBooksByAuthor(String searchArg, int offset/*, HttpServletRequest request*/) {
+    public static List<Book> getBooksByAuthor(String searchArg) {
         List<Author> authors = AuthorDAO.getAuthorsByCoincidence(searchArg);
         if (!authors.isEmpty()) {
             try {
@@ -86,8 +74,7 @@ public class BookDAO {
                         "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
                         "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
                         "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
-                        "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE " + subQuery +
-                        " ORDER BY (SELECT NULL) OFFSET " + (9 * offset) + " ROWS FETCH NEXT 9 ROWS ONLY";
+                        "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE " + subQuery;
                 PreparedStatement preparedStatement = getConnection().prepareStatement(query);
                 int i;
                 for (i = 0; i < authors.size(); i++) {

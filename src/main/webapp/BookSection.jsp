@@ -120,8 +120,24 @@
     </div>
 
     <%
-        if (session.getAttribute("searchingOption") != null) {
+        if (session.getAttribute("searchingOption") != null && session.getAttribute("inputValidationError") == null) {
     %>
+
+    <form action="sorting" method="get">
+
+        <select name="sortingOption">
+            <option value="recentlyAdded">Resently aded</option>
+            <option value="bookTitleUp">Title (A-Z)</option>
+            <option value="bookTitleDown">Title (Z-A)</option>
+            <option value="bookPageUp">Page up -> down</option>
+            <option value="bookPageDown">Page down -> up</option>
+            <option value="bookYearUp">year up -> down</option>
+            <option value="bookYearDown">year down -> up</option>
+        </select>
+
+        <input type="submit">
+
+    </form>
 
     <%
         int currentPage;
@@ -141,8 +157,7 @@
     <%
         if (i < ContentDisplayService.bookList.size()) {
     %>
-    <p><%= ContentDisplayService.bookList.get(i)%>
-    </p>
+    <p><%= ContentDisplayService.bookList.get(i)%></p>
     <%
         if (user.isHasEditPermission() == 1) {
     %>
@@ -159,10 +174,6 @@
         }
     %>
 
-    <%
-        }
-    %>
-
     <form>
         <%
             int condition = ContentDisplayService.bookList.size() % 3 >= 1 ?
@@ -171,46 +182,47 @@
             for (int i = 1; i <= condition; i++) {
                 String url = "BookSection.jsp?page=" + i;
         %>
-        <%
-            int currentPage;
-            if (request.getParameter("page") == null) {
-                currentPage = 1;
-            } else {
-                currentPage = Integer.parseInt(request.getParameter("page"));
-            }
-            if (i == currentPage) {
-        %>
-        <a style="font: bold 11px Arial;
-                    text-decoration: none;
-                    background-color: blue;
-                    color: antiquewhite;
-                    padding: 2px 6px 2px 6px;
-                    border-top: 1px solid #CCCCCC;
-                    border-right: 1px solid #333333;
-                    border-bottom: 1px solid #333333;
-                    border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%>
-        </a>
-        <%
-            } else {
-        %>
-        <a style="font: bold 11px Arial;
-                    text-decoration: none;
-                    background-color: white;
-                    color: antiquewhite;
-                    padding: 2px 6px 2px 6px;
-                    border-top: 1px solid #CCCCCC;
-                    border-right: 1px solid #333333;
-                    border-bottom: 1px solid #333333;
-                    border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%>
-        </a>
-
-        <%
-            }
-        %>
+                <%
+                    if (i == currentPage) {
+                %>
+                        <a style="font: bold 11px Arial;
+                            text-decoration: none;
+                            background-color: blue;
+                            color: antiquewhite;
+                            padding: 2px 6px 2px 6px;
+                            border-top: 1px solid #CCCCCC;
+                            border-right: 1px solid #333333;
+                            border-bottom: 1px solid #333333;
+                            border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%></a>
+                <%
+                } else {
+                %>
+                        <a style="font: bold 11px Arial;
+                            text-decoration: none;
+                            background-color: white;
+                            color: antiquewhite;
+                            padding: 2px 6px 2px 6px;
+                            border-top: 1px solid #CCCCCC;
+                            border-right: 1px solid #333333;
+                            border-bottom: 1px solid #333333;
+                            border-left: 1px solid #CCCCCC;" href="<%=url%>"><%=i%></a>
+                <%
+                    }
+                %>
         <%
             }
         %>
     </form>
+
+
+    <%
+        } else if (session.getAttribute("inputValidationError") != null){
+    %>
+        <h1>input value min length must be more than 3</h1>
+    <%
+        }
+    %>
+
 
 </div>
 
