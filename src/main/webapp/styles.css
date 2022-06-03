@@ -108,10 +108,12 @@ body {
 }
 
 .paginationButton {
+    width: 10px;
+    height: 10px;
     font: bold 11px Arial;
     text-decoration: none;
-    background-color: white;
-    color: antiquewhite;
+    background-color: antiquewhite;
+    color: black;
     padding: 2px 6px 2px 6px;
     border-top: 1px solid #CCCCCC;
     border-right: 1px solid #333333;
@@ -120,10 +122,12 @@ body {
 }
 
 .selectedPage {
+    width: 10px;
+    height: 10px;
     font: bold 11px Arial;
     text-decoration: none;
-    background-color: blue;
-    color: antiquewhite;
+    background-color: #486ca3;
+    color: black;
     padding: 2px 6px 2px 6px;
     border-top: 1px solid #CCCCCC;
     border-right: 1px solid #333333;
@@ -132,6 +136,7 @@ body {
 }
 
 .contentContainer {
+    text-align: center;
     display: block;
     margin-left: 190px;
     width: 1000px;

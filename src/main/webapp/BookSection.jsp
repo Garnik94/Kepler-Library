@@ -155,8 +155,10 @@
                 <%="Language: " + book.getLanguage()%><br>
                 <%="Year: " + book.getYear()%><br>
                 <%="Pages: " + book.getPages()%><br>
-                <%=book.getDownloadUrl()%><br>
             </div>
+            <a href="https://drive.google.com/drive/folders/149ziSQc2CgwNQhF4J9caU8JfAwwXNbIC?usp=sharing"
+               target="_blank">Download
+            </a>
             <%
                 if (user.isHasEditPermission() == 1) {
             %>
@@ -175,7 +177,6 @@
     %>
 
     </div>
-
 
     <form>
         <%
