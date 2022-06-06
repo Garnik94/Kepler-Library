@@ -20,7 +20,7 @@ public class WelcomeServlet extends HttpServlet {
         String username = request.getParameter("inputUsername");
         String password = request.getParameter("inputPassword");
         try {
-            if (new UserValidatorService().validateUser(username, password, request)) {
+            if (UserValidatorService.validateUser(username, password, request)) {
 //                session.setAttribute("username", username);
 //                session.setAttribute("password", password);
                 response.sendRedirect("Welcome.jsp");

@@ -4,6 +4,8 @@ import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import exceptions.AbsentUserException;
 import model.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class UserDAO {
@@ -37,10 +39,11 @@ public class UserDAO {
 
     public static void addNewUser(String username, String password, String email) {
         try {
+            String passwordConvertedToMD5 = md5Converter(password);
             String query = "INSERT INTO Users VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(2, passwordConvertedToMD5);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, 0);
             preparedStatement.executeUpdate();
@@ -80,6 +83,22 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private static String md5Converter(String password) {
+        StringBuilder convertPassword = new StringBuilder();
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            byte[] array = messageDigest.digest(password.getBytes());
+            for (byte b : array
+            ) {
+                convertPassword.append(b);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return new String(convertPassword);
     }
 
 }

@@ -1,13 +1,9 @@
 <%@ page import="model.User" %>
+<%@ page import="model.content.Book" %>
 <%@ page import="service.ContentDisplayService" %>
 <%@ page import="service.dao.CategoryDAO" %>
-<%@ page import="service.dao.LanguageDAO" %>
-<%@ page import="model.content.DocumentType" %>
 <%@ page import="service.dao.DocumentTypeDAO" %>
-<%@ page import="model.SearchingOption" %>
-<%@ page import="model.content.Category" %>
-<%@ page import="model.content.Language" %>
-<%@ page import="model.content.Book" %>
+<%@ page import="service.dao.LanguageDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -112,7 +108,8 @@
     <form action="sorting" method="get">
 
         <select name="sortingOption">
-            <option value="recentlyAdded">Resently aded</option>
+            <option disabled>Check sorting option</option>
+            <option value="recentlyAdded">Recently added</option>
             <option value="bookTitleUp">Title (A-Z)</option>
             <option value="bookTitleDown">Title (Z-A)</option>
             <option value="bookPageUp">Page up -> down</option>
@@ -121,31 +118,31 @@
             <option value="bookYearDown">year down -> up</option>
         </select>
 
-        <input type="submit">
+        <input type="submit" value="sort">
 
     </form>
 
     <div class="contentContainer">
 
 
-    <%
-        int currentPage;
-        if (request.getParameter("page") == null) {
-            currentPage = 1;
-        } else {
-            currentPage = Integer.parseInt(request.getParameter("page"));
-        }
-        int coefficient;
-        if (currentPage == 1) {
-            coefficient = 0;
-        } else {
-            coefficient = 10;
-        }
-        for (int i = (currentPage - 1) * coefficient; i <= (currentPage - 1) * coefficient + 10 - 1; i++) {
-    %>
-    <%
-        if (i < ContentDisplayService.bookList.size()) {
-    %>
+        <%
+            int currentPage;
+            if (request.getParameter("page") == null) {
+                currentPage = 1;
+            } else {
+                currentPage = Integer.parseInt(request.getParameter("page"));
+            }
+            int coefficient;
+            if (currentPage == 1) {
+                coefficient = 0;
+            } else {
+                coefficient = 10;
+            }
+            for (int i = (currentPage - 1) * coefficient, j = 0; i <= (currentPage - 1) * coefficient + 10 - 1; i++, j++) {
+        %>
+        <%
+            if (i < ContentDisplayService.bookList.size()) {
+        %>
         <div class="contentWindow">
             <div style="margin-top: 20px">
                 <%Book book = ContentDisplayService.bookList.get(i);%>
@@ -159,22 +156,24 @@
             <a href="https://drive.google.com/drive/folders/149ziSQc2CgwNQhF4J9caU8JfAwwXNbIC?usp=sharing"
                target="_blank">Download
             </a>
+
             <%
                 if (user.isHasEditPermission() == 1) {
+                    session.setAttribute(String.valueOf(j), book);
             %>
-            <form>
-                <input type="submit" value="Edit book">
-            </form>
+
+            <a href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>
+
             <%
                 }
             %>
         </div>
-    <%
-        }
-    %>
-    <%
-        }
-    %>
+        <%
+            }
+        %>
+        <%
+            }
+        %>
 
     </div>
 
@@ -186,17 +185,19 @@
             for (int i = 1; i <= condition; i++) {
                 String url = "BookSection.jsp?page=" + i;
         %>
-                <%
-                    if (i == currentPage) {
-                %>
-                        <a class="selectedPage" href="<%=url%>"><%=i%></a>
-                <%
-                } else {
-                %>
-                        <a class="paginationButton" href="<%=url%>"><%=i%></a>
-                <%
-                    }
-                %>
+        <%
+            if (i == currentPage) {
+        %>
+        <a class="selectedPage" href="<%=url%>"><%=i%>
+        </a>
+        <%
+        } else {
+        %>
+        <a class="paginationButton" href="<%=url%>"><%=i%>
+        </a>
+        <%
+            }
+        %>
         <%
             }
         %>
@@ -204,9 +205,9 @@
 
 
     <%
-        } else if (session.getAttribute("inputValidationError") != null){
+    } else if (session.getAttribute("inputValidationError") != null) {
     %>
-        <h1 class="errorMessageStyle">input value min length must be more than 3</h1>
+    <h1 class="errorMessageStyle">input value min length must be more than 3</h1>
     <%
         }
     %>

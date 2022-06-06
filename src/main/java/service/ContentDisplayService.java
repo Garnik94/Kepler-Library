@@ -6,6 +6,9 @@ import model.content.Category;
 import model.content.DocumentType;
 import model.content.Language;
 import service.dao.BookDAO;
+import service.dao.CategoryDAO;
+import service.dao.DocumentTypeDAO;
+import service.dao.LanguageDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,6 +37,9 @@ public class ContentDisplayService {
         filterBooksByLanguage(searchingOption.getLanguage());
         filterBooksByCategory(searchingOption.getCategory());
         filterBooksByDocumentType(searchingOption.getDocumentType());
+        filterCategories(bookList);
+        filterLanguages(bookList);
+        filterDocumentTypes(bookList);
     }
 
 
@@ -90,14 +96,14 @@ public class ContentDisplayService {
             Collections.sort(bookList, new Comparator<Book>() {
                 @Override
                 public int compare(Book o1, Book o2) {
-                    return o1.getTitle().compareTo(o2.getTitle());
+                    return o2.getTitle().compareTo(o1.getTitle());
                 }
             });
         } else if (askDesk == -1) {
             Collections.sort(bookList, new Comparator<Book>() {
                 @Override
                 public int compare(Book o1, Book o2) {
-                    return o2.getTitle().compareTo(o1.getTitle());
+                    return o1.getTitle().compareTo(o2.getTitle());
                 }
             });
         }
@@ -108,14 +114,14 @@ public class ContentDisplayService {
             Collections.sort(bookList, new Comparator<Book>() {
                 @Override
                 public int compare(Book o1, Book o2) {
-                    return o1.getPages() - o2.getPages();
+                    return o2.getPages() - o1.getPages();
                 }
             });
         } else if (askDesk == -1) {
             Collections.sort(bookList, new Comparator<Book>() {
                 @Override
                 public int compare(Book o1, Book o2) {
-                    return o2.getPages() - o1.getPages();
+                    return o1.getPages() - o2.getPages();
                 }
             });
         }
@@ -126,14 +132,14 @@ public class ContentDisplayService {
             Collections.sort(bookList, new Comparator<Book>() {
                 @Override
                 public int compare(Book o1, Book o2) {
-                    return o1.getYear() - o2.getYear();
+                    return o2.getYear() - o1.getYear();
                 }
             });
         } else if (askDesk == -1) {
             Collections.sort(bookList, new Comparator<Book>() {
                 @Override
                 public int compare(Book o1, Book o2) {
-                    return o2.getYear() - o1.getYear();
+                    return o1.getYear() - o2.getYear();
                 }
             });
         }
@@ -146,6 +152,46 @@ public class ContentDisplayService {
                 return o1.getId() - o2.getId();
             }
         });
+    }
+
+
+    public static void filterCategories(List<Book> books) {
+        List<Category> categories = CategoryDAO.getCategories();
+        Set<Category> filteredCategories = new LinkedHashSet<>();
+        for (Book book : books) {
+            for (Category category : categories) {
+                if (category.getId() == book.getCategory().getId()) {
+                    filteredCategories.add(category);
+                }
+            }
+        }
+        CategoryDAO.setCategories(new ArrayList<>(filteredCategories));
+    }
+
+    public static void filterLanguages(List<Book> books) {
+        List<Language> languages = LanguageDAO.getLanguages();
+        Set<Language> filteredLanguages = new LinkedHashSet<>();
+        for (Book book : books) {
+            for (Language language : languages) {
+                if (language.getId() == book.getLanguage().getId()) {
+                    filteredLanguages.add(language);
+                }
+            }
+        }
+        LanguageDAO.setLanguages(new ArrayList<>(filteredLanguages));
+    }
+
+    public static void filterDocumentTypes(List<Book> books) {
+        List<DocumentType> documentTypes = DocumentTypeDAO.getDocumentTypes();
+        Set<DocumentType> filterDocumentTypes = new LinkedHashSet<>();
+        for (Book book : books) {
+            for (DocumentType documentType : documentTypes) {
+                if (documentType.getId() == book.getDocumentType().getId()) {
+                    filterDocumentTypes.add(documentType);
+                }
+            }
+        }
+        DocumentTypeDAO.setDocumentTypes(new ArrayList<>(filterDocumentTypes));
     }
 
 }

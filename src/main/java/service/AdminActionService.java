@@ -29,7 +29,6 @@ public class AdminActionService {
         int pages = Integer.parseInt(request.getParameter("pages"));
         String downloadUrl = request.getParameter("downloadUrl");
         BookDAO.addNewBook(new Book(author, title, category, language, year, documentType, pages, downloadUrl));
-        ;
     }
 
     public static void addNewArticle(HttpServletRequest request) throws IOException {
@@ -66,6 +65,24 @@ public class AdminActionService {
         User user = (User) session.getAttribute("ManageableUser");
         UserDAO.forbidUser(user);
     }
+
+    public static void updateBook(Book book, HttpServletRequest request) {
+        Author author = new Author(request.getParameter("editAuthor"));
+        String title = request.getParameter("editTitle");
+        Category category = new Category(request.getParameter("editCategory"));
+        Language language = new Language(request.getParameter("editLanguage"));
+        int year = Integer.parseInt(request.getParameter("editYear"));
+        DocumentType documentType = new DocumentType(request.getParameter("editDocumentType"));
+        int pages = Integer.parseInt(request.getParameter("editPages"));
+        String downloadUrl = request.getParameter("editDownloadUrl");
+        BookDAO.updateBook(book, author, title, category, language, year, documentType, pages, downloadUrl);
+    }
+
+    public static void deleteBook(Book book) {
+        BookDAO.deleteBook(book);
+    }
+
+
 
 
 }

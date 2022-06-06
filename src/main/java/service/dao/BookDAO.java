@@ -3,8 +3,6 @@ package service.dao;
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import model.content.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,9 @@ public class BookDAO {
             language.setId(LanguageDAO.getLanguageIdByName(language));
             DocumentType documentType = new DocumentType(resultSet.getString("Document_Type_Name"));
             documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
-            Book book = new Book(new Author(resultSet.getString("Author_Name")),
+            Author author = new Author(resultSet.getString("Author_Name"));
+            author.setId(AuthorDAO.getAuthorIdByName(author));
+            Book book = new Book(author,
                     resultSet.getString("Title"),
                     category,
                     language,
@@ -41,6 +41,23 @@ public class BookDAO {
         }
         return books;
     }
+
+    public static List<Book> getBookById(int id) {
+        try {
+            String query = "SELECT * FROM Books " +
+                    "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
+                    "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
+                    "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
+                    "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE Book_Id = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, String.valueOf(id));
+            return getBooks(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
 
     public static List<Book> getBooksByTitle(String title) {
         try {
@@ -114,9 +131,40 @@ public class BookDAO {
         }
     }
 
+    public static void updateBook(Book book,
+                                  Author author,
+                                  String title,
+                                  Category category,
+                                  Language language,
+                                  int year,
+                                  DocumentType documentType,
+                                  int pages,
+                                  String downloadUrl) {
+        try {
+            category.setId(CategoryDAO.addNewCategory(category));
+            language.setId(LanguageDAO.addNewLanguage(language));
+            documentType.setId(DocumentTypeDAO.addNewDocumentType(documentType));
+            author.setId(AuthorDAO.addNewAuthor(author));
+            String query = "UPDATE Books SET Author = ?, Title = ?, Category = ?, Language = ?, Year = ?, Document_Type = ?, Pages = ?, Download_Url = ? WHERE Book_Id = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, author.getId());
+            preparedStatement.setString(2, title);
+            preparedStatement.setInt(3, category.getId());
+            preparedStatement.setInt(4, language.getId());
+            preparedStatement.setInt(5, year);
+            preparedStatement.setInt(6, documentType.getId());
+            preparedStatement.setInt(7, pages);
+            preparedStatement.setString(8, downloadUrl);
+            preparedStatement.setInt(9, book.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void deleteBook(Book book) {
         try {
-            String query = "DELETE FROM Books WHERE ID = ?";
+            String query = "DELETE FROM Books WHERE Book_Id = ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setInt(1, book.getId());
             preparedStatement.executeUpdate();

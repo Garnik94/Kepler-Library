@@ -72,6 +72,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Edit book</servlet-name>
+        <servlet-class>servlet.adminActionServlet.EditBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit book</servlet-name>
+        <url-pattern>/editBook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete book</servlet-name>
+        <servlet-class>servlet.adminActionServlet.DeleteBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete book</servlet-name>
+        <url-pattern>/deleteBook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Add new article</servlet-name>
         <servlet-class>servlet.adminActionServlet.AddArticleServlet</servlet-class>
     </servlet>
@@ -133,8 +151,6 @@
         <servlet-name>Sort content</servlet-name>
         <url-pattern>/sorting</url-pattern>
     </servlet-mapping>
-
-
 
     <servlet>
         <servlet-name>Article section</servlet-name>

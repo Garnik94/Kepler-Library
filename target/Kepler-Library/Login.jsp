@@ -25,7 +25,7 @@
         if (request.getAttribute("invalidLogin") != null &&
                 request.getAttribute("invalidLogin").equals("true")) {
     %>
-    <span class="errorMessageStyle">Username or password is wrong</span>
+        <span class="errorMessageStyle">Username or password is wrong</span>
     <%
         }
     %>

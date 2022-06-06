@@ -15,10 +15,18 @@ public class RegistrationServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
         String email = request.getParameter("email");
-        UserDAO.addNewUser(username, password, email);
-        response.sendRedirect("Login.jsp");
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        if (password.equals(confirmPassword)) {
+            UserDAO.addNewUser(username, password, email);
+            request.removeAttribute("mismatchedPasswords");
+            response.sendRedirect("Login.jsp");
+        } else {
+            request.setAttribute("mismatchedPasswords", "true");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
 }
