@@ -2,8 +2,7 @@ package servlet.adminActionServlet;
 
 import model.content.Book;
 import service.AdminActionService;
-import service.ContentDisplayService;
-import service.dao.BookDAO;
+import service.BookContentDisplayService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +20,7 @@ public class DeleteBookServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Book checkedBook = (Book) session.getAttribute("checkedBook");
         AdminActionService.deleteBook(checkedBook);
-        Iterator<Book> iterator = ContentDisplayService.bookList.iterator();
+        Iterator<Book> iterator = BookContentDisplayService.bookList.iterator();
         while (iterator.hasNext()) {
             Book book = iterator.next();
             if (book.getId() == checkedBook.getId()) {

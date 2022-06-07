@@ -4,7 +4,7 @@ import model.SearchingOption;
 import model.content.Category;
 import model.content.DocumentType;
 import model.content.Language;
-import service.ContentDisplayService;
+import service.BookContentDisplayService;
 import service.dao.CategoryDAO;
 import service.dao.DocumentTypeDAO;
 import service.dao.LanguageDAO;
@@ -64,7 +64,7 @@ public class BookSectionServlet extends HttpServlet {
                 documentType,
                 language);
         session.setAttribute("searchingOption", searchingOption);
-        ContentDisplayService.mainSearch(request);
+        BookContentDisplayService.mainSearch(request);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
         requestDispatcher.forward(request, response);
     }

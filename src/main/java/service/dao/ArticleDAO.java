@@ -1,8 +1,7 @@
 package service.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-import model.content.Article;
-import model.content.Author;
+import model.content.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,45 +16,100 @@ public class ArticleDAO {
         return DriverManager.getConnection(url);
     }
 
-    public static List<Article> getArticles(String searchParameter, String query) throws SQLException {
+    private static List<Article> getArticles(PreparedStatement preparedStatement) throws SQLException {
         List<Article> articles = new ArrayList<>();
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, searchParameter);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            Article article = new Article(
-                    AuthorDAO.getAuthorById(resultSet.getInt("Author")),
+            Category category = new Category(resultSet.getString("Category_Name"));
+            category.setId(CategoryDAO.getCategoryIdByName(category));
+            Language language = new Language(resultSet.getString("Language_Name"));
+            language.setId(LanguageDAO.getLanguageIdByName(language));
+            DocumentType documentType = new DocumentType(resultSet.getString("Document_Type_Name"));
+            documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
+            Author author = new Author(resultSet.getString("Author_Name"));
+            author.setId(AuthorDAO.getAuthorIdByName(author));
+            Journal journal = new Journal(resultSet.getString("Journal_Name"));
+            journal.setId(JournalDAO.getJournalIdByName(journal));
+            Article article = new Article(author,
                     resultSet.getString("Title"),
-                    CategoryDAO.getCategoryById(resultSet.getInt("Category")),
-                    LanguageDAO.getLanguageById(resultSet.getInt("Language")),
+                    category,
+                    language,
                     resultSet.getInt("Year"),
-                    DocumentTypeDAO.getDocumentTypeById(resultSet.getInt("Document_Type")),
-                    JournalDAO.getJournalById(resultSet.getInt("Journal")),
+                    documentType,
+                    journal,
                     resultSet.getString("Download_Url"));
-            article.setId(resultSet.getInt("ID"));
+            article.setId(resultSet.getInt("Article_Id"));
             articles.add(article);
         }
         return articles;
     }
 
-    public static List<Article> getArticlesByTitle(String title) {
+    public static List<Article> getArticlesById(int id) {
         try {
-            String query = "SELECT * FROM Articles WHERE Title = ?";
-            return getArticles(title, query);
+            String query = "SELECT * FROM Articles " +
+                    "INNER JOIN Authors ON Articles.Author = Authors.Author_Id \n" +
+                    "JOIN Categories ON Articles.Category = Categories.Category_Id\n" +
+                    "JOIN Languages ON Articles.Language = Languages.Language_Id\n" +
+                    "JOIN Document_Types ON Articles.Document_Type = Document_Types.Document_Type_Id " +
+                    "JOIN Journals ON Articles.Journal = Journals.Journal_Id " +
+                    "WHERE Article_Id = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, String.valueOf(id));
+            return getArticles(preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 
-    public static List<Article> getArticlesByAuthor(Author author) {
+
+    public static List<Article> getArticlesByTitle(String title) {
         try {
-            String query = "SELECT * FROM Articles WHERE Name = ?";
-            return getArticles(author.getAuthorName(), query);
+            String query = "SELECT * FROM Articles " +
+                    "INNER JOIN Authors ON Articles.Author = Authors.Author_Id \n" +
+                    "JOIN Categories ON Articles.Category = Categories.Category_Id\n" +
+                    "JOIN Languages ON Articles.Language = Languages.Language_Id\n" +
+                    "JOIN Document_Types ON Articles.Document_Type = Document_Types.Document_Type_Id " +
+                    "JOIN Journals ON Articles.Journal = Journals.Journal_Id " +
+                    "WHERE Article_Id = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setString(1, "%" + title + "%");
+            return getArticles(preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
+    }
+
+    public static List<Article> getArticlesByAuthor(String searchArg) {
+        List<Author> authors = AuthorDAO.getAuthorsByCoincidence(searchArg);
+        if (!authors.isEmpty()) {
+            try {
+                StringBuilder subQuery = new StringBuilder();
+                for (int i = 0; i < authors.size(); i++) {
+                    if (i == 0) {
+                        subQuery.append("Author = ?");
+                    } else {
+                        subQuery.append(" OR Author = ? ");
+                    }
+                }
+                String query = "SELECT * FROM Articles " +
+                        "INNER JOIN Authors ON Articles.Author = Authors.Author_Id \n" +
+                        "JOIN Categories ON Articles.Category = Categories.Category_Id\n" +
+                        "JOIN Languages ON Articles.Language = Languages.Language_Id\n" +
+                        "JOIN Document_Types ON Articles.Document_Type = Document_Types.Document_Type_Id " +
+                        "JOIN Journals ON Articles.Journal = Journals.Journal_Id WHERE " + subQuery;
+                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+                int i;
+                for (i = 0; i < authors.size(); i++) {
+                    preparedStatement.setInt(i + 1, authors.get(i).getId());
+                }
+                return getArticles(preparedStatement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return new ArrayList<>();
     }
 
     public static void addNewArticle(Article article) {
@@ -65,10 +119,10 @@ public class ArticleDAO {
         int languageId = LanguageDAO.addNewLanguage(article.getLanguage());
         int year = article.getYear();
         int documentTypeId = DocumentTypeDAO.addNewDocumentType(article.getDocumentType());
-        int journal = JournalDAO.addNewJournal(article.getJournal());
+        int journalId = JournalDAO.addNewJournal(article.getJournal());
         String downloadUrl = article.getDownloadUrl();
         try {
-            String query = "INSERT INTO Articles VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Books VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
             preparedStatement.setInt(1, authorId);
             preparedStatement.setString(2, title);
@@ -76,7 +130,7 @@ public class ArticleDAO {
             preparedStatement.setInt(4, languageId);
             preparedStatement.setInt(5, year);
             preparedStatement.setInt(6, documentTypeId);
-            preparedStatement.setInt(7, journal);
+            preparedStatement.setInt(7, journalId);
             preparedStatement.setString(8, downloadUrl);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -84,11 +138,43 @@ public class ArticleDAO {
         }
     }
 
-    public static void deleteArticle(Article article) {
+    public static void updateArticle(Article article,
+                                     Author author,
+                                     String title,
+                                     Category category,
+                                     Language language,
+                                     int year,
+                                     DocumentType documentType,
+                                     Journal journal,
+                                     String downloadUrl) {
         try {
-            String query = "DELETE FROM Articles WHERE ID = ?";
+            category.setId(CategoryDAO.addNewCategory(category));
+            language.setId(LanguageDAO.addNewLanguage(language));
+            documentType.setId(DocumentTypeDAO.addNewDocumentType(documentType));
+            author.setId(AuthorDAO.addNewAuthor(author));
+            journal.setId(JournalDAO.addNewJournal(journal));
+            String query = "UPDATE Articles SET Author = ?, Title = ?, Category = ?, Language = ?, Year = ?, Document_Type = ?, Journal = ?, Download_Url = ? WHERE Article_Id = ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, article.getId());
+            preparedStatement.setInt(1, author.getId());
+            preparedStatement.setString(2, title);
+            preparedStatement.setInt(3, category.getId());
+            preparedStatement.setInt(4, language.getId());
+            preparedStatement.setInt(5, year);
+            preparedStatement.setInt(6, documentType.getId());
+            preparedStatement.setInt(7, journal.getId());
+            preparedStatement.setString(8, downloadUrl);
+            preparedStatement.setInt(9, article.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteBook(Book book) {
+        try {
+            String query = "DELETE FROM Articles WHERE Article_Id = ?";
+            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, book.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

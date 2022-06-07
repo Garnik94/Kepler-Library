@@ -145,7 +145,7 @@
 
     <servlet>
         <servlet-name>Sort content</servlet-name>
-        <servlet-class>servlet.SortContentServlet</servlet-class>
+        <servlet-class>servlet.SortBookContentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Sort content</servlet-name>

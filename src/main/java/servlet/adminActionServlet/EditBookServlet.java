@@ -2,7 +2,7 @@ package servlet.adminActionServlet;
 
 import model.content.Book;
 import service.AdminActionService;
-import service.ContentDisplayService;
+import service.BookContentDisplayService;
 import service.dao.BookDAO;
 
 import javax.servlet.ServletException;
@@ -19,9 +19,9 @@ public class EditBookServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Book checkedBook = (Book) session.getAttribute("checkedBook");
         AdminActionService.updateBook(checkedBook, request);
-        for (int i = 0; i < ContentDisplayService.bookList.size(); i++) {
-            if (ContentDisplayService.bookList.get(i).getId() == checkedBook.getId()) {
-                ContentDisplayService.bookList.set(i, BookDAO.getBookById(checkedBook.getId()).get(0));
+        for (int i = 0; i < BookContentDisplayService.bookList.size(); i++) {
+            if (BookContentDisplayService.bookList.get(i).getId() == checkedBook.getId()) {
+                BookContentDisplayService.bookList.set(i, BookDAO.getBookById(checkedBook.getId()).get(0));
                 break;
             }
         }

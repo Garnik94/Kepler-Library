@@ -1,6 +1,6 @@
 <%@ page import="model.User" %>
 <%@ page import="model.content.Book" %>
-<%@ page import="service.ContentDisplayService" %>
+<%@ page import="service.BookContentDisplayService" %>
 <%@ page import="service.dao.CategoryDAO" %>
 <%@ page import="service.dao.DocumentTypeDAO" %>
 <%@ page import="service.dao.LanguageDAO" %>
@@ -141,17 +141,18 @@
             for (int i = (currentPage - 1) * coefficient, j = 0; i <= (currentPage - 1) * coefficient + 10 - 1; i++, j++) {
         %>
         <%
-            if (i < ContentDisplayService.bookList.size()) {
+            if (i < BookContentDisplayService.bookList.size()) {
         %>
         <div class="contentWindow">
             <div style="margin-top: 20px">
-                <%Book book = ContentDisplayService.bookList.get(i);%>
+                <%Book book = BookContentDisplayService.bookList.get(i);%>
                 <%=book.getAuthor()%><br>
                 <%=book.getTitle()%><br>
                 <%="Category: " + book.getCategory()%><br>
                 <%="Language: " + book.getLanguage()%><br>
                 <%="Year: " + book.getYear()%><br>
                 <%="Pages: " + book.getPages()%><br>
+                <%="Type: " + book.getDocumentType()%><br>
             </div>
             <a href="https://drive.google.com/drive/folders/149ziSQc2CgwNQhF4J9caU8JfAwwXNbIC?usp=sharing"
                target="_blank">Download
@@ -179,8 +180,8 @@
 
     <form>
         <%
-            int condition = ContentDisplayService.bookList.size() % 10 >= 1 ?
-                    ContentDisplayService.bookList.size() / 10 + 1 : ContentDisplayService.bookList.size() / 10;
+            int condition = BookContentDisplayService.bookList.size() % 10 >= 1 ?
+                    BookContentDisplayService.bookList.size() / 10 + 1 : BookContentDisplayService.bookList.size() / 10;
 
             for (int i = 1; i <= condition; i++) {
                 String url = "BookSection.jsp?page=" + i;
