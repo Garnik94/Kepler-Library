@@ -10,7 +10,7 @@
     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     response.setDateHeader("Expires", 0); // Proxies.
 
-    if (session.getAttribute("CurrentUser") == null /*|| session.getAttribute("password") == null*/) {
+    if (session.getAttribute("CurrentUser") == null) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 %>
@@ -26,9 +26,9 @@
 
 <span class="userWelcomeMessage">
         <%=
-        "Hi " + session.getAttribute("username")
+        "Hi " + session.getAttribute("CurrentUser")
         %>
-    </span>
+</span>
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
@@ -123,8 +123,6 @@
     </form>
 
     <div class="contentContainer">
-
-
         <%
             int currentPage;
             if (request.getParameter("page") == null) {
@@ -204,7 +202,6 @@
         %>
     </form>
 
-
     <%
     } else if (session.getAttribute("inputValidationError") != null) {
     %>
@@ -212,7 +209,6 @@
     <%
         }
     %>
-
 
 </div>
 

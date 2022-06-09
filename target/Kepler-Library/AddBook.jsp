@@ -17,6 +17,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<span class="userWelcomeMessage">
+        <%=
+        "Hi " + session.getAttribute("CurrentUser")
+        %>
+</span>
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>

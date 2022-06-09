@@ -1,8 +1,9 @@
 <%@ page import="model.User" %>
-<%@ page import="service.dao.UserDAO" %>
 <%@ page import="service.dao.CategoryDAO" %>
-<%@ page import="service.dao.LanguageDAO" %>
 <%@ page import="service.dao.DocumentTypeDAO" %>
+<%@ page import="service.dao.LanguageDAO" %>
+<%@ page import="service.ArticleContentDisplayService" %>
+<%@ page import="model.content.Article" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -26,9 +27,9 @@
 
 <span class="userWelcomeMessage">
         <%=
-        "Hi " + session.getAttribute("username")
+        "Hi " + session.getAttribute("CurrentUser")
         %>
-    </span>
+</span>
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
@@ -152,18 +153,18 @@
             for (int i = (currentPage - 1) * coefficient, j = 0; i <= (currentPage - 1) * coefficient + 10 - 1; i++, j++) {
         %>
         <%
-            if (i < BookContentDisplayService.bookList.size()) {
+            if (i < ArticleContentDisplayService.articleList.size()) {
         %>
         <div class="contentWindow">
             <div style="margin-top: 20px">
-                <%Book book = BookContentDisplayService.bookList.get(i);%>
-                <%=book.getAuthor()%><br>
-                <%=book.getTitle()%><br>
-                <%="Category: " + book.getCategory()%><br>
-                <%="Language: " + book.getLanguage()%><br>
-                <%="Year: " + book.getYear()%><br>
-                <%="Pages: " + book.getPages()%><br>
-                <%="Type: " + book.getDocumentType()%><br>
+                <%Article article = ArticleContentDisplayService.articleList.get(i);%>
+                <%=article.getAuthor()%><br>
+                <%=article.getTitle()%><br>
+                <%="Category: " + article.getCategory()%><br>
+                <%="Language: " + article.getLanguage()%><br>
+                <%="Year: " + article.getYear()%><br>
+                <%="Pages: " + article.getJournal()%><br>
+                <%="Type: " + article.getDocumentType()%><br>
             </div>
             <a href="https://drive.google.com/drive/folders/149ziSQc2CgwNQhF4J9caU8JfAwwXNbIC?usp=sharing"
                target="_blank">Download
@@ -171,7 +172,7 @@
 
             <%
                 if (user.isHasEditPermission() == 1) {
-                    session.setAttribute(String.valueOf(j), book);
+                    session.setAttribute(String.valueOf(j), article);
             %>
 
             <a href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>

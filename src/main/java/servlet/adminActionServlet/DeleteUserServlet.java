@@ -18,29 +18,9 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AdminActionService.deleteUser(request);
         HttpSession session = request.getSession();
-//        if (session.getAttribute("ManageableUser") != null) {
-            session.removeAttribute("ManageableUser");
-            response.sendRedirect("AdminProfile.jsp");
-//        } else if (session.getAttribute("selfDeleteUser") != null) {
-//
-//        }
+        session.removeAttribute("ManageableUser");
+        response.sendRedirect("AdminProfile.jsp");
     }
 
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.sendRedirect("AdminActions/ManageUser.jsp");
-////        HttpSession session = request.getSession();
-////        try {
-////            User user = AdminActionService.getUserFromDb(request);
-////            session.setAttribute("deletableUser", user);
-////            if(session.getAttribute("searchingUserNotFound") != null){
-////                session.removeAttribute("searchingUserNotFound");
-////            }
-////            response.sendRedirect("ManageUser.jsp");
-////        } catch (AbsentUserException e) {
-////            session.setAttribute("searchingUserNotFound", "true");
-////            response.sendRedirect("ManageUser.jsp");
-////        }
-//
-//    }
 
 }

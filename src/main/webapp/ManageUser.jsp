@@ -5,7 +5,7 @@
     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     response.setDateHeader("Expires", 0); // Proxies.
 
-    if (session.getAttribute("CurrentUser") == null /*|| session.getAttribute("password") == null*/) {
+    if (session.getAttribute("CurrentUser") == null) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 %>
@@ -19,6 +19,11 @@
 </head>
 <body>
 
+<span class="userWelcomeMessage">
+        <%=
+        "Hi " + session.getAttribute("CurrentUser")
+        %>
+</span>
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
@@ -34,7 +39,7 @@
     if (session.getAttribute("ManageableUser") != null) {
 %>
 
-<p><%= (User)(session.getAttribute("ManageableUser"))%></p>
+<p><%= (User) (session.getAttribute("ManageableUser"))%></p>
 
 <form action="permitUser" method="post">
     <input type="submit" value="Permit user">

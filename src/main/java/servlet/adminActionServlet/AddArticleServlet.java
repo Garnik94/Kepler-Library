@@ -19,7 +19,4 @@ public class AddArticleServlet extends HttpServlet {
         response.sendRedirect("AdminProfile.jsp");
     }
 
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.sendRedirect("AddArticle.jsp");
-//    }
 }

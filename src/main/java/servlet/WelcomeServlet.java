@@ -17,12 +17,14 @@ import java.io.IOException;
 public class WelcomeServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String username = request.getParameter("inputUsername");
         String password = request.getParameter("inputPassword");
         try {
             if (UserValidatorService.validateUser(username, password, request)) {
 //                session.setAttribute("username", username);
 //                session.setAttribute("password", password);
+                session.removeAttribute("searchingOption");
                 response.sendRedirect("Welcome.jsp");
             } else {
                 request.setAttribute("invalidLogin", "true");

@@ -1,5 +1,7 @@
 package servlet;
 
+import service.BookContentDisplayService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,8 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("username");
         session.removeAttribute("password");
+        session.removeAttribute("searchingOption");
+        session.removeAttribute("CurrentUser");
         if (session.getAttribute("adminMode") != null) {
             session.removeAttribute("adminMode");
         }

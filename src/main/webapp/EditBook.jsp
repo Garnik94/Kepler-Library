@@ -1,11 +1,14 @@
-<%@ page import="model.content.Book" %><%--
-  Created by IntelliJ IDEA.
-  User: sky
-  Date: 04.06.2022
-  Time: 10:27
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="model.content.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    response.setDateHeader("Expires", 0); // Proxies.
+
+    if (session.getAttribute("CurrentUser") == null) {
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
+    }
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -15,6 +18,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<span class="userWelcomeMessage">
+        <%=
+        "Hi " + session.getAttribute("CurrentUser")
+        %>
+</span>
+<form action="logout" method="post">
+    <input type="submit" value="Logout">
+</form>
 
     <%
         int currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));

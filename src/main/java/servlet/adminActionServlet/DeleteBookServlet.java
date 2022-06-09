@@ -28,10 +28,8 @@ public class DeleteBookServlet extends HttpServlet {
                 break;
             }
         }
+        session.removeAttribute("checkedBook");
         response.sendRedirect("BookSection.jsp");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }

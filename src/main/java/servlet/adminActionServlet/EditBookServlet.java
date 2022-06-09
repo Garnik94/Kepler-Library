@@ -25,6 +25,7 @@ public class EditBookServlet extends HttpServlet {
                 break;
             }
         }
+        session.removeAttribute("checkedBook");
         response.sendRedirect("BookSection.jsp");
     }
 
