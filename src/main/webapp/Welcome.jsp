@@ -29,11 +29,15 @@
         "Hi " + user
         %>
     </span>
+
+    <form action="Welcome.jsp">
+        <input type="submit" value="Home">
+    </form>
+
     <form action="logout" method="post">
         <input type="submit" value="Logout">
     </form>
     <%
-
         if (user.isHasEditPermission() == 1) {
     %>
     <form action="AdminProfile.jsp">
@@ -56,7 +60,7 @@
     <span class="textStyle">Choose section</span><br>
     <form>
         <input class="bookSectionButtonStyle" formaction="BookSection.jsp" formmethod="get" type="submit" value="Books"><br>
-        <input class="articleSectionButtonStyle" formaction="articles" formmethod="post" type="submit" value="Articles"><br>
+        <input class="articleSectionButtonStyle" formaction="ArticleSection.jsp" formmethod="get" type="submit" value="Articles"><br>
     </form>
 </body>
 </html>

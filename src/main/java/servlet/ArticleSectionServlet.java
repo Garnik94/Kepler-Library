@@ -58,7 +58,7 @@ public class ArticleSectionServlet extends HttpServlet {
             journal = new Journal(request.getParameter("selectedJournal"));
             journal.setId(JournalDAO.getJournalIdByName(journal));
         }
-        SearchingOption searchingOption = new SearchingOption(request.getParameter("searchBook"),
+        SearchingOption searchingOption = new SearchingOption(request.getParameter("searchArticle"),
                 request.getParameter("searchBy"),
                 category,
                 documentType,
@@ -66,7 +66,7 @@ public class ArticleSectionServlet extends HttpServlet {
         searchingOption.setJournal(journal);
         session.setAttribute("searchingOption", searchingOption);
         ArticleContentDisplayService.mainSearch(request);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArticleSection.jsp");
         requestDispatcher.forward(request, response);
     }
 

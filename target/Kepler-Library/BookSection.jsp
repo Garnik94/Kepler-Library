@@ -29,9 +29,15 @@
         "Hi " + session.getAttribute("CurrentUser")
         %>
 </span>
+
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
+
+<form action="Welcome.jsp">
+    <input type="submit" value="Home">
+</form>
+
 <%
     User user = (User) session.getAttribute("CurrentUser");
     if (user.isHasEditPermission() == 1) { %>

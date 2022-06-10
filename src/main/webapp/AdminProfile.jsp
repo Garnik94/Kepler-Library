@@ -30,9 +30,7 @@
 
 <form>
     <input type="submit" formaction="AddBook.jsp" formmethod="get" value="Add new book">
-    <input type="submit" value="Delete book">
     <input type="submit" formaction="AddArticle.jsp" formmethod="get" value="Add new article">
-    <input type="submit" value="Delete article">
     <input type="submit" formaction="ManageUser.jsp" formmethod="get" value="Manage user">
 </form>
 </body>

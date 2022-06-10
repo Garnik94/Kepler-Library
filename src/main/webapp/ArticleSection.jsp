@@ -4,13 +4,14 @@
 <%@ page import="service.dao.LanguageDAO" %>
 <%@ page import="service.ArticleContentDisplayService" %>
 <%@ page import="model.content.Article" %>
+<%@ page import="service.dao.JournalDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     response.setDateHeader("Expires", 0); // Proxies.
 
-    if (session.getAttribute("username") == null || session.getAttribute("password") == null) {
+    if (session.getAttribute("CurrentUser") == null) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 %>
@@ -24,15 +25,20 @@
 </head>
 <body>
 
-
 <span class="userWelcomeMessage">
         <%=
         "Hi " + session.getAttribute("CurrentUser")
         %>
 </span>
+
+<form action="Welcome.jsp">
+    <input type="submit" value="Home">
+</form>
+
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
+
 <%
     User user = (User) session.getAttribute("CurrentUser");
     if (user.isHasEditPermission() == 1) { %>
@@ -46,7 +52,7 @@
         <form action="articles" method="get">
             <span>Search</span><br>
             <label>
-                <input class="inputAreaStyle" name="searchBook" type="text">
+                <input class="inputAreaStyle" name="searchArticle" type="text">
             </label><br>
             <label>By author<br>
                 <select name="searchBy">
@@ -97,9 +103,9 @@
                 <select name="selectedJournal">
                     <option value="blankJournal" disabled selected>Select Document type</option>
                     <%
-                        for (int i = 0; i < DocumentTypeDAO.getDocumentTypes().size(); i++) {
+                        for (int i = 0; i < JournalDAO.getJournals().size(); i++) {
                     %>
-                    <option value="<%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>"><%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>
+                    <option value="<%=JournalDAO.getJournals().get(i).getJournal()%>"><%=JournalDAO.getJournals().get(i).getJournal()%>
                     </option>
                     <%
                         }
@@ -136,7 +142,6 @@
 
     <div class="contentContainer">
 
-
         <%
             int currentPage;
             if (request.getParameter("page") == null) {
@@ -163,7 +168,7 @@
                 <%="Category: " + article.getCategory()%><br>
                 <%="Language: " + article.getLanguage()%><br>
                 <%="Year: " + article.getYear()%><br>
-                <%="Pages: " + article.getJournal()%><br>
+                <%="Journal: " + article.getJournal()%><br>
                 <%="Type: " + article.getDocumentType()%><br>
             </div>
             <a href="https://drive.google.com/drive/folders/149ziSQc2CgwNQhF4J9caU8JfAwwXNbIC?usp=sharing"
@@ -192,8 +197,8 @@
 
     <form>
         <%
-            int condition = BookContentDisplayService.bookList.size() % 10 >= 1 ?
-                    BookContentDisplayService.bookList.size() / 10 + 1 : BookContentDisplayService.bookList.size() / 10;
+            int condition = ArticleContentDisplayService.articleList.size() % 10 >= 1 ?
+                    ArticleContentDisplayService.articleList.size() / 10 + 1 : ArticleContentDisplayService.articleList.size() / 10;
 
             for (int i = 1; i <= condition; i++) {
                 String url = "BookSection.jsp?page=" + i;

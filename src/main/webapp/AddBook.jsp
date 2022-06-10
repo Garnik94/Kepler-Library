@@ -23,6 +23,11 @@
         "Hi " + session.getAttribute("CurrentUser")
         %>
 </span>
+
+<form action="Welcome.jsp">
+    <input type="submit" value="Home">
+</form>
+
 <form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
