@@ -29,6 +29,7 @@ public class DeleteBookServlet extends HttpServlet {
             }
         }
         session.removeAttribute("checkedBook");
+        session.removeAttribute("needToConfirm");
         response.sendRedirect("BookSection.jsp");
     }
 

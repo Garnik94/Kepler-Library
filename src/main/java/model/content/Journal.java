@@ -1,20 +1,20 @@
 package model.content;
 
-public class Journal {
+public class Journal implements Comparable<Journal> {
 
     private int Id;
-    private String journal;
+    private String journalName;
 
     public Journal(String journal) {
-        this.journal = journal;
+        this.journalName = journal;
     }
 
-    public String getJournal() {
-        return journal;
+    public String getJournalName() {
+        return journalName;
     }
 
-    public void setJournal(String journal) {
-        this.journal = journal;
+    public void setJournalName(String journalName) {
+        this.journalName = journalName;
     }
 
     public int getId() {
@@ -25,8 +25,14 @@ public class Journal {
         Id = id;
     }
 
+    public int compareTo(Journal journal) {
+        return this.journalName.compareTo(journal.getJournalName());
+
+    }
+
     @Override
     public String toString() {
-        return journal;
+        return journalName;
     }
+
 }

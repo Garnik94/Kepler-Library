@@ -74,15 +74,14 @@
         <input  type="submit" value="Edit book">
     </form>
 
-    <form action="deleteBook" method="post">
-        <input type="submit" value="Delete book">
+    <form>
+        <input type="submit" value="Delete book" onclick="<%session.setAttribute("needToConfirm", true);%>">
     </form>
 
-    <h1>
-    <%=
-       editableBook
-    %>
-    </h1>
+    <% if (session.getAttribute("needToConfirm") != null) {%>
+        <jsp:include page="ConfirmDeleteBook.jsp"/>
+    <% } %>
+
 
 </body>
 </html>

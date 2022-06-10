@@ -105,7 +105,7 @@
                     <%
                         for (int i = 0; i < JournalDAO.getJournals().size(); i++) {
                     %>
-                    <option value="<%=JournalDAO.getJournals().get(i).getJournal()%>"><%=JournalDAO.getJournals().get(i).getJournal()%>
+                    <option value="<%=JournalDAO.getJournals().get(i).getJournalName()%>"><%=JournalDAO.getJournals().get(i).getJournalName()%>
                     </option>
                     <%
                         }

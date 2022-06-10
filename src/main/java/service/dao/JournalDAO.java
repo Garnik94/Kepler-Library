@@ -1,10 +1,7 @@
 package service.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-import model.content.Category;
-import model.content.DocumentType;
 import model.content.Journal;
-import model.content.Language;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,7 +69,7 @@ public class JournalDAO {
 
     public static int getJournalIdByName(Journal journal) {
         for (Journal currentJournal : journals) {
-            if (currentJournal.getJournal().equals(journal.getJournal())) {
+            if (currentJournal.getJournalName().equals(journal.getJournalName())) {
                 return currentJournal.getId();
             }
         }
@@ -96,7 +93,7 @@ public class JournalDAO {
         try {
             String query = "INSERT INTO Journals VALUES (?)";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, journal.getJournal());
+            preparedStatement.setString(1, journal.getJournalName());
             preparedStatement.executeUpdate();
             setJournals(getAllJournals());
             journalId =  getJournalIdByName(journal);

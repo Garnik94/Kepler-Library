@@ -18,7 +18,6 @@ public class SortBookContentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String sortingOption = request.getParameter("sortingOption");
-//        int currentPage = Integer.parseInt(request.getParameter("page"));
         if (sortingOption.equals("recentlyAdded")){
             BookContentDisplayService.sortBooksByRecentlyAdded();
         }

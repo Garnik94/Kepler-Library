@@ -14,6 +14,8 @@ import static service.dao.DocumentTypeDAO.getAllDocumentTypes;
 import static service.dao.DocumentTypeDAO.setDocumentTypes;
 import static service.dao.LanguageDAO.getAllLanguages;
 import static service.dao.LanguageDAO.setLanguages;
+import static service.dao.JournalDAO.getAllJournals;
+import static service.dao.JournalDAO.setJournals;
 
 public class ArticleContentDisplayService {
 
@@ -26,6 +28,7 @@ public class ArticleContentDisplayService {
         setCategories(getAllCategories());
         setLanguages(getAllLanguages());
         setDocumentTypes(getAllDocumentTypes());
+        setJournals(getAllJournals());
         if (searchingOption.getSearchBy().equals("Author")) {
             searchArticlesByAuthor(searchingOption.getInputSearchOption());
         } else if (searchingOption.getSearchBy().equals("Title")) {
@@ -34,9 +37,11 @@ public class ArticleContentDisplayService {
         filterArticlesByLanguage(searchingOption.getLanguage());
         filterArticlesByCategory(searchingOption.getCategory());
         filterArticlesByDocumentType(searchingOption.getDocumentType());
+        filterArticlesByJournal(searchingOption.getJournal());
         filterCategories(articleList);
         filterLanguages(articleList);
         filterDocumentTypes(articleList);
+        filterJournals(articleList);
     }
 
     public static void searchArticlesByAuthor(String author) {
@@ -83,6 +88,18 @@ public class ArticleContentDisplayService {
         }
     }
 
+    public static void filterArticlesByJournal(Journal journal) {
+        if (journal != null) {
+            Iterator<Article> iterator = articleList.iterator();
+            while (iterator.hasNext()) {
+                Article article = iterator.next();
+                if (article.getJournal().getId() != journal.getId()) {
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
     public static void sortArticlesByTitle(int askDesk) {
         if (askDesk == 1) {
             Collections.sort(articleList, new Comparator<Article>() {
@@ -114,6 +131,24 @@ public class ArticleContentDisplayService {
                 @Override
                 public int compare(Article o1, Article o2) {
                     return o1.getYear() - o2.getYear();
+                }
+            });
+        }
+    }
+
+    public static void sortArticlesByJournal(int askDesk) {
+        if (askDesk == 1) {
+            Collections.sort(articleList, new Comparator<Article>() {
+                @Override
+                public int compare(Article o1, Article o2) {
+                    return o2.getJournal().compareTo(o1.getJournal());
+                }
+            });
+        } else if (askDesk == -1) {
+            Collections.sort(articleList, new Comparator<Article>() {
+                @Override
+                public int compare(Article o1, Article o2) {
+                    return o1.getJournal().compareTo(o2.getJournal());
                 }
             });
         }
@@ -166,5 +201,18 @@ public class ArticleContentDisplayService {
             }
         }
         DocumentTypeDAO.setDocumentTypes(new ArrayList<>(filterDocumentTypes));
+    }
+
+    public static void filterJournals(List<Article> articles) {
+        List<Journal> journals = JournalDAO.getJournals();
+        Set<Journal> filteredJournals = new LinkedHashSet<>();
+        for (Article article : articles) {
+            for (Journal journal : journals) {
+                if (journal.getId() == article.getJournal().getId()) {
+                    filteredJournals.add(journal);
+                }
+            }
+        }
+        JournalDAO.setJournals(new ArrayList<>(filteredJournals));
     }
 }

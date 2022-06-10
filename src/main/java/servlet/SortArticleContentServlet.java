@@ -1,6 +1,6 @@
 package servlet;
 
-import service.BookContentDisplayService;
+import service.ArticleContentDisplayService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,27 +18,25 @@ public class SortArticleContentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String sortingOption = request.getParameter("sortingOption");
-//        int currentPage = Integer.parseInt(request.getParameter("page"));
         if (sortingOption.equals("recentlyAdded")){
-            BookContentDisplayService.sortBooksByRecentlyAdded();
+            ArticleContentDisplayService.sortArticlesByRecentlyAdded();
         }
         if (sortingOption.equals("bookTitleUp")){
-            BookContentDisplayService.sortBooksByTitle(1);
+            ArticleContentDisplayService.sortArticlesByTitle(1);
         } else if (sortingOption.equals("bookTitleDown")){
-            BookContentDisplayService.sortBooksByTitle(-1);
+            ArticleContentDisplayService.sortArticlesByTitle(-1);
         }
         if (sortingOption.equals("bookPageUp")){
-            BookContentDisplayService.sortBooksByPage(1);
+            ArticleContentDisplayService.sortArticlesByJournal(1);
         } else if (sortingOption.equals("bookPageDown")){
-            BookContentDisplayService.sortBooksByPage(-1);
+            ArticleContentDisplayService.sortArticlesByJournal(-1);
         }
-
         if (sortingOption.equals("bookYearUp")){
-            BookContentDisplayService.sortBooksByYear(1);
+            ArticleContentDisplayService.sortArticlesByYear(1);
         } else if (sortingOption.equals("bookYearDown")){
-            BookContentDisplayService.sortBooksByYear(-1);
+            ArticleContentDisplayService.sortArticlesByYear(-1);
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("ArticleSection.jsp");
         requestDispatcher.forward(request, response);
     }
 
