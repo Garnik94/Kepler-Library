@@ -53,51 +53,6 @@
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>Admin Profile</servlet-name>-->
-<!--        <servlet-class>servlet.adminActionServlet.AdminProfileServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>Admin Profile</servlet-name>-->
-<!--        <url-pattern>/adminProfile</url-pattern>-->
-<!--    </servlet-mapping>-->
-
-    <servlet>
-        <servlet-name>Add new book</servlet-name>
-        <servlet-class>servlet.adminActionServlet.AddBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Add new book</servlet-name>
-        <url-pattern>/addNewBook</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Edit book</servlet-name>
-        <servlet-class>servlet.adminActionServlet.EditBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Edit book</servlet-name>
-        <url-pattern>/editBook</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Delete book</servlet-name>
-        <servlet-class>servlet.adminActionServlet.DeleteBookServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Delete book</servlet-name>
-        <url-pattern>/deleteBook</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Add new article</servlet-name>
-        <servlet-class>servlet.adminActionServlet.AddArticleServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Add new article</servlet-name>
-        <url-pattern>/addNewArticle</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>Search manageable user</servlet-name>
         <servlet-class>servlet.adminActionServlet.SearchManageableUserServlet</servlet-class>
@@ -144,13 +99,42 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>Sort content</servlet-name>
+        <servlet-name>Add new book</servlet-name>
+        <servlet-class>servlet.adminActionServlet.AddBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Add new book</servlet-name>
+        <url-pattern>/addNewBook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Edit book</servlet-name>
+        <servlet-class>servlet.adminActionServlet.EditBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit book</servlet-name>
+        <url-pattern>/editBook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete book</servlet-name>
+        <servlet-class>servlet.adminActionServlet.DeleteBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete book</servlet-name>
+        <url-pattern>/deleteBook</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Sort book content</servlet-name>
         <servlet-class>servlet.SortBookContentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Sort content</servlet-name>
-        <url-pattern>/sorting</url-pattern>
+        <servlet-name>Sort book content</servlet-name>
+        <url-pattern>/sortBooks</url-pattern>
     </servlet-mapping>
+
+
 
     <servlet>
         <servlet-name>Article section</servlet-name>
@@ -159,6 +143,42 @@
     <servlet-mapping>
         <servlet-name>Article section</servlet-name>
         <url-pattern>/articles</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Add new article</servlet-name>
+        <servlet-class>servlet.adminActionServlet.AddArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Add new article</servlet-name>
+        <url-pattern>/addNewArticle</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Edit article</servlet-name>
+        <servlet-class>servlet.adminActionServlet.EditArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit article</servlet-name>
+        <url-pattern>/editArticle</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete article</servlet-name>
+        <servlet-class>servlet.adminActionServlet.DeleteArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete article</servlet-name>
+        <url-pattern>/deleteArticle</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Sort article content</servlet-name>
+        <servlet-class>servlet.SortArticleContentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Sort article content</servlet-name>
+        <url-pattern>/sortArticles</url-pattern>
     </servlet-mapping>
 
     <error-page>

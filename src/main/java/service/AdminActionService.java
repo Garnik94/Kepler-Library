@@ -80,8 +80,24 @@ public class AdminActionService {
         BookDAO.updateBook(book, author, title, category, language, year, documentType, pages, downloadUrl);
     }
 
+    public static void updateArticle(Article article, HttpServletRequest request) {
+        Author author = new Author(request.getParameter("editAuthor"));
+        String title = request.getParameter("editTitle");
+        Category category = new Category(request.getParameter("editCategory"));
+        Language language = new Language(request.getParameter("editLanguage"));
+        int year = Integer.parseInt(request.getParameter("editYear"));
+        DocumentType documentType = new DocumentType(request.getParameter("editDocumentType"));
+        Journal journal = new Journal(request.getParameter("editJournal"));
+        String downloadUrl = request.getParameter("editDownloadUrl");
+        ArticleDAO.updateArticle(article, author, title, category, language, year, documentType, journal, downloadUrl);
+    }
+
     public static void deleteBook(Book book) {
         BookDAO.deleteBook(book);
+    }
+
+    public static void deleteArticle(Article article) {
+        ArticleDAO.deleteArticle(article);
     }
 
 

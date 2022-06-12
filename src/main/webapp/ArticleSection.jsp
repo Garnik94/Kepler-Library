@@ -31,7 +31,7 @@
         %>
 </span>
 
-<form action="Welcome.jsp">
+<form action="welcome" method="get">
     <input type="submit" value="Home">
 </form>
 
@@ -125,15 +125,15 @@
         if (session.getAttribute("searchingOption") != null && session.getAttribute("inputValidationError") == null) {
     %>
 
-    <form action="sorting" method="get">
+    <form action="sortArticles" method="get">
 
         <select name="sortingOption">
             <option disabled>Check sorting option</option>
             <option value="recentlyAdded">Recently added</option>
-            <option value="bookTitleUp">Title (A-Z)</option>
-            <option value="bookTitleDown">Title (Z-A)</option>
-            <option value="bookYearUp">year up -> down</option>
-            <option value="bookYearDown">year down -> up</option>
+            <option value="articleTitleUp">Title (A-Z)</option>
+            <option value="articleTitleDown">Title (Z-A)</option>
+            <option value="articleYearUp">year up -> down</option>
+            <option value="articleYearDown">year down -> up</option>
         </select>
 
         <input type="submit" value="sort">
@@ -180,7 +180,7 @@
                     session.setAttribute(String.valueOf(j), article);
             %>
 
-            <a href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>
+            <a href="EditArticle.jsp?editableArticle=<%=i%>">Edit article</a>
 
             <%
                 }
@@ -201,7 +201,7 @@
                     ArticleContentDisplayService.articleList.size() / 10 + 1 : ArticleContentDisplayService.articleList.size() / 10;
 
             for (int i = 1; i <= condition; i++) {
-                String url = "BookSection.jsp?page=" + i;
+                String url = "ArticleSection.jsp?page=" + i;
         %>
         <%
             if (i == currentPage) {

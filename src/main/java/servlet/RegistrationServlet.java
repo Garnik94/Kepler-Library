@@ -18,13 +18,26 @@ public class RegistrationServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-        if (password.equals(confirmPassword)) {
-            UserDAO.addNewUser(username, password, email);
-            request.removeAttribute("mismatchedPasswords");
-            response.sendRedirect("Login.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
+        if ((!username.isEmpty() ||
+                !email.isEmpty() ||
+                !password.isEmpty() ||
+                !confirmPassword.isEmpty()) &&
+                password.equals(confirmPassword)) {
+            boolean isUserSuccessfullyAdded = UserDAO.addNewUser(username, password, email);
+            if (isUserSuccessfullyAdded) {
+                request.removeAttribute("MismatchedPasswords");
+                request.removeAttribute("RequiredInputError");
+                response.sendRedirect("Login.jsp");
+            } else {
+                request.setAttribute("UserIsAlreadyExists", "true");
+                requestDispatcher.forward(request, response);
+            }
+        } else if (!password.equals(confirmPassword)) {
+            request.setAttribute("MismatchedPasswords", "true");
+            requestDispatcher.forward(request, response);
         } else {
-            request.setAttribute("mismatchedPasswords", "true");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
+            request.setAttribute("RequiredInputError", "true");
             requestDispatcher.forward(request, response);
         }
     }

@@ -38,17 +38,12 @@ public class WelcomeServlet extends HttpServlet {
         }
     }
 
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        if ((session.getAttribute("username") == null || session.getAttribute("password") == null)) {
-////            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-////            rd.forward(request, response);
-//            response.sendRedirect("Login.jsp");
-//        } else {
-////            RequestDispatcher rd = request.getRequestDispatcher("Welcome.jsp");
-////            rd.forward(request, response);
-//            response.sendRedirect("Welcome.jsp");
-//        }
-//    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.removeAttribute("ConfirmDeleteBook");
+        session.removeAttribute("ConfirmEditBook");
+        response.sendRedirect("Welcome.jsp");
+
+    }
 
 }

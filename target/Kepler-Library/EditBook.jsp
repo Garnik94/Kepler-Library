@@ -25,7 +25,7 @@
         %>
 </span>
 
-<form action="Welcome.jsp">
+<form action="welcome" method="get">
     <input type="submit" value="Home">
 </form>
 
@@ -34,7 +34,10 @@
 </form>
 
     <%
-        int currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
+        int currentEditableBookIndex = 0;
+        if (request.getParameter("editableBook") != null) {
+            currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
+        }
         Book editableBook = (Book) session.getAttribute(String.valueOf(currentEditableBookIndex));
         session.setAttribute("checkedBook", editableBook);
     %>
@@ -74,12 +77,36 @@
         <input  type="submit" value="Edit book">
     </form>
 
-    <form>
-        <input type="submit" value="Delete book" onclick="<%session.setAttribute("needToConfirm", true);%>">
+    <form action="deleteBook" method="post">
+        <input type="submit" value="Delete book">
     </form>
 
-    <% if (session.getAttribute("needToConfirm") != null) {%>
-        <jsp:include page="ConfirmDeleteBook.jsp"/>
+    <% if (session.getAttribute("ConfirmDeleteBook") != null) {%>
+<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
+            <span class="errorMessageStyle">Are you really going to delete book</span>
+
+            <form>
+                <label>
+                    <input type="submit" formaction="deleteBook?confirmDeleteBook=yes" formmethod="post" value="Yes">
+                </label>
+                <label>
+                    <input type="submit" formaction="deleteBook?confirmDeleteBook=no" formmethod="post" value="No">
+                </label>
+            </form>
+    <% } %>
+
+    <% if (session.getAttribute("ConfirmEditBook") != null) {%>
+<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
+            <span class="errorMessageStyle">Are you really going to edit book</span>
+
+            <form>
+                <label>
+                    <input type="submit" formaction="editBook?confirmEditBook=yes" formmethod="post" value="Yes">
+                </label>
+                <label>
+                    <input type="submit" formaction="editBook?confirmEditBook=no" formmethod="post" value="No">
+                </label>
+            </form>
     <% } %>
 
 

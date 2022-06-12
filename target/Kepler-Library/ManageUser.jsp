@@ -25,7 +25,7 @@
         %>
 </span>
 
-<form action="Welcome.jsp">
+<form action="welcome" method="get">
     <input type="submit" value="Home">
 </form>
 

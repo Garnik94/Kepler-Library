@@ -30,12 +30,12 @@
         %>
 </span>
 
-<form action="logout" method="post">
-    <input type="submit" value="Logout">
+<form action="welcome" method="get">
+    <input type="submit" value="Home">
 </form>
 
-<form action="Welcome.jsp">
-    <input type="submit" value="Home">
+<form action="logout" method="post">
+    <input type="submit" value="Logout">
 </form>
 
 <%
@@ -49,11 +49,11 @@
 <div class="bigContainer">
     <div class="bigContainer">
         <form action="books" method="get">
-            <span>Search</span><br>
+            <span class="textStyle">Search</span><br>
             <label>
                 <input class="inputAreaStyle" name="searchBook" type="text">
             </label><br>
-            <label>By author<br>
+            <label><br>
                 <select name="searchBy">
                     <option>Author</option>
                     <option>Title</option>
@@ -111,7 +111,7 @@
         if (session.getAttribute("searchingOption") != null && session.getAttribute("inputValidationError") == null) {
     %>
 
-    <form action="sorting" method="get">
+    <form action="sortBooks" method="get">
 
         <select name="sortingOption">
             <option disabled>Check sorting option</option>

@@ -4,6 +4,8 @@ import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import exceptions.AbsentUserException;
 import model.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -37,18 +39,26 @@ public class UserDAO {
         throw new AbsentUserException();
     }
 
-    public static void addNewUser(String username, String password, String email) {
+    public static boolean addNewUser(String username,
+                                  String password,
+                                  String email) {
         try {
-            String passwordConvertedToMD5 = md5Converter(password);
-            String query = "INSERT INTO Users VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, passwordConvertedToMD5);
-            preparedStatement.setString(3, email);
-            preparedStatement.setInt(4, 0);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            getUser(new User(username));
+            return false;
+        } catch (AbsentUserException e) {
+            try {
+                String passwordConvertedToMD5 = md5Converter(password);
+                String query = "INSERT INTO Users VALUES (?, ?, ?, ?)";
+                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, passwordConvertedToMD5);
+                preparedStatement.setString(3, email);
+                preparedStatement.setInt(4, 0);
+                preparedStatement.executeUpdate();
+                return true;
+            } catch (SQLException e1){
+                return false;
+            }
         }
     }
 
@@ -84,7 +94,6 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-
 
     private static String md5Converter(String password) {
         StringBuilder convertPassword = new StringBuilder();

@@ -170,11 +170,11 @@ public class ArticleDAO {
         }
     }
 
-    public static void deleteBook(Book book) {
+    public static void deleteArticle(Article article) {
         try {
             String query = "DELETE FROM Articles WHERE Article_Id = ?";
             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, book.getId());
+            preparedStatement.setInt(1, article.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

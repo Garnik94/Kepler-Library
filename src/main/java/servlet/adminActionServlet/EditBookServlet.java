@@ -17,16 +17,32 @@ import java.io.IOException;
 public class EditBookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Book checkedBook = (Book) session.getAttribute("checkedBook");
-        AdminActionService.updateBook(checkedBook, request);
-        for (int i = 0; i < BookContentDisplayService.bookList.size(); i++) {
-            if (BookContentDisplayService.bookList.get(i).getId() == checkedBook.getId()) {
-                BookContentDisplayService.bookList.set(i, BookDAO.getBookById(checkedBook.getId()).get(0));
-                break;
+        if (session.getAttribute("ConfirmEditBook") == null) {
+            session.setAttribute("ConfirmEditBook", true);
+            session.removeAttribute("ConfirmDeleteBook");
+            response.sendRedirect("EditBook.jsp");
+        } else {
+            if (request.getParameter("confirmEditBook") != null &&
+                    request.getParameter("confirmEditBook").equals("yes")) {
+                Book checkedBook = (Book) session.getAttribute("checkedBook");
+                AdminActionService.updateBook(checkedBook, request);
+                for (int i = 0; i < BookContentDisplayService.bookList.size(); i++) {
+                    if (BookContentDisplayService.bookList.get(i).getId() == checkedBook.getId()) {
+                        BookContentDisplayService.bookList.set(i, BookDAO.getBookById(checkedBook.getId()).get(0));
+                        break;
+                    }
+                }
+                session.removeAttribute("checkedBook");
+                session.removeAttribute("ConfirmEditBook");
+                response.sendRedirect("BookSection.jsp");
+            } else if (request.getParameter("confirmEditBook") != null &&
+                    request.getParameter("confirmEditBook").equals("no")){
+                session.removeAttribute("ConfirmEditBook");
+                response.sendRedirect("EditBook.jsp");
+            } else {
+                response.sendRedirect("EditBook.jsp");
             }
         }
-        session.removeAttribute("checkedBook");
-        response.sendRedirect("BookSection.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
