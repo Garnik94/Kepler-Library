@@ -1,7 +1,6 @@
 package servlet;
 
 import exceptions.AbsentUserException;
-import model.User;
 import service.UserValidatorService;
 
 import javax.servlet.RequestDispatcher;
@@ -22,19 +21,19 @@ public class WelcomeServlet extends HttpServlet {
         String password = request.getParameter("inputPassword");
         try {
             if (UserValidatorService.validateUser(username, password, request)) {
-//                session.setAttribute("username", username);
-//                session.setAttribute("password", password);
                 session.removeAttribute("searchingOption");
-                response.sendRedirect("Welcome.jsp");
+                response.sendRedirect("BookSection.jsp");
             } else {
-                request.setAttribute("invalidLogin", "true");
-                RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-                rd.forward(request, response);
+                session.setAttribute("invalidLogin", "true");
+                response.sendRedirect("Login.jsp");
+//                RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+//                rd.forward(request, response);
             }
         } catch (AbsentUserException e) {
-            request.setAttribute("invalidLogin", "true");
-            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-            rd.forward(request, response);
+            session.setAttribute("invalidLogin", "true");
+            response.sendRedirect("Login.jsp");
+//            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
+//            rd.forward(request, response);
         }
     }
 
@@ -42,7 +41,7 @@ public class WelcomeServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("ConfirmDeleteBook");
         session.removeAttribute("ConfirmEditBook");
-        response.sendRedirect("Welcome.jsp");
+        response.sendRedirect("BookSection.jsp");
 
     }
 

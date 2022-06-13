@@ -1,0 +1,180 @@
+/*body {*/
+/*    !*background-image: url('graphic/mainWallpaper.jpg');*!*/
+/*    !*background-image: url('../graphic/beautiful-arrangement-different-books.jpg');*!*/
+/*    background-image: url('../graphic/top-view-different-books-arrangement.jpg');*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*    text-align: center;*/
+/*}*/
+
+.mainPageBackground{
+    background-image: url('../graphic/beautiful-arrangement-different-books.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginPage {
+    margin-left: 50px;
+    text-align: center;
+    width: 600px;
+    height: 300px;
+}
+
+.standardPageBody {
+    background-image: url('../graphic/top-view-different-books-arrangement.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+}
+
+.mainLabel {
+    text-align: center;
+    text-shadow: -5px 0 #ffffff, 0 5px #fffafa, 5px 0 #ffffff, 0 -5px #fffcfc;
+    font-size: 50px;
+    color: #000000;
+    font-family: cursive;
+    letter-spacing: 10px;
+}
+
+.formDivStyle {
+    margin-top: 100px;
+}
+
+.textStyle {
+    text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+    color: black;
+    font-size: x-large;
+    font-family: cursive;
+    letter-spacing: 1px;
+}
+
+.inputAreaStyle {
+    text-align: center;
+    padding-left: 10px;
+    font-size: medium;
+    font-family: cursive;
+    border-color: black;
+    border-radius: 50px;
+    height: 30px;
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.loginButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 50px;
+    width: 220px;
+    height: 40px;
+    background: rgba(50, 205, 50, 0.68);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: medium;
+    font-family: cursive;
+    margin-bottom: 10px;
+}
+
+.registrationButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 50px;
+    width: 220px;
+    height: 40px;
+    background: rgba(65, 105, 225, 0.88);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: medium;
+    font-family: cursive;
+}
+
+.bookSectionButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 20px;
+    width: 220px;
+    height: 100px;
+    background: rgba(37, 255, 0, 0.88);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: xx-large;
+    font-family: cursive;
+    margin-top: 20px;
+}
+
+.articleSectionButtonStyle {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border-radius: 20px;
+    width: 220px;
+    height: 100px;
+    background: rgba(0, 255, 175, 0.88);
+    color: antiquewhite;
+    letter-spacing: 1px;
+    font-size: xx-large;
+    font-family: cursive;
+    margin-top: 20px;
+}
+
+.userWelcomeMessage {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    color: antiquewhite;
+    font-size: medium;
+    text-align: right;
+    margin-left: 500px;
+}
+
+.errorMessageStyle {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color: red;
+    font-size: larger;
+    text-align: center;
+    font-family: cursive;
+    font-weight: bold;
+}
+
+.paginationButton {
+    width: 10px;
+    height: 10px;
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: antiquewhite;
+    color: black;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+.selectedPage {
+    width: 10px;
+    height: 10px;
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: #486ca3;
+    color: black;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+.contentContainer {
+    text-align: center;
+    display: block;
+    /*margin-left: 190px;*/
+    width: 1300px;
+    height: 600px;
+}
+
+.contentWindow {
+    background-image: url('../graphic/декоративный-шаблон-обложки-книги-сертификата-рамки-границы-124412623.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    margin-top: 30px;
+    margin-left: 30px;
+    width: 200px;
+    height: 250px;
+    text-align: center;
+    /*background: antiquewhite;*/
+}
+

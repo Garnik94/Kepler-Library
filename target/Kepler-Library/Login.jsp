@@ -5,8 +5,8 @@
     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
     response.setDateHeader("Expires", 0); // Proxies.
 
-    if (session.getAttribute("CurrentUser") != null){
-        response.sendRedirect("Welcome.jsp");
+    if (session.getAttribute("CurrentUser") != null) {
+        response.sendRedirect("BookSection.jsp");
     }
 %>
 <html>
@@ -15,38 +15,45 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
-<body>
-<div>
-    <span class="mainLabel">WELCOME TO</span><br>
-    <span class="mainLabel">KEPLER LIBRARY</span>
-</div>
+<body class="mainPageBackground">
 
-<div class="formDivStyle">
+<div class="loginPage">
 
-    <%
-        if (request.getAttribute("invalidLogin") != null &&
-                request.getAttribute("invalidLogin").equals("true")) {
-    %>
+    <div>
+        <span class="mainLabel">WELCOME TO</span><br>
+        <span class="mainLabel">KEPLER LIBRARY</span>
+    </div>
+
+    <div class="formDivStyle">
+
+        <form>
+            <label class="textStyle">Username<br>
+                <input name="inputUsername" class="inputAreaStyle" type="text">
+            </label><br>
+            <span class="textStyle">Password</span><br>
+            <label class="textStyle">
+                <input name="inputPassword" class="inputAreaStyle" type="password">
+            </label><br>
+            <input formmethod="post" formaction="welcome" class="loginButtonStyle" type="submit" value="Login"><br>
+            <input formmethod="get" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
+                   value="Registration">
+        </form>
+
+        <%
+            if (session.getAttribute("invalidLogin") != null &&
+                    session.getAttribute("invalidLogin").equals("true")) {
+        %>
         <span class="errorMessageStyle">Username or password is wrong</span>
-    <%
-        }
-    %>
+        <%
+           session.removeAttribute("invalidLogin"); }
+        %>
 
-    <form>
-        <label class="textStyle">Username<br>
-            <input name="inputUsername" class="inputAreaStyle" type="text">
-        </label><br>
-        <span class="textStyle">Password</span><br>
-        <label class="textStyle">
-            <input name="inputPassword" class="inputAreaStyle" type="password">
-        </label><br>
-        <input formmethod="post" formaction="welcome" class="loginButtonStyle" type="submit" value="Login"><br>
-        <input formmethod="get" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
-               value="Registration">
-    </form>
+    </div>
+
 </div>
+
 
 </body>
 </html>

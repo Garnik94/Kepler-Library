@@ -15,9 +15,9 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
-<body>
+<body class="standardPageBody">
 
 <span class="userWelcomeMessage">
         <%=
@@ -35,7 +35,6 @@
 
 <form>
     <input type="submit" formaction="AddBook.jsp" formmethod="get" value="Add new book">
-    <input type="submit" formaction="AddArticle.jsp" formmethod="get" value="Add new article">
     <input type="submit" formaction="ManageUser.jsp" formmethod="get" value="Manage user">
 </form>
 </body>

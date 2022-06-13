@@ -1,7 +1,6 @@
 package service.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-import model.content.Journal;
 import model.content.Language;
 
 import java.sql.*;

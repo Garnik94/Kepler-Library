@@ -134,53 +134,6 @@
         <url-pattern>/sortBooks</url-pattern>
     </servlet-mapping>
 
-
-
-    <servlet>
-        <servlet-name>Article section</servlet-name>
-        <servlet-class>servlet.ArticleSectionServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Article section</servlet-name>
-        <url-pattern>/articles</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Add new article</servlet-name>
-        <servlet-class>servlet.adminActionServlet.AddArticleServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Add new article</servlet-name>
-        <url-pattern>/addNewArticle</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Edit article</servlet-name>
-        <servlet-class>servlet.adminActionServlet.EditArticleServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Edit article</servlet-name>
-        <url-pattern>/editArticle</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Delete article</servlet-name>
-        <servlet-class>servlet.adminActionServlet.DeleteArticleServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Delete article</servlet-name>
-        <url-pattern>/deleteArticle</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Sort article content</servlet-name>
-        <servlet-class>servlet.SortArticleContentServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Sort article content</servlet-name>
-        <url-pattern>/sortArticles</url-pattern>
-    </servlet-mapping>
-
     <error-page>
         <error-code>404</error-code>
         <location>/404Error.jsp</location>

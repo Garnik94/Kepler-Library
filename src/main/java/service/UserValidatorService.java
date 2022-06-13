@@ -6,8 +6,6 @@ import service.dao.UserDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class UserValidatorService {
 
@@ -15,8 +13,11 @@ public class UserValidatorService {
             throws AbsentUserException {
         User user = UserDAO.getUser(new User(username, password));
         HttpSession session = request.getSession();
-        session.setAttribute("CurrentUser", user);
-        return user.getUsername().equals(username) && user.getPassword().equals(password);
+        if (user.getUsername().equals(username) && user.getPassword().equals(UserDAO.md5Converter(password))){
+            session.setAttribute("CurrentUser", user);
+            return true;
+        }
+        return false;
     }
 
 

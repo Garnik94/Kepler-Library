@@ -15,9 +15,9 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
-<body>
+<body class="standardPageBody">
 
 <span class="userWelcomeMessage">
         <%=

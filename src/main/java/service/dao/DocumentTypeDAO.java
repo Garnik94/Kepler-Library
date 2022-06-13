@@ -2,7 +2,6 @@ package service.dao;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import model.content.DocumentType;
-import model.content.Journal;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -95,7 +95,7 @@ public class UserDAO {
         }
     }
 
-    private static String md5Converter(String password) {
+    public static String md5Converter(String password) {
         StringBuilder convertPassword = new StringBuilder();
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");

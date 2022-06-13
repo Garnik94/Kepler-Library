@@ -2,7 +2,6 @@ package model;
 
 import model.content.Category;
 import model.content.DocumentType;
-import model.content.Journal;
 import model.content.Language;
 
 public class SearchingOption {
@@ -11,7 +10,6 @@ public class SearchingOption {
     private String searchBy;
     private Category category;
     private DocumentType documentType;
-    private Journal journal;
     private Language language;
 
     public SearchingOption(String inputSearchOption,
@@ -50,14 +48,6 @@ public class SearchingOption {
         this.documentType = documentType;
     }
 
-    public Journal getJournal() {
-        return journal;
-    }
-
-    public void setJournal(Journal journal) {
-        this.journal = journal;
-    }
-
     public Language getLanguage() {
         return language;
     }
@@ -81,7 +71,6 @@ public class SearchingOption {
                 ", searchBy='" + searchBy + '\'' +
                 ", category=" + category +
                 ", documentType=" + documentType +
-                ", journal=" + journal +
                 ", language=" + language +
                 '}';
     }
