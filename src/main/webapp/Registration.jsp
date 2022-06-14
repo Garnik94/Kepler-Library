@@ -41,6 +41,7 @@
     %>
     <span class="errorMessageStyle">Mismatched passwords</span>
     <%
+            request.removeAttribute("MismatchedPasswords");
         }
     %>
 
@@ -50,6 +51,7 @@
     %>
     <span class="errorMessageStyle">All inputs are required</span>
     <%
+            request.removeAttribute("RequiredInputError");
         }
     %>
 
@@ -59,11 +61,11 @@
     %>
     <span class="errorMessageStyle">User is already exists</span>
     <%
+            request.removeAttribute("UserIsAlreadyExists");
         }
     %>
 
 </div>
-
 
 </body>
 </html>

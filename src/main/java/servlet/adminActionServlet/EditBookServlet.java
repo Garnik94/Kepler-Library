@@ -20,7 +20,7 @@ public class EditBookServlet extends HttpServlet {
         if (session.getAttribute("ConfirmEditBook") == null) {
             session.setAttribute("ConfirmEditBook", true);
             session.removeAttribute("ConfirmDeleteBook");
-            response.sendRedirect("EditBook.jsp");
+            response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
         } else {
             if (request.getParameter("confirmEditBook") != null &&
                     request.getParameter("confirmEditBook").equals("yes")) {
@@ -38,9 +38,9 @@ public class EditBookServlet extends HttpServlet {
             } else if (request.getParameter("confirmEditBook") != null &&
                     request.getParameter("confirmEditBook").equals("no")){
                 session.removeAttribute("ConfirmEditBook");
-                response.sendRedirect("EditBook.jsp");
+                response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
             } else {
-                response.sendRedirect("EditBook.jsp");
+                response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
             }
         }
     }

@@ -21,7 +21,7 @@ public class DeleteBookServlet extends HttpServlet {
         if (session.getAttribute("ConfirmDeleteBook") == null) {
             session.setAttribute("ConfirmDeleteBook", true);
             session.removeAttribute("ConfirmEditBook");
-            response.sendRedirect("EditBook.jsp");
+            response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
         } else {
             if (request.getParameter("confirmDeleteBook") != null &&
                     request.getParameter("confirmDeleteBook").equals("yes")) {
@@ -41,9 +41,9 @@ public class DeleteBookServlet extends HttpServlet {
             } else if (request.getParameter("confirmDeleteBook") != null &&
                     request.getParameter("confirmDeleteBook").equals("no")){
                 session.removeAttribute("ConfirmDeleteBook");
-                response.sendRedirect("EditBook.jsp");
+                response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
             } else {
-                response.sendRedirect("EditBook.jsp");
+                response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
             }
         }
     }

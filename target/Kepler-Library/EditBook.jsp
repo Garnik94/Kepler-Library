@@ -34,15 +34,15 @@
 </form>
 
     <%
-        int currentEditableBookIndex = 0;
-        if (request.getParameter("editableBook") != null) {
+        int currentEditableBookIndex;
+//        if (request.getParameter("editableBook") != null) {
             currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
-        }
+//        }
         Book editableBook = (Book) session.getAttribute(String.valueOf(currentEditableBookIndex));
         session.setAttribute("checkedBook", editableBook);
     %>
 
-    <form action="editBook" method="post">
+    <form action="editBook?editableBook=<%=currentEditableBookIndex%>" method="post">
         <div>
             <div style="display: inline-block; margin-right: 20px">
                 <label class="textStyle">Author<br>
@@ -77,7 +77,7 @@
         <input  type="submit" value="Edit book">
     </form>
 
-    <form action="deleteBook" method="post">
+    <form action="deleteBook?editableBook=<%=currentEditableBookIndex%>" method="post">
         <input type="submit" value="Delete book">
     </form>
 
@@ -87,10 +87,10 @@
 
             <form>
                 <label>
-                    <input type="submit" formaction="deleteBook?confirmDeleteBook=yes" formmethod="post" value="Yes">
+                    <input type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmDeleteBook=yes" formmethod="post" value="Yes">
                 </label>
                 <label>
-                    <input type="submit" formaction="deleteBook?confirmDeleteBook=no" formmethod="post" value="No">
+                    <input type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmDeleteBook=no" formmethod="post" value="No">
                 </label>
             </form>
     <% } %>
@@ -101,14 +101,13 @@
 
             <form>
                 <label>
-                    <input type="submit" formaction="editBook?confirmEditBook=yes" formmethod="post" value="Yes">
+                    <input type="submit" formaction="editBook?editableBook=<%=currentEditableBookIndex%>&&confirmEditBook=yes" formmethod="post" value="Yes">
                 </label>
                 <label>
-                    <input type="submit" formaction="editBook?confirmEditBook=no" formmethod="post" value="No">
+                    <input type="submit" formaction="editBook?editableBook=<%=currentEditableBookIndex%>&&confirmEditBook=no" formmethod="post" value="No">
                 </label>
             </form>
     <% } %>
-
 
 </body>
 </html>

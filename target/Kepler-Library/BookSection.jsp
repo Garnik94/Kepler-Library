@@ -158,7 +158,7 @@
                 <%="Pages: " + book.getPages()%><br>
                 <%="Type: " + book.getDocumentType()%><br>
             </div>
-            <a href="https://drive.google.com/drive/folders/149ziSQc2CgwNQhF4J9caU8JfAwwXNbIC?usp=sharing"
+            <a href="<%=book.getDownloadUrl()%>"
                target="_blank">Download
             </a>
 

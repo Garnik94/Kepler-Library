@@ -42,12 +42,13 @@
         </form>
 
         <%
-            if (session.getAttribute("invalidLogin") != null &&
-                    session.getAttribute("invalidLogin").equals("true")) {
+            if (request.getAttribute("invalidLogin") != null &&
+                    request.getAttribute("invalidLogin").equals("true")) {
         %>
         <span class="errorMessageStyle">Username or password is wrong</span>
         <%
-           session.removeAttribute("invalidLogin"); }
+                request.removeAttribute("invalidLogin");
+            }
         %>
 
     </div>
