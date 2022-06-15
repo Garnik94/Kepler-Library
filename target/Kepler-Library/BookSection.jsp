@@ -20,31 +20,32 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body class="standardPageBody">
 
-<span class="userWelcomeMessage">
-        <%=
-        "Hi " + session.getAttribute("CurrentUser")
-        %>
-</span>
+<div style="float: right; text-align: center; width: 300px">
+    <span class="textStyle">
+        ${CurrentUser}
+    </span> <br> <br>
 
-<form action="welcome" method="get">
-    <input type="submit" value="Home">
-</form>
+    <form action="welcome" method="get">
+        <input type="submit" value="Home">
+    </form>
 
-<form action="logout" method="post">
-    <input type="submit" value="Logout">
-</form>
+    <form action="logout" method="post">
+        <input type="submit" value="Logout">
+    </form>
+    <%
+        User user = (User) session.getAttribute("CurrentUser");
+        if (user.isHasEditPermission() == 1) { %>
+    <form action="AdminProfile.jsp" method="get">
+        <input type="submit" value="Admin profile">
+    </form>
+    <% } %>
+</div>
 
-<%
-    User user = (User) session.getAttribute("CurrentUser");
-    if (user.isHasEditPermission() == 1) { %>
-<form action="AdminProfile.jsp" method="get">
-    <input type="submit" value="Admin profile">
-</form>
-<% } %>
+<br><br><br><br><br><br><br><br><br>
 
 <div class="bigContainer">
     <div class="bigContainer">
@@ -165,7 +166,7 @@
 
             <%
                 if (user.isHasEditPermission() == 1) {
-                    session.setAttribute(String.valueOf(j), book);
+                    session.setAttribute(String.valueOf(i), book);
             %>
 
             <a class="linksLikeButton" href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>

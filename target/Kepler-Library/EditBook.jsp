@@ -1,4 +1,5 @@
 <%@ page import="model.content.Book" %>
+<%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -15,23 +16,30 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body class="standardPageBody">
 
-<span class="userWelcomeMessage">
-        <%=
-        "Hi " + session.getAttribute("CurrentUser")
-        %>
-</span>
+<div style="float: right; text-align: center; width: 300px">
+    <span class="textStyle">
+        ${CurrentUser}
+    </span> <br> <br>
 
-<form action="welcome" method="get">
-    <input type="submit" value="Home">
-</form>
+    <form action="welcome" method="get">
+        <input type="submit" value="Home">
+    </form>
 
-<form action="logout" method="post">
-    <input type="submit" value="Logout">
-</form>
+    <form action="logout" method="post">
+        <input type="submit" value="Logout">
+    </form>
+    <%
+        User user = (User) session.getAttribute("CurrentUser");
+        if (user.isHasEditPermission() == 1) { %>
+    <form action="AdminProfile.jsp" method="get">
+        <input type="submit" value="Admin profile">
+    </form>
+    <% } %>
+</div>
 
     <%
         int currentEditableBookIndex;
@@ -81,11 +89,11 @@
             }
         %>
 
-        <input <%=isDisable%> type="submit" value="Edit book">
+        <input <%=isDisable%> class="registrationButtonStyle" type="submit" value="Edit book">
     </form>
 
     <form action="deleteBook?editableBook=<%=currentEditableBookIndex%>" method="post">
-        <input type="submit" value="Delete book">
+        <input class="deleteButtonStyle" type="submit" value="Delete book">
     </form>
 
     <% if (session.getAttribute("ConfirmDeleteBook") != null) {%>

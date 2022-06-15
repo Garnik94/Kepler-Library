@@ -15,47 +15,58 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body class="standardPageBody">
 
-<span class="userWelcomeMessage">
-        <%=
-        "Hi " + session.getAttribute("CurrentUser")
-        %>
-</span>
+<div style="float: right; text-align: center; width: 300px">
+    <span class="textStyle">
+        ${CurrentUser}
+    </span> <br> <br>
 
-<form action="welcome" method="get">
-    <input type="submit" value="Home">
-</form>
+    <form action="welcome" method="get">
+        <input type="submit" value="Home">
+    </form>
 
-<form action="logout" method="post">
-    <input type="submit" value="Logout">
-</form>
+    <form action="logout" method="post">
+        <input type="submit" value="Logout">
+    </form>
+    <%
+        User user = (User) session.getAttribute("CurrentUser");
+        if (user.isHasEditPermission() == 1) { %>
+    <form action="AdminProfile.jsp" method="get">
+        <input type="submit" value="Admin profile">
+    </form>
+    <% } %>
+</div>
+
+<br><br><br><br><br><br><br><br><br>
 
 <form action="searchManageableUser" method="get">
     <label>Search user<br>
-        <input type="text" name="searchingUser">
-    </label>
+        <input class="inputAreaStyle" type="text" name="searchingUser">
+    </label><br>
     <input type="submit" value="Search">
 </form>
 
 <%
     if (session.getAttribute("ManageableUser") != null) {
+        User manageableUser = (User) (session.getAttribute("ManageableUser"));
 %>
 
-<p><%= (User) (session.getAttribute("ManageableUser"))%></p>
+<span class="textStyle"><%=manageableUser.getUsername()%></span><br>
+<span class="textStyle"><%=manageableUser.getEmail()%></span><br><br>
 
 <form action="permitUser" method="post">
-    <input type="submit" value="Permit user">
+    <input class="loginButtonStyle" type="submit" value="Permit user">
 </form>
 
 <form action="forbidUser" method="post">
-    <input type="submit" value="Forbid user">
+    <input class="deleteButtonStyle" type="submit" value="Forbid user">
 </form>
 
 <form action="deleteUser" method="post">
-    <input type="submit" value="Delete user">
+    <input class="deleteButtonStyle" type="submit" value="Delete user">
 </form>
 
 <%
@@ -70,6 +81,7 @@
 <span class="errorMessageStyle">User is not found</span>
 
 <%
+        session.removeAttribute("searchingUserNotFound");
     }
 %>
 
