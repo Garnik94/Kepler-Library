@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="mainPageBackground">
 
@@ -37,17 +37,17 @@
                 <input name="inputPassword" class="inputAreaStyle" type="password">
             </label><br>
             <input formmethod="post" formaction="welcome" class="loginButtonStyle" type="submit" value="Login"><br>
-            <input formmethod="get" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
+            <input formmethod="post" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
                    value="Registration">
         </form>
 
         <%
-            if (request.getAttribute("invalidLogin") != null &&
-                    request.getAttribute("invalidLogin").equals("true")) {
+            if (session.getAttribute("invalidLogin") != null &&
+                    session.getAttribute("invalidLogin").equals("true")) {
         %>
         <span class="errorMessageStyle">Username or password is wrong</span>
         <%
-                request.removeAttribute("invalidLogin");
+                session.removeAttribute("invalidLogin");
             }
         %>
 

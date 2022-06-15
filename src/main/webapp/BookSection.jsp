@@ -20,7 +20,7 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="standardPageBody">
 
@@ -51,16 +51,16 @@
         <form action="books" method="get">
             <span class="textStyle">Search</span><br>
             <label>
-                <input class="inputAreaStyle" name="searchBook" type="text">
+                <input class="searchInputAreaStyle" name="searchBook" type="text">
             </label><br>
             <label><br>
-                <select name="searchBy">
+                <select class="multiSelectTextStyle" name="searchBy">
                     <option>Author</option>
                     <option>Title</option>
                 </select>
             </label>
             <label>
-                <select name="selectedCategory">
+                <select class="multiSelectTextStyle" name="selectedCategory">
                     <option value="blankCategory" disabled selected>Select category</option>
                     <%
                         for (int i = 0; i < CategoryDAO.getCategories().size(); i++) {
@@ -73,7 +73,7 @@
                 </select>
             </label>
             <label>
-                <select name="selectedLanguage">
+                <select class="multiSelectTextStyle" name="selectedLanguage">
                     <option value="blankLanguage" disabled selected>Select language</option>
                     <%
                         for (int i = 0; i < LanguageDAO.getLanguages().size(); i++) {
@@ -86,7 +86,7 @@
                 </select>
             </label>
             <label>
-                <select name="selectedDocumentType">
+                <select class="multiSelectTextStyle" name="selectedDocumentType">
                     <option value="blankDocumentType" disabled selected>Select Document type</option>
                     <%
                         for (int i = 0; i < DocumentTypeDAO.getDocumentTypes().size(); i++) {
@@ -113,16 +113,18 @@
 
     <form action="sortBooks" method="get">
 
-        <select name="sortingOption">
-            <option disabled>Check sorting option</option>
-            <option value="recentlyAdded">Recently added</option>
-            <option value="bookTitleUp">Title (A-Z)</option>
-            <option value="bookTitleDown">Title (Z-A)</option>
-            <option value="bookPageUp">Page up -> down</option>
-            <option value="bookPageDown">Page down -> up</option>
-            <option value="bookYearUp">year up -> down</option>
-            <option value="bookYearDown">year down -> up</option>
-        </select>
+        <label>
+            <select class="multiSelectTextStyle" name="sortingOption">
+                <option disabled>Check sorting option</option>
+                <option value="recentlyAdded">Recently added</option>
+                <option value="bookTitleUp">Title (A-Z)</option>
+                <option value="bookTitleDown">Title (Z-A)</option>
+                <option value="bookPageUp">Page up -> down</option>
+                <option value="bookPageDown">Page down -> up</option>
+                <option value="bookYearUp">year up -> down</option>
+                <option value="bookYearDown">year down -> up</option>
+            </select>
+        </label>
 
         <input type="submit" value="sort">
 
@@ -148,7 +150,7 @@
             if (i < BookContentDisplayService.bookList.size()) {
         %>
         <div class="contentWindow">
-            <div style="margin-top: 20px">
+            <div class="contentTextStyle" style="margin-top: 20px">
                 <%Book book = BookContentDisplayService.bookList.get(i);%>
                 <%=book.getAuthor()%><br>
                 <%=book.getTitle()%><br>
@@ -157,17 +159,16 @@
                 <%="Year: " + book.getYear()%><br>
                 <%="Pages: " + book.getPages()%><br>
                 <%="Type: " + book.getDocumentType()%><br>
-            </div>
-            <a href="<%=book.getDownloadUrl()%>"
-               target="_blank">Download
-            </a>
+            </div><br>
+            <a class="linksLikeButton"href="<%=book.getDownloadUrl()%>"
+               target="_blank">Download</a><br><br>
 
             <%
                 if (user.isHasEditPermission() == 1) {
                     session.setAttribute(String.valueOf(j), book);
             %>
 
-            <a href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>
+            <a class="linksLikeButton" href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>
 
             <%
                 }
@@ -193,13 +194,11 @@
         <%
             if (i == currentPage) {
         %>
-        <a class="selectedPage" href="<%=url%>"><%=i%>
-        </a>
+        <a class="selectedPage" href="<%=url%>"><%=i%></a>
         <%
         } else {
         %>
-        <a class="paginationButton" href="<%=url%>"><%=i%>
-        </a>
+        <a class="paginationButton" href="<%=url%>"><%=i%></a>
         <%
             }
         %>

@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="standardPageBody">
 
@@ -42,7 +42,7 @@
         session.setAttribute("checkedBook", editableBook);
     %>
 
-    <form action="editBook?editableBook=<%=currentEditableBookIndex%>" method="post">
+    <form action="editBook<%--?editableBook=<%=currentEditableBookIndex%>--%>" method="post">
         <div>
             <div style="display: inline-block; margin-right: 20px">
                 <label class="textStyle">Author<br>
@@ -74,7 +74,14 @@
                 </label><br>
             </div>
         </div>
-        <input  type="submit" value="Edit book">
+        <%
+            String isDisable = "";
+            if (session.getAttribute("ConfirmDeleteBook") != null){
+                isDisable = "disabled";
+            }
+        %>
+
+        <input <%=isDisable%> type="submit" value="Edit book">
     </form>
 
     <form action="deleteBook?editableBook=<%=currentEditableBookIndex%>" method="post">
