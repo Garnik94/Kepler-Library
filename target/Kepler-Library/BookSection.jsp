@@ -20,7 +20,7 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="standardPageBody">
 
@@ -30,22 +30,23 @@
     </span> <br> <br>
 
     <form action="welcome" method="get">
-        <input type="submit" value="Home">
+        <input class="navigationButtons" type="submit" value="Home">
     </form>
 
-    <form action="logout" method="post">
-        <input type="submit" value="Logout">
-    </form>
     <%
         User user = (User) session.getAttribute("CurrentUser");
         if (user.isHasEditPermission() == 1) { %>
     <form action="AdminProfile.jsp" method="get">
-        <input type="submit" value="Admin profile">
+        <input class="navigationButtons" type="submit" value="Manage">
     </form>
     <% } %>
+
+    <form action="logout" method="post">
+        <input class="navigationButtons" type="submit" value="Logout">
+    </form>
 </div>
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
 
 <div class="bigContainer">
     <div class="bigContainer">
@@ -62,7 +63,7 @@
             </label>
             <label>
                 <select class="multiSelectTextStyle" name="selectedCategory">
-                    <option value="blankCategory" disabled selected>Select category</option>
+                    <option value="blankCategory" disabled selected>Category</option>
                     <%
                         for (int i = 0; i < CategoryDAO.getCategories().size(); i++) {
                     %>
@@ -75,7 +76,7 @@
             </label>
             <label>
                 <select class="multiSelectTextStyle" name="selectedLanguage">
-                    <option value="blankLanguage" disabled selected>Select language</option>
+                    <option value="blankLanguage" disabled selected>Language</option>
                     <%
                         for (int i = 0; i < LanguageDAO.getLanguages().size(); i++) {
                     %>
@@ -88,7 +89,7 @@
             </label>
             <label>
                 <select class="multiSelectTextStyle" name="selectedDocumentType">
-                    <option value="blankDocumentType" disabled selected>Select Document type</option>
+                    <option value="blankDocumentType" disabled selected>Document type</option>
                     <%
                         for (int i = 0; i < DocumentTypeDAO.getDocumentTypes().size(); i++) {
                     %>
@@ -99,7 +100,7 @@
                     %>
                 </select>
             </label>
-            <input type="submit" value="Search">
+            <input class="searchButton" type="submit" value="Search">
         </form>
 
         <%
@@ -127,7 +128,7 @@
             </select>
         </label>
 
-        <input type="submit" value="sort">
+        <input class="searchButton" type="submit" value="Sort">
 
     </form>
 
@@ -153,8 +154,8 @@
         <div class="contentWindow">
             <div class="contentTextStyle" style="margin-top: 20px">
                 <%Book book = BookContentDisplayService.bookList.get(i);%>
-                <%=book.getAuthor()%><br>
-                <%=book.getTitle()%><br>
+                <span style="font-weight: bold"><%=book.getAuthor()%></span><br>
+                <span style="font-weight: bold"><%=book.getTitle()%></span><br>
                 <%="Category: " + book.getCategory()%><br>
                 <%="Language: " + book.getLanguage()%><br>
                 <%="Year: " + book.getYear()%><br>

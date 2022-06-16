@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="standardPageBody">
 
@@ -25,28 +25,29 @@
     </span> <br> <br>
 
     <form action="welcome" method="get">
-        <input type="submit" value="Home">
+        <input class="navigationButtons" type="submit" value="Home">
     </form>
 
-    <form action="logout" method="post">
-        <input type="submit" value="Logout">
-    </form>
     <%
         User user = (User) session.getAttribute("CurrentUser");
         if (user.isHasEditPermission() == 1) { %>
     <form action="AdminProfile.jsp" method="get">
-        <input type="submit" value="Admin profile">
+        <input class="navigationButtons" type="submit" value="Manage">
     </form>
     <% } %>
+
+    <form action="logout" method="post">
+        <input class="navigationButtons" type="submit" value="Logout">
+    </form>
 </div>
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br>
 
 <form action="searchManageableUser" method="get">
-    <label>Search user<br>
+    <label class="textStyle">Search user<br>
         <input class="inputAreaStyle" type="text" name="searchingUser">
     </label><br>
-    <input type="submit" value="Search">
+    <input class="searchButton" type="submit" value="Search">
 </form>
 
 <%

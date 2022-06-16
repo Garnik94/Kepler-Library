@@ -16,7 +16,7 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="standardPageBody">
 
@@ -26,24 +26,27 @@
     </span> <br> <br>
 
     <form action="welcome" method="get">
-        <input type="submit" value="Home">
+        <input class="navigationButtons" type="submit" value="Home">
     </form>
 
-    <form action="logout" method="post">
-        <input type="submit" value="Logout">
-    </form>
     <%
         User user = (User) session.getAttribute("CurrentUser");
         if (user.isHasEditPermission() == 1) { %>
     <form action="AdminProfile.jsp" method="get">
-        <input type="submit" value="Admin profile">
+        <input class="navigationButtons" type="submit" value="Manage">
     </form>
     <% } %>
+
+    <form action="logout" method="post">
+        <input class="navigationButtons" type="submit" value="Logout">
+    </form>
 </div>
 
+<br><br><br><br><br><br><br><br><br><br><br>
+
 <form>
-    <input type="submit" formaction="AddBook.jsp" formmethod="get" value="Add new book">
-    <input type="submit" formaction="ManageUser.jsp" formmethod="get" value="Manage user">
+    <input class="loginButtonStyle" type="submit" formaction="AddBook.jsp" formmethod="get" value="Add new book"><br>
+    <input class="loginButtonStyle" type="submit" formaction="ManageUser.jsp" formmethod="get" value="Manage user">
 </form>
 </body>
 </html>
