@@ -36,32 +36,32 @@
     </form>
 
     <%
-        if (request.getAttribute("MismatchedPasswords") != null &&
-                request.getAttribute("MismatchedPasswords").equals("true")) {
+        if (session.getAttribute("MismatchedPasswords") != null &&
+                session.getAttribute("MismatchedPasswords").equals("true")) {
     %>
     <span class="errorMessageStyle">Mismatched passwords</span>
     <%
-            request.removeAttribute("MismatchedPasswords");
+            session.removeAttribute("MismatchedPasswords");
         }
     %>
 
     <%
-        if (request.getAttribute("RequiredInputError") != null &&
-                request.getAttribute("RequiredInputError").equals("true")) {
+        if (session.getAttribute("RequiredInputError") != null &&
+                session.getAttribute("RequiredInputError").equals("true")) {
     %>
     <span class="errorMessageStyle">All inputs are required</span>
     <%
-            request.removeAttribute("RequiredInputError");
+            session.removeAttribute("RequiredInputError");
         }
     %>
 
     <%
-        if (request.getAttribute("UserIsAlreadyExists") != null &&
-                request.getAttribute("UserIsAlreadyExists").equals("true")) {
+        if (session.getAttribute("UserIsAlreadyExists") != null &&
+                session.getAttribute("UserIsAlreadyExists").equals("true")) {
     %>
     <span class="errorMessageStyle">User is already exists</span>
     <%
-            request.removeAttribute("UserIsAlreadyExists");
+            session.removeAttribute("UserIsAlreadyExists");
         }
     %>
 

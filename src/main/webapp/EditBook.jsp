@@ -105,13 +105,15 @@
 
             <form>
                 <label>
-                    <input type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmDeleteBook=yes" formmethod="post" value="Yes">
+                    <input class="navigationButtons" type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmDeleteBook=yes" formmethod="post" value="Yes">
                 </label>
                 <label>
-                    <input type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmDeleteBook=no" formmethod="post" value="No">
+                    <input class="navigationButtons" type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmDeleteBook=no" formmethod="post" value="No">
                 </label>
             </form>
-    <% } %>
+    <%
+        }
+    %>
 
     <% if (session.getAttribute("ConfirmEditBook") != null) {%>
 <%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
@@ -125,7 +127,9 @@
                     <input type="submit" formaction="editBook?editableBook=<%=currentEditableBookIndex%>&&confirmEditBook=no" formmethod="post" value="No">
                 </label>
             </form>
-    <% } %>
+    <%
+        }
+    %>
 
 </body>
 </html>

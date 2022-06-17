@@ -64,7 +64,7 @@ public class BookSectionServlet extends HttpServlet {
                 documentType,
                 language);
         session.setAttribute("searchingOption", searchingOption);
-        if (session.getAttribute("CurrentUser") == null) {
+        if (session.getAttribute("CurrentUser") != null) {
             BookContentDisplayService.mainSearch(request);
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");

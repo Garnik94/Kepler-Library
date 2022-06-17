@@ -31,7 +31,6 @@ public class SortBookContentServlet extends HttpServlet {
         } else if (sortingOption.equals("bookPageDown")){
             BookContentDisplayService.sortBooksByPage(-1);
         }
-
         if (sortingOption.equals("bookYearUp")){
             BookContentDisplayService.sortBooksByYear(1);
         } else if (sortingOption.equals("bookYearDown")){
