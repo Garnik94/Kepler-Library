@@ -12,6 +12,7 @@ import service.dao.LanguageDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Connection;
 import java.util.*;
 
 import static service.dao.CategoryDAO.*;
@@ -22,17 +23,17 @@ public class BookContentDisplayService {
 
     public static List<Book> bookList = new ArrayList<>();
 
-    public static void mainSearch(HttpServletRequest request) {
+    public static void mainSearch(HttpServletRequest request, Connection connection) {
         HttpSession session = request.getSession();
         SearchingOption searchingOption = (SearchingOption) session.getAttribute("searchingOption");
         bookList.clear();
-        setCategories(getAllCategories());
-        setLanguages(getAllLanguages());
-        setDocumentTypes(getAllDocumentTypes());
+        setCategories(getAllCategories(connection));
+        setLanguages(getAllLanguages(connection));
+        setDocumentTypes(getAllDocumentTypes(connection));
         if (searchingOption.getSearchBy().equals("Author")) {
-            searchBooksByAuthor(searchingOption.getInputSearchOption());
+            searchBooksByAuthor(connection, searchingOption.getInputSearchOption());
         } else if (searchingOption.getSearchBy().equals("Title")) {
-            searchBooksByTitle(searchingOption.getInputSearchOption());
+            searchBooksByTitle(connection, searchingOption.getInputSearchOption());
         }
         filterBooksByLanguage(searchingOption.getLanguage());
         filterBooksByCategory(searchingOption.getCategory());
@@ -42,12 +43,12 @@ public class BookContentDisplayService {
         filterDocumentTypes(bookList);
     }
 
-    public static void searchBooksByAuthor(String author) {
-        bookList = BookDAO.getBooksByAuthor(author);
+    public static void searchBooksByAuthor(Connection connection, String author) {
+        bookList = BookDAO.getBooksByAuthor(connection, author);
     }
 
-    public static void searchBooksByTitle(String title) {
-        bookList = BookDAO.getBooksByTitle(title);
+    public static void searchBooksByTitle(Connection connection, String title) {
+        bookList = BookDAO.getBooksByTitle(connection, title);
     }
 
     public static void filterBooksByLanguage(Language language) {

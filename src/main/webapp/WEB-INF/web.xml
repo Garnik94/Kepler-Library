@@ -8,14 +8,15 @@
         <welcome-file>Login.jsp</welcome-file>
     </welcome-file-list>
 
-<!--    <servlet>-->
-<!--        <servlet-name>Default page</servlet-name>-->
-<!--        <servlet-class>servlet.LoginServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>Default page</servlet-name>-->
-<!--        <url-pattern></url-pattern>-->
-<!--    </servlet-mapping>-->
+    <context-param>
+        <param-name>dbConnectionUrl</param-name>
+        <param-value>jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;
+            integratedSecurity=true;encrypt=true;trustServerCertificate=true</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>servlet.listeners.ContextListener</listener-class>
+    </listener>
 
     <servlet>
         <servlet-name>Login page</servlet-name>

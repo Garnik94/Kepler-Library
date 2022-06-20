@@ -11,9 +11,9 @@ import java.util.List;
 
 public class CategoryDAO {
 
-    static {
-        setCategories(getAllCategories());
-    }
+//    static {
+//        setCategories(getAllCategories());
+//    }
 
     private static List<Category> categories;
 
@@ -25,18 +25,18 @@ public class CategoryDAO {
         CategoryDAO.categories = categories;
     }
 
-    public static Connection getConnection() throws SQLException {
-        DriverManager.registerDriver(new SQLServerDriver());
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-        return DriverManager.getConnection(url);
-    }
+//    public static Connection getConnection() throws SQLException {
+//        DriverManager.registerDriver(new SQLServerDriver());
+//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
+//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
+//        return DriverManager.getConnection(url);
+//    }
 
-    public static List<Category> getAllCategories() {
+    public static List<Category> getAllCategories(Connection connection) {
         List<Category> categories = new ArrayList<>();
         try {
             String query = "SELECT * FROM Categories";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Category category = new Category(resultSet.getString("Category_Name"));
@@ -89,17 +89,17 @@ public class CategoryDAO {
         return -1;
     }
 
-    public static int addNewCategory(Category category) {
+    public static int addNewCategory(Connection connection, Category category) {
         int categoryId = getCategoryIdByName(category);
         if (categoryId != -1) {
             return categoryId;
         }
         try {
             String query = "INSERT INTO Categories VALUES (?)";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, category.getCategoryName());
             preparedStatement.executeUpdate();
-            setCategories(getAllCategories());
+            setCategories(getAllCategories(connection));
             categoryId = getCategoryIdByName(category);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -9,14 +9,14 @@ import java.util.List;
 
 public class BookDAO {
 
-    public static Connection getConnection() throws SQLException {
-        DriverManager.registerDriver(new SQLServerDriver());
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-        return DriverManager.getConnection(url);
-    }
+//    public static Connection getConnection() throws SQLException {
+//        DriverManager.registerDriver(new SQLServerDriver());
+//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
+//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
+//        return DriverManager.getConnection(url);
+//    }
 
-    private static List<Book> getBooks(PreparedStatement preparedStatement) throws SQLException {
+    private static List<Book> getBooks(Connection connection, PreparedStatement preparedStatement) throws SQLException {
         List<Book> books = new ArrayList<>();
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -27,7 +27,7 @@ public class BookDAO {
             DocumentType documentType = new DocumentType(resultSet.getString("Document_Type_Name"));
             documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
             Author author = new Author(resultSet.getString("Author_Name"));
-            author.setId(AuthorDAO.getAuthorIdByName(author));
+            author.setId(AuthorDAO.getAuthorIdByName(connection, author));
             Book book = new Book(author,
                     resultSet.getString("Title"),
                     category,
@@ -42,16 +42,16 @@ public class BookDAO {
         return books;
     }
 
-    public static List<Book> getBookById(int id) {
+    public static List<Book> getBookById(Connection connection, int id) {
         try {
             String query = "SELECT * FROM Books " +
                     "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
                     "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
                     "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
                     "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE Book_Id = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, String.valueOf(id));
-            return getBooks(preparedStatement);
+            return getBooks(connection, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,24 +59,24 @@ public class BookDAO {
     }
 
 
-    public static List<Book> getBooksByTitle(String title) {
+    public static List<Book> getBooksByTitle(Connection connection, String title) {
         try {
             String query = "SELECT * FROM Books " +
                     "INNER JOIN Authors ON Books.Author = Authors.Author_Id \n" +
                     "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
                     "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
                     "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE Title LIKE ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "%" + title + "%");
-            return getBooks(preparedStatement);
+            return getBooks(connection, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return new ArrayList<>();
     }
 
-    public static List<Book> getBooksByAuthor(String searchArg) {
-        List<Author> authors = AuthorDAO.getAuthorsByCoincidence(searchArg);
+    public static List<Book> getBooksByAuthor(Connection connection, String searchArg) {
+        List<Author> authors = AuthorDAO.getAuthorsByCoincidence(connection, searchArg);
         if (!authors.isEmpty()) {
             try {
                 StringBuilder subQuery = new StringBuilder();
@@ -92,12 +92,12 @@ public class BookDAO {
                         "JOIN Categories ON Books.Category = Categories.Category_Id\n" +
                         "JOIN Languages ON Books.Language = Languages.Language_Id\n" +
                         "JOIN Document_Types ON Books.Document_Type = Document_Types.Document_Type_Id WHERE " + subQuery;
-                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
                 int i;
                 for (i = 0; i < authors.size(); i++) {
                     preparedStatement.setInt(i + 1, authors.get(i).getId());
                 }
-                return getBooks(preparedStatement);
+                return getBooks(connection, preparedStatement);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -105,18 +105,18 @@ public class BookDAO {
         return new ArrayList<>();
     }
 
-    public static void addNewBook(Book book) {
-        int authorId = AuthorDAO.addNewAuthor(book.getAuthor());
+    public static void addNewBook(Connection connection, Book book) {
+        int authorId = AuthorDAO.addNewAuthor(connection, book.getAuthor());
         String title = book.getTitle();
-        int categoryId = CategoryDAO.addNewCategory(book.getCategory());
-        int languageId = LanguageDAO.addNewLanguage(book.getLanguage());
+        int categoryId = CategoryDAO.addNewCategory(connection, book.getCategory());
+        int languageId = LanguageDAO.addNewLanguage(connection, book.getLanguage());
         int year = book.getYear();
-        int documentTypeId = DocumentTypeDAO.addNewDocumentType(book.getDocumentType());
+        int documentTypeId = DocumentTypeDAO.addNewDocumentType(connection, book.getDocumentType());
         int pages = book.getPages();
         String downloadUrl = book.getDownloadUrl();
         try {
             String query = "INSERT INTO Books VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, authorId);
             preparedStatement.setString(2, title);
             preparedStatement.setInt(3, categoryId);
@@ -131,7 +131,8 @@ public class BookDAO {
         }
     }
 
-    public static void updateBook(Book book,
+    public static void updateBook(Connection connection,
+                                  Book book,
                                   Author author,
                                   String title,
                                   Category category,
@@ -141,12 +142,12 @@ public class BookDAO {
                                   int pages,
                                   String downloadUrl) {
         try {
-            category.setId(CategoryDAO.addNewCategory(category));
-            language.setId(LanguageDAO.addNewLanguage(language));
-            documentType.setId(DocumentTypeDAO.addNewDocumentType(documentType));
-            author.setId(AuthorDAO.addNewAuthor(author));
+            category.setId(CategoryDAO.addNewCategory(connection, category));
+            language.setId(LanguageDAO.addNewLanguage(connection, language));
+            documentType.setId(DocumentTypeDAO.addNewDocumentType(connection, documentType));
+            author.setId(AuthorDAO.addNewAuthor(connection, author));
             String query = "UPDATE Books SET Author = ?, Title = ?, Category = ?, Language = ?, Year = ?, Document_Type = ?, Pages = ?, Download_Url = ? WHERE Book_Id = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, author.getId());
             preparedStatement.setString(2, title);
             preparedStatement.setInt(3, category.getId());
@@ -162,10 +163,10 @@ public class BookDAO {
         }
     }
 
-    public static void deleteBook(Book book) {
+    public static void deleteBook(Connection connection, Book book) {
         try {
             String query = "DELETE FROM Books WHERE Book_Id = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, book.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

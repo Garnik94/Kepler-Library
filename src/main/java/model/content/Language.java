@@ -1,5 +1,7 @@
 package model.content;
 
+import java.util.Objects;
+
 public class Language {
 
     private int Id;
@@ -28,5 +30,19 @@ public class Language {
     @Override
     public String toString() {
         return language;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Language language1 = (Language) o;
+        return Id == language1.Id &&
+                Objects.equals(language, language1.language);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, language);
     }
 }

@@ -9,9 +9,9 @@ import java.util.List;
 
 public class DocumentTypeDAO {
 
-    static {
-        setDocumentTypes(getAllDocumentTypes());
-    }
+//    static {
+//        setDocumentTypes(getAllDocumentTypes());
+//    }
 
     private static List<DocumentType> documentTypes;
 
@@ -23,18 +23,18 @@ public class DocumentTypeDAO {
         DocumentTypeDAO.documentTypes = documentTypes;
     }
 
-    public static Connection getConnection() throws SQLException {
-        DriverManager.registerDriver(new SQLServerDriver());
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-        return DriverManager.getConnection(url);
-    }
+//    public static Connection getConnection() throws SQLException {
+//        DriverManager.registerDriver(new SQLServerDriver());
+//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
+//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
+//        return DriverManager.getConnection(url);
+//    }
 
-    public static List<DocumentType> getAllDocumentTypes() {
+    public static List<DocumentType> getAllDocumentTypes(Connection connection) {
         List<DocumentType> documentTypes = new ArrayList<>();
         try {
             String query = "SELECT * FROM Document_Types";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 DocumentType documentType = new DocumentType(resultSet.getString("Document_Type_Name"));
@@ -87,17 +87,17 @@ public class DocumentTypeDAO {
         return -1;
     }
 
-    public static int addNewDocumentType(DocumentType documentType) {
+    public static int addNewDocumentType(Connection connection, DocumentType documentType) {
         int documentTypeId = getDocumentTypeIdByName(documentType);
         if (documentTypeId != -1) {
             return documentTypeId;
         }
         try {
             String query = "INSERT INTO Document_Types VALUES (?)";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, documentType.getType());
             preparedStatement.executeUpdate();
-            setDocumentTypes(getAllDocumentTypes());
+            setDocumentTypes(getAllDocumentTypes(connection));
             documentTypeId = getDocumentTypeIdByName(documentType);
         } catch (SQLException e) {
             e.printStackTrace();

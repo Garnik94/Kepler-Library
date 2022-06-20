@@ -1,28 +1,28 @@
 package service.dao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import exceptions.AbsentUserException;
 import model.User;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDAO {
 
-    public static Connection getConnection() throws SQLException {
-        DriverManager.registerDriver(new SQLServerDriver());
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-        return DriverManager.getConnection(url);
-    }
+//    public static Connection getConnection() throws SQLException {
+//        DriverManager.registerDriver(new SQLServerDriver());
+//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
+//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
+//        return DriverManager.getConnection(url);
+//    }
 
-    public static User getUser(User user) throws AbsentUserException {
+    public static User getUser(Connection connection, User user) throws AbsentUserException {
         try {
             String query = "SELECT * FROM Users WHERE Username = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getUsername());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -39,33 +39,34 @@ public class UserDAO {
         throw new AbsentUserException();
     }
 
-    public static boolean addNewUser(String username,
-                                  String password,
-                                  String email) {
+    public static boolean addNewUser(Connection connection,
+                                     String username,
+                                     String password,
+                                     String email) {
         try {
-            getUser(new User(username));
+            getUser(connection, new User(username));
             return false;
         } catch (AbsentUserException e) {
             try {
                 String passwordConvertedToMD5 = md5Converter(password);
                 String query = "INSERT INTO Users VALUES (?, ?, ?, ?)";
-                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, passwordConvertedToMD5);
                 preparedStatement.setString(3, email);
                 preparedStatement.setInt(4, 0);
                 preparedStatement.executeUpdate();
                 return true;
-            } catch (SQLException e1){
+            } catch (SQLException e1) {
                 return false;
             }
         }
     }
 
-    public static void deleteUser(User user) {
+    public static void deleteUser(Connection connection, User user) {
         try {
             String query = "DELETE FROM Users WHERE ID = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -73,10 +74,10 @@ public class UserDAO {
         }
     }
 
-    public static void permitUser(User user) {
+    public static void permitUser(Connection connection, User user) {
         try {
             String query = "UPDATE Users SET Has_Edit_Permission = 1 WHERE ID = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -84,10 +85,10 @@ public class UserDAO {
         }
     }
 
-    public static void forbidUser(User user) {
+    public static void forbidUser(Connection connection, User user) {
         try {
             String query = "UPDATE Users SET Has_Edit_Permission = 0 WHERE ID = ?";
-            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

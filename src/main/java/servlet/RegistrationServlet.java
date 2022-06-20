@@ -3,6 +3,7 @@ package servlet;
 import service.dao.UserDAO;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 
 @WebServlet(name = "RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
@@ -20,13 +22,15 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         HttpSession session = request.getSession();
+        ServletContext servletContext = getServletContext();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
 //        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
         if ((!username.isEmpty() ||
                 !email.isEmpty() ||
                 !password.isEmpty() ||
                 !confirmPassword.isEmpty()) &&
                 password.equals(confirmPassword)) {
-            boolean isUserSuccessfullyAdded = UserDAO.addNewUser(username, password, email);
+            boolean isUserSuccessfullyAdded = UserDAO.addNewUser(connection, username, password, email);
             if (isUserSuccessfullyAdded) {
                 session.removeAttribute("MismatchedPasswords");
                 session.removeAttribute("RequiredInputError");

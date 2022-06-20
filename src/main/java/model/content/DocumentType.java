@@ -1,5 +1,7 @@
 package model.content;
 
+import java.util.Objects;
+
 public class DocumentType {
 
     private int Id;
@@ -28,5 +30,19 @@ public class DocumentType {
     @Override
     public String toString() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DocumentType that = (DocumentType) o;
+        return Id == that.Id &&
+                Objects.equals(type, that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, type);
     }
 }

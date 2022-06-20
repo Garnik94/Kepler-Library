@@ -1,3 +1,4 @@
+<%@ page import="model.SearchingOption" %>
 <%@ page import="model.User" %>
 <%@ page import="model.content.Book" %>
 <%@ page import="service.BookContentDisplayService" %>
@@ -11,7 +12,8 @@
     response.setDateHeader("Expires", 0); // Proxies.
 
     if (session.getAttribute("CurrentUser") == null) {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        response.sendRedirect("Login.jsp");
+        return;
     }
 %>
 <html>
@@ -51,23 +53,38 @@
 <div class="bigContainer">
     <div class="bigContainer">
         <form action="books" method="get">
-            <span class="textStyle">Search</span><br>
+            <%
+                SearchingOption searchingOption = (SearchingOption) session.getAttribute("searchingOption");
+            %>
+
+            <span class="textStyle">Search by</span><br><br>
             <label>
-                <input class="searchInputAreaStyle" name="searchBook" type="text">
-            </label><br>
-            <label><br>
                 <select class="multiSelectTextStyle" name="searchBy">
+
                     <option>Author</option>
                     <option>Title</option>
                 </select>
             </label>
             <label>
                 <select class="multiSelectTextStyle" name="selectedCategory">
-                    <option value="blankCategory" disabled selected>Category</option>
                     <%
-                        for (int i = 0; i < CategoryDAO.getCategories().size(); i++) {
+                        String selectedCategory = "";
+                        if (searchingOption == null ||
+                                (searchingOption.getCategory() != null &&
+                                        searchingOption.getCategory().getCategoryName().equals("All Categories"))) {
+                            selectedCategory = "selected";
+                        }
                     %>
-                    <option value="<%=CategoryDAO.getCategories().get(i).getCategoryName()%>"><%=CategoryDAO.getCategories().get(i).getCategoryName()%>
+                    <option value="All Categories" <%=selectedCategory%>>All Categories</option>
+                    <%
+                        selectedCategory = "";
+                        for (int i = 0; i < CategoryDAO.getCategories().size(); i++) {
+                            if (searchingOption != null && searchingOption.getCategory() != null &&
+                                    searchingOption.getCategory().equals(CategoryDAO.getCategories().get(i))) {
+                                selectedCategory = "selected";
+                            }
+                    %>
+                    <option value="<%=CategoryDAO.getCategories().get(i).getCategoryName()%>" <%=selectedCategory%>><%=CategoryDAO.getCategories().get(i).getCategoryName()%>
                     </option>
                     <%
                         }
@@ -76,11 +93,24 @@
             </label>
             <label>
                 <select class="multiSelectTextStyle" name="selectedLanguage">
-                    <option value="blankLanguage" disabled selected>Language</option>
                     <%
-                        for (int i = 0; i < LanguageDAO.getLanguages().size(); i++) {
+                        String selectedLanguage = "";
+                        if (searchingOption == null ||
+                                (searchingOption.getLanguage() != null &&
+                                        searchingOption.getLanguage().getLanguage().equals("All Languages"))) {
+                            selectedLanguage = "selected";
+                        }
                     %>
-                    <option value="<%=LanguageDAO.getLanguages().get(i).getLanguage()%>"><%=LanguageDAO.getLanguages().get(i).getLanguage()%>
+                    <option value="All Languages" <%=selectedLanguage%>>All language</option>
+                    <%
+                        selectedLanguage = "";
+                        for (int i = 0; i < LanguageDAO.getLanguages().size(); i++) {
+                            if (searchingOption != null && searchingOption.getLanguage() != null &&
+                                    searchingOption.getLanguage().equals(LanguageDAO.getLanguages().get(i))) {
+                                selectedLanguage = "selected";
+                            }
+                    %>
+                    <option value="<%=LanguageDAO.getLanguages().get(i).getLanguage()%>" <%=selectedLanguage%>><%=LanguageDAO.getLanguages().get(i).getLanguage()%>
                     </option>
                     <%
                         }
@@ -89,23 +119,35 @@
             </label>
             <label>
                 <select class="multiSelectTextStyle" name="selectedDocumentType">
-                    <option value="blankDocumentType" disabled selected>Document type</option>
                     <%
-                        for (int i = 0; i < DocumentTypeDAO.getDocumentTypes().size(); i++) {
+                        String selectedDocumentType = "";
+                        if (searchingOption == null ||
+                                (searchingOption.getDocumentType() != null &&
+                                        searchingOption.getDocumentType().getType().equals("All Document Types"))) {
+                            selectedDocumentType = "selected";
+                        }
                     %>
-                    <option value="<%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>"><%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>
+                    <option value="All Document Types" selected <%=selectedDocumentType%>>All document type</option>
+                    <%
+                        selectedDocumentType = "";
+                        for (int i = 0; i < DocumentTypeDAO.getDocumentTypes().size(); i++) {
+                            if (searchingOption != null && searchingOption.getDocumentType() != null &&
+                                    searchingOption.getDocumentType().equals(DocumentTypeDAO.getDocumentTypes().get(i))) {
+                                selectedDocumentType = "selected";
+                            }
+                    %>
+                    <option value="<%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>" <%=selectedDocumentType%>><%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>
                     </option>
                     <%
                         }
                     %>
                 </select>
+            </label><br>
+            <label>
+                <input class="searchInputAreaStyle" name="searchBook" type="text">
             </label>
             <input class="searchButton" type="submit" value="Search">
         </form>
-
-        <%
-            session.getAttribute("searchingOption");
-        %>
 
     </div>
 
@@ -161,8 +203,9 @@
                 <%="Year: " + book.getYear()%><br>
                 <%="Pages: " + book.getPages()%><br>
                 <%="Type: " + book.getDocumentType()%><br>
-            </div><br>
-            <a class="linksLikeButton"href="<%=book.getDownloadUrl()%>"
+            </div>
+            <br>
+            <a class="linksLikeButton" href="<%=book.getDownloadUrl()%>"
                target="_blank">Download</a><br><br>
 
             <%
@@ -196,11 +239,13 @@
         <%
             if (i == currentPage) {
         %>
-        <a class="selectedPage" href="<%=url%>"><%=i%></a>
+        <a class="selectedPage" href="<%=url%>"><%=i%>
+        </a>
         <%
         } else {
         %>
-        <a class="paginationButton" href="<%=url%>"><%=i%></a>
+        <a class="paginationButton" href="<%=url%>"><%=i%>
+        </a>
         <%
             }
         %>

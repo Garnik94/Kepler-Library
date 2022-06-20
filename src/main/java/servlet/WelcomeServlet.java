@@ -4,6 +4,7 @@ import exceptions.AbsentUserException;
 import service.UserValidatorService;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 
 @WebServlet(name = "ChooseSectionServlet")
 public class WelcomeServlet extends HttpServlet {
@@ -20,8 +22,10 @@ public class WelcomeServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("inputUsername");
         String password = request.getParameter("inputPassword");
+        ServletContext servletContext = getServletContext();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         try {
-            if (UserValidatorService.validateUser(username, password, request)) {
+            if (UserValidatorService.validateUser(connection, username, password, request)) {
                 session.removeAttribute("searchingOption");
                 response.sendRedirect("BookSection.jsp");
             } else {

@@ -14,6 +14,8 @@
 </head>
 <body class="mainPageBackground">
 
+<br><br><br><br><br><br><br><br><br>
+
 <div class="loginPage">
     <form method="post" action="registration">
         <label class="textStyle">Enter username<br>

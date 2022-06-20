@@ -10,6 +10,7 @@ import service.dao.DocumentTypeDAO;
 import service.dao.LanguageDAO;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 
 @WebServlet(name = "BookSectionServlet")
 public class BookSectionServlet extends HttpServlet {
@@ -36,6 +38,8 @@ public class BookSectionServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        ServletContext servletContext = getServletContext();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
 //        if (request.getParameter("searchBook").length() < 3) {
 //            session.setAttribute("inputValidationError", true);
 //            RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
@@ -44,17 +48,20 @@ public class BookSectionServlet extends HttpServlet {
 //        }
         session.removeAttribute("inputValidationError");
         Category category = null;
-        if (request.getParameter("selectedCategory") != null) {
+        if (request.getParameter("selectedCategory") != null &&
+                !request.getParameter("selectedCategory").equals("All Categories")) {
             category = new Category(request.getParameter("selectedCategory"));
             category.setId(CategoryDAO.getCategoryIdByName(category));
         }
         DocumentType documentType = null;
-        if (request.getParameter("selectedDocumentType") != null) {
+        if (request.getParameter("selectedDocumentType") != null &&
+                !request.getParameter("selectedDocumentType").equals("All Document Types")) {
             documentType = new DocumentType(request.getParameter("selectedDocumentType"));
             documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
         }
         Language language = null;
-        if (request.getParameter("selectedLanguage") != null) {
+        if (request.getParameter("selectedLanguage") != null &&
+                !request.getParameter("selectedLanguage").equals("All Languages")) {
             language = new Language(request.getParameter("selectedLanguage"));
             language.setId(LanguageDAO.getLanguageIdByName(language));
         }
@@ -65,9 +72,10 @@ public class BookSectionServlet extends HttpServlet {
                 language);
         session.setAttribute("searchingOption", searchingOption);
         if (session.getAttribute("CurrentUser") != null) {
-            BookContentDisplayService.mainSearch(request);
+            BookContentDisplayService.mainSearch(request, connection);
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
-        requestDispatcher.forward(request, response);
+//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+//        requestDispatcher.forward(request, response);
+        response.sendRedirect("BookSection.jsp");
     }
 }
