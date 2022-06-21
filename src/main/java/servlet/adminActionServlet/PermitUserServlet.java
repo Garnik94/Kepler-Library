@@ -17,14 +17,26 @@ public class PermitUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
-        AdminActionService.permitUser(request, connection);
         HttpSession session = request.getSession();
-        session.removeAttribute("ManageableUser");
-        response.sendRedirect("AdminProfile.jsp");
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+        if (session.getAttribute("ConfirmPermitUser") == null) {
+            session.setAttribute("ConfirmPermitUser", true);
+            session.removeAttribute("ConfirmForbidUser");
+            session.removeAttribute("ConfirmDeleteUser");
+            response.sendRedirect("ManageUser.jsp");
+        } else {
+            if (request.getParameter("ConfirmPermitUser") != null &&
+                    request.getParameter("confirmPermitUser").equals("yes")) {
+                AdminActionService.permitUser(request, connection);
+                session.removeAttribute("ManageableUser");
+                session.removeAttribute("ConfirmPermitUser");
+                response.sendRedirect("ManageUser.jsp");
+            } else if (request.getParameter("ConfirmPermitUser") != null &&
+                    request.getParameter("ConfirmPermitUser").equals("no")) {
+                session.removeAttribute("ConfirmPermitUser");
+                response.sendRedirect("ManageUser.jsp");
+            } else {
+                response.sendRedirect("ManageUser.jsp");
+            }
+        }
     }
 }

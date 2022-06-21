@@ -69,6 +69,4 @@ public class AdminActionService {
         UserDAO.forbidUser(connection, user);
     }
 
-
-
 }

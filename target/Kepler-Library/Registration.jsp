@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (session.getAttribute("CurrentUser") != null) {
-        request.getRequestDispatcher("BookSection.jsp").forward(request, response);
+        response.sendRedirect("BookSection.jsp");
+        return;
     }
 %>
 <html>

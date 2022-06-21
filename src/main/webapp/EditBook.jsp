@@ -7,7 +7,8 @@
     response.setDateHeader("Expires", 0); // Proxies.
 
     if (session.getAttribute("CurrentUser") == null) {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        response.sendRedirect("Login.jsp");
+        return;
     }
 %>
 <html>
@@ -102,6 +103,8 @@
     <% if (session.getAttribute("ConfirmDeleteBook") != null) {%>
 <%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
             <span class="errorMessageStyle">Are you really going to delete book</span>
+
+            <br>
 
             <form>
                 <label>

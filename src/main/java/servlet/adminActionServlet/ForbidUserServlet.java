@@ -1,6 +1,7 @@
 package servlet.adminActionServlet;
 
 import com.sun.org.apache.xalan.internal.xsltc.DOM;
+import model.User;
 import service.AdminActionService;
 
 import javax.servlet.ServletContext;
@@ -18,13 +19,26 @@ public class ForbidUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
-        AdminActionService.forbidUser(request, connection);
         HttpSession session = request.getSession();
-        session.removeAttribute("ManageableUser");
-        response.sendRedirect("AdminProfile.jsp");
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        if (session.getAttribute("ConfirmForbidUser") == null) {
+            session.setAttribute("ConfirmForbidUser", true);
+            session.removeAttribute("ConfirmPermitUser");
+            session.removeAttribute("ConfirmDeleteUser");
+            response.sendRedirect("ManageUser.jsp");
+        } else {
+            if (request.getParameter("confirmForbidUser") != null &&
+                    request.getParameter("confirmForbidUser").equals("yes")) {
+                AdminActionService.forbidUser(request, connection);
+                session.removeAttribute("ManageableUser");
+                session.removeAttribute("confirmForbidUser");
+                response.sendRedirect("ManageUser.jsp");
+            } else if (request.getParameter("confirmForbidUser") != null &&
+                    request.getParameter("confirmForbidUser").equals("no")) {
+                session.removeAttribute("ConfirmForbidUser");
+                response.sendRedirect("ManageUser.jsp");
+            } else {
+                response.sendRedirect("ManageUser.jsp");
+            }
+        }
     }
 }

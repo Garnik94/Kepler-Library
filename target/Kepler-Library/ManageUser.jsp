@@ -6,7 +6,8 @@
     response.setDateHeader("Expires", 0); // Proxies.
 
     if (session.getAttribute("CurrentUser") == null) {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        response.sendRedirect("Login.jsp");
+        return;
     }
 %>
 <html>
@@ -53,21 +54,25 @@
 <%
     if (session.getAttribute("ManageableUser") != null) {
         User manageableUser = (User) (session.getAttribute("ManageableUser"));
+        String disabled = "";
+        if (manageableUser.getId() == 1){
+            disabled = "disabled";
+        }
 %>
 
 <span class="textStyle"><%=manageableUser.getUsername()%></span><br>
 <span class="textStyle"><%=manageableUser.getEmail()%></span><br><br>
 
 <form action="permitUser" method="post">
-    <input class="loginButtonStyle" type="submit" value="Permit user">
+    <input disabled class="loginButtonStyle" type="submit" value="Permit user">
 </form>
 
 <form action="forbidUser" method="post">
-    <input class="deleteButtonStyle" type="submit" value="Forbid user">
+    <input disabled class="deleteButtonStyle" type="submit" value="Forbid user">
 </form>
 
 <form action="deleteUser" method="post">
-    <input class="deleteButtonStyle" type="submit" value="Delete user">
+    <input disabled class="deleteButtonStyle" type="submit" value="Delete user">
 </form>
 
 <%
@@ -83,6 +88,87 @@
 
 <%
         session.removeAttribute("searchingUserNotFound");
+    }
+%>
+
+<%--<%--%>
+<%--    if (session.getAttribute("AdminDeleteError") != null &&--%>
+<%--            session.getAttribute("AdminDeleteError").equals("true")) {--%>
+<%--%>--%>
+
+<%--<span class="errorMessageStyle">Admin is not deletable</span>--%>
+
+<%--<%--%>
+<%--        session.removeAttribute("AdminDeleteError");--%>
+<%--    }--%>
+<%--%>--%>
+
+
+<%--<%--%>
+<%--    if (session.getAttribute("AdminForbidError") != null &&--%>
+<%--            session.getAttribute("AdminForbidError").equals("true")) {--%>
+<%--%>--%>
+
+<%--<span class="errorMessageStyle">You cant forbid Admin</span>--%>
+
+<%--<%--%>
+<%--        session.removeAttribute("AdminForbidError");--%>
+<%--    }--%>
+<%--%>--%>
+
+<% if (session.getAttribute("ConfirmPermitUser") != null) {%>
+<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
+<span class="errorMessageStyle">Are you really going to permit user</span>
+
+<form>
+    <label>
+        <input class="navigationButtons" type="submit" formaction="permitUser?confirmPermitUser=yes" formmethod="post"
+               value="Yes">
+    </label>
+    <label>
+        <input class="navigationButtons" type="submit" formaction="permitUser?confirmPermitUser=no" formmethod="post"
+               value="No">
+    </label>
+</form>
+<%
+    }
+%>
+
+<% if (session.getAttribute("ConfirmForbidUser") != null) {%>
+<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
+<span class="errorMessageStyle">Are you really going to forbid user</span>
+
+<form>
+    <label>
+        <input class="navigationButtons" type="submit" formaction="forbidUser?confirmForbidUser=yes" formmethod="post"
+               value="Yes">
+    </label>
+    <label>
+        <input class="navigationButtons" type="submit" formaction="forbidUser?confirmForbidUser=no" formmethod="post"
+               value="No">
+    </label>
+</form>
+<%
+    }
+%>
+
+<% if (session.getAttribute("ConfirmDeleteUser") != null) {%>
+<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
+<span class="errorMessageStyle">Are you really going to delete user</span>
+
+<br>
+
+<form>
+    <label>
+        <input class="navigationButtons" type="submit" formaction="deleteUser?confirmDeleteUser=yes" formmethod="post"
+               value="Yes">
+    </label>
+    <label>
+        <input class="navigationButtons" type="submit" formaction="deleteUser?confirmDeleteUser=no" formmethod="post"
+               value="No">
+    </label>
+</form>
+<%
     }
 %>
 

@@ -7,6 +7,7 @@
 
     if (session.getAttribute("CurrentUser") != null) {
         response.sendRedirect("BookSection.jsp");
+        return;
     }
 %>
 <html>

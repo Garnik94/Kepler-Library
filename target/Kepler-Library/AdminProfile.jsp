@@ -6,7 +6,8 @@
     response.setDateHeader("Expires", 0); // Proxies.
 
     if (session.getAttribute("CurrentUser") == null) {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        response.sendRedirect("Login.jsp");
+        return;
     }
 
 %>
