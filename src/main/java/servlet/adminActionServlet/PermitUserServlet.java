@@ -24,14 +24,14 @@ public class PermitUserServlet extends HttpServlet {
             session.removeAttribute("ConfirmDeleteUser");
             response.sendRedirect("ManageUser.jsp");
         } else {
-            if (request.getParameter("ConfirmPermitUser") != null &&
+            if (request.getParameter("confirmPermitUser") != null &&
                     request.getParameter("confirmPermitUser").equals("yes")) {
                 AdminActionService.permitUser(request, connection);
                 session.removeAttribute("ManageableUser");
                 session.removeAttribute("ConfirmPermitUser");
                 response.sendRedirect("ManageUser.jsp");
-            } else if (request.getParameter("ConfirmPermitUser") != null &&
-                    request.getParameter("ConfirmPermitUser").equals("no")) {
+            } else if (request.getParameter("confirmPermitUser") != null &&
+                    request.getParameter("confirmPermitUser").equals("no")) {
                 session.removeAttribute("ConfirmPermitUser");
                 response.sendRedirect("ManageUser.jsp");
             } else {

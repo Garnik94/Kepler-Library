@@ -88,7 +88,9 @@
         </div>
         <%
             String isDisable = "";
-            if (session.getAttribute("ConfirmDeleteBook") != null){
+            if (session.getAttribute("ConfirmDeleteBook") != null ||
+                    session.getAttribute("ConfirmEditBook") != null
+            ){
                 isDisable = "disabled";
             }
         %>
@@ -97,7 +99,7 @@
     </form>
 
     <form action="deleteBook?editableBook=<%=currentEditableBookIndex%>" method="post">
-        <input class="deleteButtonStyle" type="submit" value="Delete book">
+        <input <%=isDisable%> class="deleteButtonStyle" type="submit" value="Delete book">
     </form>
 
     <% if (session.getAttribute("ConfirmDeleteBook") != null) {%>

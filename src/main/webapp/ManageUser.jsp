@@ -55,7 +55,12 @@
     if (session.getAttribute("ManageableUser") != null) {
         User manageableUser = (User) (session.getAttribute("ManageableUser"));
         String disabled = "";
-        if (manageableUser.getId() == 1){
+        if (manageableUser.getId() == 1) {
+            disabled = "disabled";
+        }
+        if (session.getAttribute("ConfirmPermitUser") != null ||
+                session.getAttribute("ConfirmForbidUser") != null ||
+                session.getAttribute("ConfirmDeletedUser") != null) {
             disabled = "disabled";
         }
 %>
@@ -64,15 +69,15 @@
 <span class="textStyle"><%=manageableUser.getEmail()%></span><br><br>
 
 <form action="permitUser" method="post">
-    <input disabled class="loginButtonStyle" type="submit" value="Permit user">
+    <input <%=disabled%> class="loginButtonStyle" type="submit" value="Permit user">
 </form>
 
 <form action="forbidUser" method="post">
-    <input disabled class="deleteButtonStyle" type="submit" value="Forbid user">
+    <input <%=disabled%> class="deleteButtonStyle" type="submit" value="Forbid user">
 </form>
 
 <form action="deleteUser" method="post">
-    <input disabled class="deleteButtonStyle" type="submit" value="Delete user">
+    <input <%=disabled%> class="deleteButtonStyle" type="submit" value="Delete user">
 </form>
 
 <%
