@@ -29,13 +29,13 @@ public class WelcomeServlet extends HttpServlet {
                 session.removeAttribute("searchingOption");
                 response.sendRedirect("BookSection.jsp");
             } else {
-                session.setAttribute("invalidLogin", "true");
+                session.setAttribute("invalidLogin", "Username or password is wrong");
                 response.sendRedirect("Login.jsp");
 //                RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
 //                rd.forward(request, response);
             }
         } catch (AbsentUserException e) {
-            session.setAttribute("invalidLogin", "true");
+            session.setAttribute("invalidLogin", "Username or password is wrong");
             response.sendRedirect("Login.jsp");
 //            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
 //            rd.forward(request, response);

@@ -15,6 +15,7 @@
         response.sendRedirect("Login.jsp");
         return;
     }
+    User user = (User) session.getAttribute("CurrentUser");
 %>
 <html>
 <head>
@@ -26,27 +27,28 @@
 </head>
 <body class="standardPageBody">
 
-<div style="float: right; text-align: center; width: 300px">
-    <span class="textStyle">
-        ${CurrentUser}
-    </span> <br> <br>
+<jsp:include page="UserProfile.jsp"/>
+<%--<div style="float: right; text-align: center; width: 300px">--%>
+<%--    <span class="textStyle">--%>
+<%--        ${CurrentUser}--%>
+<%--    </span> <br> <br>--%>
 
-    <form action="welcome" method="get">
-        <input class="navigationButtons" type="submit" value="Home">
-    </form>
+<%--    <form action="welcome" method="get">--%>
+<%--        <input class="navigationButtons" type="submit" value="Home">--%>
+<%--    </form>--%>
 
-    <%
-        User user = (User) session.getAttribute("CurrentUser");
-        if (user.isHasEditPermission() == 1) { %>
-    <form action="AdminProfile.jsp" method="get">
-        <input class="navigationButtons" type="submit" value="Manage">
-    </form>
-    <% } %>
+<%--    <%--%>
+<%--        User user = (User) session.getAttribute("CurrentUser");--%>
+<%--        if (user.isHasEditPermission() == 1) { %>--%>
+<%--    <form action="AdminProfile.jsp" method="get">--%>
+<%--        <input class="navigationButtons" type="submit" value="Manage">--%>
+<%--    </form>--%>
+<%--    <% } %>--%>
 
-    <form action="logout" method="post">
-        <input class="navigationButtons" type="submit" value="Logout">
-    </form>
-</div>
+<%--    <form action="logout" method="post">--%>
+<%--        <input class="navigationButtons" type="submit" value="Logout">--%>
+<%--    </form>--%>
+<%--</div>--%>
 
 <br><br><br><br><br><br><br><br><br><br><br>
 

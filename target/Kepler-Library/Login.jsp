@@ -38,15 +38,15 @@
                 <input name="inputPassword" class="inputAreaStyle" type="password">
             </label><br>
             <input formmethod="post" formaction="welcome" class="loginButtonStyle" type="submit" value="Login"><br>
-            <input formmethod="get" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
+            <input formmethod="post" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
                    value="Registration">
         </form>
 
         <%
-            if (session.getAttribute("invalidLogin") != null &&
-                    session.getAttribute("invalidLogin").equals("true")) {
+            if (session.getAttribute("invalidLogin") != null /*&&
+                    session.getAttribute("invalidLogin").equals("true")*/) {
         %>
-        <span class="errorMessageStyle">Username or password is wrong</span>
+        <span class="errorMessageStyle">${invalidLogin}</span>
         <%
                 session.removeAttribute("invalidLogin");
             }

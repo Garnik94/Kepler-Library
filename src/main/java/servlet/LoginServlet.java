@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("invalidLogin", "false");
+        request.setAttribute("invalidLogin", null);
         RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
         rd.forward(request, response);
     }
