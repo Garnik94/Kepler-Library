@@ -15,12 +15,12 @@
     </context-param>
 
     <listener>
-        <listener-class>servlet.listeners.ContextListener</listener-class>
+        <listener-class>controller.listeners.ContextListener</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>Login page</servlet-name>
-        <servlet-class>servlet.LoginServlet</servlet-class>
+        <servlet-class>controller.LoginController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login page</servlet-name>
@@ -29,7 +29,7 @@
 
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>servlet.LogoutServlet</servlet-class>
+        <servlet-class>controller.LogoutController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
@@ -38,7 +38,7 @@
 
     <servlet>
         <servlet-name>Registration page</servlet-name>
-        <servlet-class>servlet.RegistrationServlet</servlet-class>
+        <servlet-class>controller.RegistrationController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Registration page</servlet-name>
@@ -47,7 +47,7 @@
 
     <servlet>
         <servlet-name>Welcome page</servlet-name>
-        <servlet-class>servlet.WelcomeServlet</servlet-class>
+        <servlet-class>controller.WelcomeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Welcome page</servlet-name>
@@ -56,7 +56,7 @@
 
     <servlet>
         <servlet-name>Search manageable user</servlet-name>
-        <servlet-class>servlet.adminActionServlet.SearchManageableUserServlet</servlet-class>
+        <servlet-class>controller.permitedActionController.ManageableUserSearchController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Search manageable user</servlet-name>
@@ -65,7 +65,7 @@
 
     <servlet>
         <servlet-name>Delete user</servlet-name>
-        <servlet-class>servlet.adminActionServlet.DeleteUserServlet</servlet-class>
+        <servlet-class>controller.permitedActionController.UserDeleteController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete user</servlet-name>
@@ -74,7 +74,7 @@
 
     <servlet>
         <servlet-name>Permit user</servlet-name>
-        <servlet-class>servlet.adminActionServlet.PermitUserServlet</servlet-class>
+        <servlet-class>controller.permitedActionController.UserPermitController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Permit user</servlet-name>
@@ -83,7 +83,7 @@
 
     <servlet>
         <servlet-name>Forbid user</servlet-name>
-        <servlet-class>servlet.adminActionServlet.ForbidUserServlet</servlet-class>
+        <servlet-class>controller.permitedActionController.UserForbidController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Forbid user</servlet-name>
@@ -92,7 +92,7 @@
 
     <servlet>
         <servlet-name>Book section</servlet-name>
-        <servlet-class>servlet.BookSectionServlet</servlet-class>
+        <servlet-class>controller.BookSectionController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Book section</servlet-name>
@@ -101,7 +101,7 @@
 
     <servlet>
         <servlet-name>Add new book</servlet-name>
-        <servlet-class>servlet.adminActionServlet.AddBookServlet</servlet-class>
+        <servlet-class>controller.permitedActionController.BookAddController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Add new book</servlet-name>
@@ -110,7 +110,7 @@
 
     <servlet>
         <servlet-name>Edit book</servlet-name>
-        <servlet-class>servlet.adminActionServlet.EditBookServlet</servlet-class>
+        <servlet-class>controller.permitedActionController.BookEditController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Edit book</servlet-name>
@@ -119,7 +119,7 @@
 
     <servlet>
         <servlet-name>Delete book</servlet-name>
-        <servlet-class>servlet.adminActionServlet.DeleteBookServlet</servlet-class>
+        <servlet-class>controller.permitedActionController.BookDeleteController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete book</servlet-name>
@@ -128,7 +128,7 @@
 
     <servlet>
         <servlet-name>Sort book content</servlet-name>
-        <servlet-class>servlet.SortBookContentServlet</servlet-class>
+        <servlet-class>controller.BookSortController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Sort book content</servlet-name>
@@ -139,5 +139,37 @@
         <error-code>404</error-code>
         <location>/404Error.jsp</location>
     </error-page>
+
+    <filter>
+        <filter-name>User Authenticate</filter-name>
+        <filter-class>filter.UserAuthenticateFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>User Authenticate</filter-name>
+        <url-pattern>/AddBook.jsp</url-pattern>
+        <url-pattern>/BookSection.jsp</url-pattern>
+        <url-pattern>/EditBook.jsp</url-pattern>
+        <url-pattern>/ManageUser.jsp</url-pattern>
+        <url-pattern>/PermittedProfile.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>User Confirmation</filter-name>
+        <filter-class>filter.UserConfirmationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>User Confirmation</filter-name>
+        <url-pattern>/Login.jsp</url-pattern>
+        <url-pattern>/Registration.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>Cache control</filter-name>
+        <filter-class>filter.CacheControlFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Cache control</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>

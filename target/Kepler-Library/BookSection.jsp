@@ -7,14 +7,14 @@
 <%@ page import="service.dao.LanguageDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-    response.setDateHeader("Expires", 0); // Proxies.
+//    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//    response.setDateHeader("Expires", 0); // Proxies.
 
-    if (session.getAttribute("CurrentUser") == null) {
-        response.sendRedirect("Login.jsp");
-        return;
-    }
+//    if (session.getAttribute("CurrentUser") == null) {
+//        response.sendRedirect("Login.jsp");
+//        return;
+//    }
     User user = (User) session.getAttribute("CurrentUser");
 %>
 <html>
@@ -27,28 +27,28 @@
 </head>
 <body class="standardPageBody">
 
-<jsp:include page="UserProfile.jsp"/>
-<%--<div style="float: right; text-align: center; width: 300px">--%>
-<%--    <span class="textStyle">--%>
-<%--        ${CurrentUser}--%>
-<%--    </span> <br> <br>--%>
+<%--<jsp:include page="UserProfile.jsp"/>--%>
+<div style="float: right; text-align: center; width: 300px">
+    <span class="textStyle">
+        ${CurrentUser}
+    </span> <br> <br>
 
-<%--    <form action="welcome" method="get">--%>
-<%--        <input class="navigationButtons" type="submit" value="Home">--%>
-<%--    </form>--%>
+    <form action="welcome" method="get">
+        <input class="navigationButtons" type="submit" value="Home">
+    </form>
 
-<%--    <%--%>
-<%--        User user = (User) session.getAttribute("CurrentUser");--%>
-<%--        if (user.isHasEditPermission() == 1) { %>--%>
-<%--    <form action="AdminProfile.jsp" method="get">--%>
-<%--        <input class="navigationButtons" type="submit" value="Manage">--%>
-<%--    </form>--%>
-<%--    <% } %>--%>
+    <%
+//        User user = (User) session.getAttribute("CurrentUser");
+        if (user.isHasEditPermission() == 1) { %>
+    <form action="PermittedProfile.jsp" method="get">
+        <input class="navigationButtons" type="submit" value="Manage">
+    </form>
+    <% } %>
 
-<%--    <form action="logout" method="post">--%>
-<%--        <input class="navigationButtons" type="submit" value="Logout">--%>
-<%--    </form>--%>
-<%--</div>--%>
+    <form action="logout" method="post">
+        <input class="navigationButtons" type="submit" value="Logout">
+    </form>
+</div>
 
 <br><br><br><br><br><br><br><br><br><br><br>
 
