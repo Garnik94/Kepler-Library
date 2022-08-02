@@ -9,10 +9,6 @@ import java.util.List;
 
 public class LanguageDAO {
 
-//    static {
-//        setLanguages(getAllLanguages());
-//    }
-
     private static List<Language> languages;
 
     public static List<Language> getLanguages() {
@@ -22,13 +18,6 @@ public class LanguageDAO {
     public static void setLanguages(List<Language> languages) {
         LanguageDAO.languages = languages;
     }
-
-//    public static Connection getConnection() throws SQLException {
-//        DriverManager.registerDriver(new SQLServerDriver());
-//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-//        return DriverManager.getConnection(url);
-//    }
 
     public static List<Language> getAllLanguages(Connection connection) {
         List<Language> languages = new ArrayList<>();
@@ -53,17 +42,6 @@ public class LanguageDAO {
                     return currentLanguage;
                 }
             }
-//        try {
-//            String query = "SELECT * FROM Languages WHERE ID = ?";
-//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-//            preparedStatement.setString(1, Integer.toString(id));
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                return new Language(resultSet.getString("Language"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return null;
     }
 
@@ -73,17 +51,6 @@ public class LanguageDAO {
                 return currentLanguage.getId();
             }
         }
-//        try {
-//            String query = "SELECT * FROM Languages WHERE Language = ?";
-//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-//            preparedStatement.setString(1, language.getLanguage());
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                return resultSet.getInt("ID");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return -1;
     }
 

@@ -135,11 +135,6 @@
         <url-pattern>/sortBooks</url-pattern>
     </servlet-mapping>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404Error.jsp</location>
-    </error-page>
-
     <filter>
         <filter-name>User Authenticate</filter-name>
         <filter-class>filter.UserAuthenticateFilter</filter-class>
@@ -164,6 +159,15 @@
     </filter-mapping>
 
     <filter>
+        <filter-name>User profile</filter-name>
+        <filter-class>filter.UserProfileFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>User profile</filter-name>
+        <url-pattern>/UserProfile.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>Cache control</filter-name>
         <filter-class>filter.CacheControlFilter</filter-class>
     </filter>
@@ -171,14 +175,15 @@
         <filter-name>Cache control</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
-    <servlet>
-        <servlet-name>User profile</servlet-name>
-        <servlet-class>controller.BookSectionController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>User profile</servlet-name>
-        <url-pattern>/UserProfile.jsp</url-pattern>
-    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404Error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/Error.jsp</location>
+    </error-page>
 
 </web-app>

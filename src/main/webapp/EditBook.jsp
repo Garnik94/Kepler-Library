@@ -1,16 +1,6 @@
 <%@ page import="model.content.Book" %>
 <%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-//    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-//    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-//    response.setDateHeader("Expires", 0); // Proxies.
-
-//    if (session.getAttribute("CurrentUser") == null) {
-//        response.sendRedirect("Login.jsp");
-//        return;
-//    }
-%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -22,28 +12,6 @@
 <body class="standardPageBody">
 
 <jsp:include page="UserProfile.jsp"/>
-
-<%--<div style="float: right; text-align: center; width: 300px">--%>
-<%--    <span class="textStyle">--%>
-<%--        ${CurrentUser}--%>
-<%--    </span> <br> <br>--%>
-
-<%--    <form action="welcome" method="get">--%>
-<%--        <input class="navigationButtons" type="submit" value="Home">--%>
-<%--    </form>--%>
-
-<%--    <%--%>
-<%--        User user = (User) session.getAttribute("CurrentUser");--%>
-<%--        if (user.isHasEditPermission() == 1) { %>--%>
-<%--    <form action="PermittedProfile.jsp" method="get">--%>
-<%--        <input class="navigationButtons" type="submit" value="Manage">--%>
-<%--    </form>--%>
-<%--    <% } %>--%>
-
-<%--    <form action="logout" method="post">--%>
-<%--        <input class="navigationButtons" type="submit" value="Logout">--%>
-<%--    </form>--%>
-<%--</div>--%>
 
 <br><br><br><br><br><br><br><br><br><br><br>
 
@@ -73,7 +41,7 @@
                 </label><br>
             </div>
 
-            <div style="display: inline-block; margin-left: 20px"<%--style="float: right; margin-right: 450px"--%>>
+            <div style="display: inline-block; margin-left: 20px">
                 <label class="textStyle">Year<br>
                     <input class="inputAreaStyle" type="text" name="editYear" value="<%=editableBook.getYear()%>">
                 </label><br>
@@ -105,8 +73,7 @@
     </form>
 
     <% if (session.getAttribute("ConfirmDeleteBook") != null) {%>
-<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
-            <span class="errorMessageStyle">Are you really going to delete book</span>
+            <span class="errorMessageStyle">${ConfirmDeleteBook}</span>
 
             <br>
 
@@ -122,8 +89,10 @@
         }
     %>
 
-    <% if (session.getAttribute("ConfirmEditBook") != null) {%>
-<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
+    <%
+        if (session.getAttribute("ConfirmEditBook") != null)
+        {
+    %>
             <span class="errorMessageStyle">Are you really going to edit book</span>
 
             <form>
@@ -135,6 +104,15 @@
                 </label>
             </form>
     <%
+        }
+    %>
+
+    <%
+        if (session.getAttribute("requiredUpdateBook") != null) {
+    %>
+    <span class="errorMessageStyle">${requiredUpdateBook}</span>
+    <%
+            session.removeAttribute("requiredUpdateBook");
         }
     %>
 

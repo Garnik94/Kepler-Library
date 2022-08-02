@@ -9,13 +9,6 @@ import java.util.List;
 
 public class AuthorDAO {
 
-//    public static Connection getConnection() throws SQLException {
-//        DriverManager.registerDriver(new SQLServerDriver());
-//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-//        return DriverManager.getConnection(url);
-//    }
-
     public static Author getAuthorById(Connection connection, int id) {
         try {
             String query = "SELECT * FROM Authors WHERE Author_Id = ?";

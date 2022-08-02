@@ -192,4 +192,64 @@ public class BookContentDisplayService {
         DocumentTypeDAO.setDocumentTypes(new ArrayList<>(filterDocumentTypes));
     }
 
+    public static SearchingOption cacheSearchingOptions(HttpServletRequest request) {
+        Category category = getSelectedCategory(request);
+        DocumentType documentType = getSelectedDocumentType(request);
+        Language language = getSelectedLanguage(request);
+        return new SearchingOption(request.getParameter("searchBook"),
+                request.getParameter("searchBy"),
+                category,
+                documentType,
+                language);
+    }
+    public static Category getSelectedCategory(HttpServletRequest request) {
+        Category category = null;
+        if (request.getParameter("selectedCategory") != null &&
+                !request.getParameter("selectedCategory").equals("All Categories")) {
+            category = new Category(request.getParameter("selectedCategory"));
+            category.setId(CategoryDAO.getCategoryIdByName(category));
+        }
+        return category;
+    }
+
+    public static DocumentType getSelectedDocumentType(HttpServletRequest request) {
+        DocumentType documentType = null;
+        if (request.getParameter("selectedDocumentType") != null &&
+                !request.getParameter("selectedDocumentType").equals("All Document Types")) {
+            documentType = new DocumentType(request.getParameter("selectedDocumentType"));
+            documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
+        }
+        return documentType;
+    }
+
+    public static Language getSelectedLanguage(HttpServletRequest request) {
+        Language language = null;
+        if (request.getParameter("selectedLanguage") != null &&
+                !request.getParameter("selectedLanguage").equals("All Languages")) {
+            language = new Language(request.getParameter("selectedLanguage"));
+            language.setId(LanguageDAO.getLanguageIdByName(language));
+        }
+        return language;
+    }
+
+    public static void deleteBookFromBookList(Book checkedBook) {
+        Iterator<Book> iterator = BookContentDisplayService.bookList.iterator();
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            if (book.getId() == checkedBook.getId()) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+
+    public static void updateBookFromBookList(Book checkedBook, Connection connection) {
+        for (int i = 0; i < BookContentDisplayService.bookList.size(); i++) {
+            if (BookContentDisplayService.bookList.get(i).getId() == checkedBook.getId()) {
+                BookContentDisplayService.bookList.set(i, BookDAO.getBookById(connection, checkedBook.getId()).get(0));
+                break;
+            }
+        }
+    }
+
 }

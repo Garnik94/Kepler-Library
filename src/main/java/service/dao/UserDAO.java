@@ -12,13 +12,6 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-//    public static Connection getConnection() throws SQLException {
-//        DriverManager.registerDriver(new SQLServerDriver());
-//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-//        return DriverManager.getConnection(url);
-//    }
-
     public static User getUser(Connection connection, User user) throws AbsentUserException {
         try {
             String query = "SELECT * FROM Users WHERE Username = ?";

@@ -1,6 +1,6 @@
 package controller.permitedActionController;
 
-import service.AdminActionService;
+import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ public class BookAddController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
-        AdminActionService.addNewBook(request, connection);
+        PermittedActionService.addNewBook(request, connection);
         response.sendRedirect("PermittedProfile.jsp");
     }
 

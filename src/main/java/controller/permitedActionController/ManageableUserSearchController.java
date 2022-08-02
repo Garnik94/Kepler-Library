@@ -2,7 +2,7 @@ package controller.permitedActionController;
 
 import exceptions.AbsentUserException;
 import model.User;
-import service.AdminActionService;
+import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,7 +25,7 @@ public class ManageableUserSearchController extends HttpServlet {
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         try {
-            User user = AdminActionService.getUserFromDb(request, connection);
+            User user = PermittedActionService.getUserFromDb(request, connection);
             session.setAttribute("ManageableUser", user);
             if (session.getAttribute("searchingUserNotFound") != null) {
                 session.removeAttribute("searchingUserNotFound");

@@ -1,6 +1,6 @@
 package controller.permitedActionController;
 
-import service.AdminActionService;
+import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,7 +26,7 @@ public class UserForbidController extends HttpServlet {
         } else {
             if (request.getParameter("confirmForbidUser") != null &&
                     request.getParameter("confirmForbidUser").equals("yes")) {
-                AdminActionService.forbidUser(request, connection);
+                PermittedActionService.forbidUser(request, connection);
                 session.removeAttribute("ManageableUser");
                 session.removeAttribute("confirmForbidUser");
                 response.sendRedirect("ManageUser.jsp");

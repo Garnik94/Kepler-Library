@@ -31,18 +31,18 @@ public class RegistrationController extends HttpServlet {
                 password.equals(confirmPassword)) {
             boolean isUserSuccessfullyAdded = UserDAO.addNewUser(connection, username, password, email);
             if (isUserSuccessfullyAdded) {
-                session.removeAttribute("MismatchedPasswords");
-                session.removeAttribute("RequiredInputError");
+                session.removeAttribute("mismatchedPasswords");
+                session.removeAttribute("requiredInputError");
                 response.sendRedirect("Login.jsp");
             } else {
-                session.setAttribute("UserIsAlreadyExists", "true");
+                session.setAttribute("userIsAlreadyExists", "User is already exists");
                 response.sendRedirect("Registration.jsp");
             }
         } else if (!password.equals(confirmPassword)) {
-            session.setAttribute("MismatchedPasswords", "true");
+            session.setAttribute("mismatchedPasswords", "Mismatched passwords");
             response.sendRedirect("Registration.jsp");
         } else {
-            session.setAttribute("RequiredInputError", "true");
+            session.setAttribute("requiredInputError", "All inputs are required");
             response.sendRedirect("Registration.jsp");
         }
     }

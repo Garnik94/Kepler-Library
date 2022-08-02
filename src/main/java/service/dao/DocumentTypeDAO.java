@@ -9,10 +9,6 @@ import java.util.List;
 
 public class DocumentTypeDAO {
 
-//    static {
-//        setDocumentTypes(getAllDocumentTypes());
-//    }
-
     private static List<DocumentType> documentTypes;
 
     public static List<DocumentType> getDocumentTypes() {
@@ -22,13 +18,6 @@ public class DocumentTypeDAO {
     public static void setDocumentTypes(List<DocumentType> documentTypes) {
         DocumentTypeDAO.documentTypes = documentTypes;
     }
-
-//    public static Connection getConnection() throws SQLException {
-//        DriverManager.registerDriver(new SQLServerDriver());
-//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-//        return DriverManager.getConnection(url);
-//    }
 
     public static List<DocumentType> getAllDocumentTypes(Connection connection) {
         List<DocumentType> documentTypes = new ArrayList<>();
@@ -53,17 +42,6 @@ public class DocumentTypeDAO {
                 return currentDocumentType;
             }
         }
-//        try {
-//            String query = "SELECT * FROM Document_Types WHERE ID = ?";
-//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-//            preparedStatement.setString(1, Integer.toString(id));
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                return new DocumentType(resultSet.getString("Type"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return null;
     }
 
@@ -73,17 +51,6 @@ public class DocumentTypeDAO {
                 return currentDocumentType.getId();
             }
         }
-//        try {
-//            String query = "SELECT * FROM Document_Types WHERE Type = ?";
-//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-//            preparedStatement.setString(1, documentType.getType());
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                return resultSet.getInt("ID");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return -1;
     }
 

@@ -1,6 +1,6 @@
 package controller.permitedActionController;
 
-import service.AdminActionService;
+import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,7 +26,7 @@ public class UserPermitController extends HttpServlet {
         } else {
             if (request.getParameter("confirmPermitUser") != null &&
                     request.getParameter("confirmPermitUser").equals("yes")) {
-                AdminActionService.permitUser(request, connection);
+                PermittedActionService.permitUser(request, connection);
                 session.removeAttribute("ManageableUser");
                 session.removeAttribute("ConfirmPermitUser");
                 response.sendRedirect("ManageUser.jsp");

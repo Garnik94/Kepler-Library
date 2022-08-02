@@ -9,13 +9,6 @@ import java.util.List;
 
 public class BookDAO {
 
-//    public static Connection getConnection() throws SQLException {
-//        DriverManager.registerDriver(new SQLServerDriver());
-//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-//        return DriverManager.getConnection(url);
-//    }
-
     private static List<Book> getBooks(Connection connection, PreparedStatement preparedStatement) throws SQLException {
         List<Book> books = new ArrayList<>();
         ResultSet resultSet = preparedStatement.executeQuery();

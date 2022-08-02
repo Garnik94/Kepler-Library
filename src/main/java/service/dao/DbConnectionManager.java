@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbConnectionManager {
-
     public static Connection getConnection(String url) throws SQLException {
         DriverManager.registerDriver(new SQLServerDriver());
         return DriverManager.getConnection(url);

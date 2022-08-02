@@ -29,14 +29,10 @@ public class WelcomeController extends HttpServlet {
             } else {
                 session.setAttribute("invalidLogin", "Username or password is wrong");
                 response.sendRedirect("Login.jsp");
-//                RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-//                rd.forward(request, response);
             }
         } catch (AbsentUserException e) {
             session.setAttribute("invalidLogin", "Username or password is wrong");
             response.sendRedirect("Login.jsp");
-//            RequestDispatcher rd = request.getRequestDispatcher("Login.jsp");
-//            rd.forward(request, response);
         }
     }
 

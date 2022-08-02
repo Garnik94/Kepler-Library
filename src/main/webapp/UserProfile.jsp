@@ -14,7 +14,6 @@
     <span class="textStyle">
         <jsp:useBean id="CurrentUser" type="model.User" scope="session"/>
         <jsp:getProperty name="CurrentUser" property="username"/>
-<%--        </jsp:useBean>--%>
     </span> <br><br>
 
     <form action="welcome" method="get">
@@ -23,7 +22,8 @@
 
     <%
         User user = (User) session.getAttribute("CurrentUser");
-        if (user.isHasEditPermission() == 1) { %>
+        if (user.isHasEditPermission() == 1) {
+    %>
     <form action="PermittedProfile.jsp" method="get">
         <input class="navigationButtons" type="submit" value="Manage">
     </form>

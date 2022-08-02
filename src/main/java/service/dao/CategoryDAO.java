@@ -11,10 +11,6 @@ import java.util.List;
 
 public class CategoryDAO {
 
-//    static {
-//        setCategories(getAllCategories());
-//    }
-
     private static List<Category> categories;
 
     public static List<Category> getCategories() {
@@ -24,13 +20,6 @@ public class CategoryDAO {
     public static void setCategories(List<Category> categories) {
         CategoryDAO.categories = categories;
     }
-
-//    public static Connection getConnection() throws SQLException {
-//        DriverManager.registerDriver(new SQLServerDriver());
-//        String url = "jdbc:sqlserver://localhost:1433;databaseName=Kepler_Library;" +
-//                "integratedSecurity=true;encrypt=true;trustServerCertificate=true";
-//        return DriverManager.getConnection(url);
-//    }
 
     public static List<Category> getAllCategories(Connection connection) {
         List<Category> categories = new ArrayList<>();
@@ -55,17 +44,6 @@ public class CategoryDAO {
                 return currentCategory;
             }
         }
-//        try {
-//            String query = "SELECT * FROM Categories WHERE ID = ?";
-//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-//            preparedStatement.setString(1, Integer.toString(id));
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                return new Category(resultSet.getString("Category"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return null;
     }
 
@@ -75,17 +53,6 @@ public class CategoryDAO {
                 return currentCategory.getId();
             }
         }
-//        try {
-//            String query = "SELECT * FROM Categories WHERE Category = ?";
-//            PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-//            preparedStatement.setString(1, category.getCategoryName());
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                return resultSet.getInt("ID");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return -1;
     }
 

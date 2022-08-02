@@ -1,6 +1,6 @@
 package controller.permitedActionController;
 
-import service.AdminActionService;
+import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,7 +27,7 @@ public class UserDeleteController extends HttpServlet {
         } else {
             if (request.getParameter("confirmDeleteUser") != null &&
                     request.getParameter("confirmDeleteUser").equals("yes")) {
-                AdminActionService.deleteUser(request, connection);
+                PermittedActionService.deleteUser(request, connection);
                 session.removeAttribute("ManageableUser");
                 session.removeAttribute("ConfirmDeleteUser");
                 response.sendRedirect("ManageUser.jsp");
