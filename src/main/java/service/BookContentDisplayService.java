@@ -30,9 +30,11 @@ public class BookContentDisplayService {
         setCategories(getAllCategories(connection));
         setLanguages(getAllLanguages(connection));
         setDocumentTypes(getAllDocumentTypes(connection));
-        if (searchingOption.getSearchBy().equals("Author")) {
+        if (searchingOption.getSearchBy() != null &&
+                searchingOption.getSearchBy().equals("Author")) {
             searchBooksByAuthor(connection, searchingOption.getInputSearchOption());
-        } else if (searchingOption.getSearchBy().equals("Title")) {
+        } else if (searchingOption.getSearchBy() != null &&
+                searchingOption.getSearchBy().equals("Title")) {
             searchBooksByTitle(connection, searchingOption.getInputSearchOption());
         }
         filterBooksByLanguage(searchingOption.getLanguage());

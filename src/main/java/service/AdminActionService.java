@@ -1,5 +1,6 @@
 package service;
 
+import com.google.common.base.Preconditions;
 import exceptions.AbsentUserException;
 import model.User;
 import model.content.*;
@@ -19,6 +20,7 @@ public class AdminActionService {
     }
 
     public static void addNewBook(HttpServletRequest request, Connection connection) throws IOException {
+        Preconditions.checkNotNull(connection);
         Author author = new Author(request.getParameter("author"));
         String title = request.getParameter("title");
         Category category = new Category(request.getParameter("category"));
@@ -31,6 +33,8 @@ public class AdminActionService {
     }
 
     public static void updateBook(Book book, HttpServletRequest request, Connection connection) {
+        Preconditions.checkNotNull(book);
+        Preconditions.checkNotNull(connection);
         Author author = new Author(request.getParameter("editAuthor"));
         String title = request.getParameter("editTitle");
         Category category = new Category(request.getParameter("editCategory"));
@@ -43,27 +47,33 @@ public class AdminActionService {
     }
 
     public static void deleteBook(Book book, Connection connection) {
+        Preconditions.checkNotNull(book);
+        Preconditions.checkNotNull(connection);
         BookDAO.deleteBook(connection, book);
     }
 
     public static User getUserFromDb(HttpServletRequest request, Connection connection) throws AbsentUserException {
+        Preconditions.checkNotNull(connection);
         User user = new User(request.getParameter("searchingUser"));
         return UserDAO.getUser(connection, user);
     }
 
     public static void deleteUser(HttpServletRequest request, Connection connection) {
+        Preconditions.checkNotNull(connection);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("ManageableUser");
         UserDAO.deleteUser(connection, user);
     }
 
     public static void permitUser(HttpServletRequest request, Connection connection) {
+        Preconditions.checkNotNull(connection);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("ManageableUser");
         UserDAO.permitUser(connection, user);
     }
 
     public static void forbidUser(HttpServletRequest request, Connection connection) {
+        Preconditions.checkNotNull(connection);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("ManageableUser");
         UserDAO.forbidUser(connection, user);

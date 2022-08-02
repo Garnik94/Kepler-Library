@@ -171,5 +171,14 @@
         <filter-name>Cache control</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <servlet>
+        <servlet-name>User profile</servlet-name>
+        <servlet-class>controller.BookSectionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>User profile</servlet-name>
+        <url-pattern>/UserProfile.jsp</url-pattern>
+    </servlet-mapping>
 
 </web-app>
