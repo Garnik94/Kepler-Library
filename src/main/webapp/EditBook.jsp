@@ -1,5 +1,4 @@
 <%@ page import="model.content.Book" %>
-<%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -24,7 +23,7 @@
         session.setAttribute("checkedBook", editableBook);
     %>
 
-    <form action="editBook<%--?editableBook=<%=currentEditableBookIndex%>--%>" method="post">
+    <form action="editBook" method="post">
         <div>
             <div style="display: inline-block; margin-right: 20px">
                 <label class="textStyle">Author<br>
@@ -104,15 +103,6 @@
                 </label>
             </form>
     <%
-        }
-    %>
-
-    <%
-        if (session.getAttribute("requiredUpdateBook") != null) {
-    %>
-    <span class="errorMessageStyle">${requiredUpdateBook}</span>
-    <%
-            session.removeAttribute("requiredUpdateBook");
         }
     %>
 

@@ -16,70 +16,31 @@ import java.sql.Connection;
 
 public class PermittedActionService {
 
-    private void addContent(HttpServletRequest request, HttpServletResponse response) {
-
-    }
-
-    public static boolean checkRequiredInputs(String... inputs) {
-        for (String input : inputs) {
-            if (input.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void addNewBook(HttpServletRequest request, Connection connection) throws IOException {
         Preconditions.checkNotNull(connection);
-            String author = request.getParameter("author");
-            String title = request.getParameter("title");
-            String category = request.getParameter("category");
-            String language = request.getParameter("language");
-            String year = request.getParameter("year");
-            String documentType = request.getParameter("documentType");
-            String pages = request.getParameter("pages");
-            String downloadUrl = request.getParameter("downloadUrl");
-        if(!checkRequiredInputs(author, title, category, language, year, documentType, pages, downloadUrl)) {
-            BookDAO.addNewBook(connection, new Book(new Author(author),
-                    title,
-                    new Category(category),
-                    new Language(language),
-                    Integer.parseInt(year),
-                    new DocumentType(documentType),
-                    Integer.parseInt(pages),
-                    downloadUrl));
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("requiredAddBook", "All inputs are required");
-        }
+        Author author = new Author(request.getParameter("author"));
+        String title = request.getParameter("title");
+        Category category = new Category(request.getParameter("category"));
+        Language language = new Language(request.getParameter("language"));
+        int year = request.getParameter("year").isEmpty() ? 0 : Integer.parseInt(request.getParameter("year"));
+        DocumentType documentType = new DocumentType(request.getParameter("documentType"));
+        int pages = request.getParameter("pages").isEmpty() ? 0 : Integer.parseInt(request.getParameter("pages"));
+        String downloadUrl = request.getParameter("downloadUrl");
+        BookDAO.addNewBook(connection, new Book(author, title, category, language, year, documentType, pages, downloadUrl));
     }
 
     public static void updateBook(Book book, HttpServletRequest request, Connection connection) {
         Preconditions.checkNotNull(book);
         Preconditions.checkNotNull(connection);
-        String author = request.getParameter("editAuthor");
+        Author author = new Author(request.getParameter("editAuthor"));
         String title = request.getParameter("editTitle");
-        String category = request.getParameter("editCategory");
-        String language = request.getParameter("editLanguage");
-        String year = request.getParameter("editYear");
-        String documentType = request.getParameter("editDocumentType");
-        String pages = request.getParameter("editPages");
+        Category category = new Category(request.getParameter("editCategory"));
+        Language language = new Language(request.getParameter("editLanguage"));
+        int year = request.getParameter("editYear").isEmpty() ? 0 : Integer.parseInt(request.getParameter("editYear"));
+        DocumentType documentType = new DocumentType(request.getParameter("editDocumentType"));
+        int pages = request.getParameter("editPages").isEmpty() ? 0 : Integer.parseInt(request.getParameter("editPages"));
         String downloadUrl = request.getParameter("editDownloadUrl");
-        if (!checkRequiredInputs(author, title, category, language, year, documentType, pages, downloadUrl)) {
-            BookDAO.updateBook(connection,
-                    book,
-                    new Author(author),
-                    title,
-                    new Category(category),
-                    new Language(language),
-                    Integer.parseInt(year),
-                    new DocumentType(documentType),
-                    Integer.parseInt(pages),
-                    downloadUrl);
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("requiredUpdateBook", "All inputs are required");
-        }
+        BookDAO.updateBook(connection, book, author, title, category, language, year, documentType, pages, downloadUrl);
     }
 
     public static void deleteBook(Book book, Connection connection) {
