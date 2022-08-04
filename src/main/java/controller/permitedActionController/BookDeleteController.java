@@ -1,5 +1,6 @@
 package controller.permitedActionController;
 
+import com.google.common.base.Objects;
 import model.content.Book;
 import service.PermittedActionService;
 import service.BookContentDisplayService;
@@ -26,7 +27,7 @@ public class BookDeleteController extends HttpServlet {
             response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
         } else {
             if (request.getParameter("confirmDeleteBook") != null &&
-                    request.getParameter("confirmDeleteBook").equals("yes")) {
+                    Objects.equal(request.getParameter("confirmDeleteBook"), "yes")) {
                 Book checkedBook = (Book) session.getAttribute("checkedBook");
                 PermittedActionService.deleteBook(checkedBook, connection);
                 BookContentDisplayService.deleteBookFromBookList(checkedBook);
@@ -34,7 +35,7 @@ public class BookDeleteController extends HttpServlet {
                 session.removeAttribute("ConfirmDeleteBook");
                 response.sendRedirect("BookSection.jsp");
             } else if (request.getParameter("confirmDeleteBook") != null &&
-                    request.getParameter("confirmDeleteBook").equals("no")) {
+                    Objects.equal(request.getParameter("confirmDeleteBook"), "no")) {
                 session.removeAttribute("ConfirmDeleteBook");
                 response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
             } else {

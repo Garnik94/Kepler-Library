@@ -1,5 +1,6 @@
 package controller.permitedActionController;
 
+import com.google.common.base.Objects;
 import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
@@ -26,13 +27,13 @@ public class UserDeleteController extends HttpServlet {
             response.sendRedirect("ManageUser.jsp");
         } else {
             if (request.getParameter("confirmDeleteUser") != null &&
-                    request.getParameter("confirmDeleteUser").equals("yes")) {
+                    Objects.equal(request.getParameter("confirmDeleteUser"), "yes")) {
                 PermittedActionService.deleteUser(request, connection);
                 session.removeAttribute("ManageableUser");
                 session.removeAttribute("ConfirmDeleteUser");
                 response.sendRedirect("ManageUser.jsp");
             } else if (request.getParameter("confirmDeleteUser") != null &&
-                    request.getParameter("confirmDeleteUser").equals("no")) {
+                    Objects.equal(request.getParameter("confirmDeleteUser"), "no")) {
                 session.removeAttribute("ConfirmDeleteUser");
                 response.sendRedirect("ManageUser.jsp");
             } else {

@@ -1,5 +1,6 @@
 package controller.permitedActionController;
 
+import com.google.common.base.Objects;
 import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
@@ -25,13 +26,13 @@ public class UserForbidController extends HttpServlet {
             response.sendRedirect("ManageUser.jsp");
         } else {
             if (request.getParameter("confirmForbidUser") != null &&
-                    request.getParameter("confirmForbidUser").equals("yes")) {
+                    Objects.equal(request.getParameter("confirmForbidUser"), "yes")) {
                 PermittedActionService.forbidUser(request, connection);
                 session.removeAttribute("ManageableUser");
                 session.removeAttribute("confirmForbidUser");
                 response.sendRedirect("ManageUser.jsp");
             } else if (request.getParameter("confirmForbidUser") != null &&
-                    request.getParameter("confirmForbidUser").equals("no")) {
+                    Objects.equal(request.getParameter("confirmForbidUser"), "no")) {
                 session.removeAttribute("ConfirmForbidUser");
                 response.sendRedirect("ManageUser.jsp");
             } else {

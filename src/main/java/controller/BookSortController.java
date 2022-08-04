@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.common.base.Objects;
 import service.BookContentDisplayService;
 
 import javax.servlet.ServletException;
@@ -17,22 +18,24 @@ public class BookSortController extends HttpServlet {
         String sortingOption = request.getParameter("sortingOption");
         HttpSession session = request.getSession();
         session.setAttribute("sortingOption", sortingOption);
-        if (sortingOption.equals("Recently added")){
-            BookContentDisplayService.sortBooksByRecentlyAdded();
+        if (Objects.equal(sortingOption, "Recently added")){
+            BookContentDisplayService.sortBooksByRecentlyAdded(1);
+        } else if (Objects.equal(sortingOption,"Last added")) {
+            BookContentDisplayService.sortBooksByRecentlyAdded(-1);
         }
-        if (sortingOption.equals("Title (A-Z)")){
+        if (Objects.equal(sortingOption, "Title (A-Z)")){
             BookContentDisplayService.sortBooksByTitle(1);
-        } else if (sortingOption.equals("Title (Z-A)")){
+        } else if (Objects.equal(sortingOption, "Title (Z-A)")){
             BookContentDisplayService.sortBooksByTitle(-1);
         }
-        if (sortingOption.equals("Page up -> down")){
+        if (Objects.equal(sortingOption, "Page up -> down")){
             BookContentDisplayService.sortBooksByPage(1);
-        } else if (sortingOption.equals("Page down -> up")){
+        } else if (Objects.equal(sortingOption, "Page down -> up")){
             BookContentDisplayService.sortBooksByPage(-1);
         }
-        if (sortingOption.equals("Year up -> down")){
+        if (Objects.equal(sortingOption, "Year up -> down")){
             BookContentDisplayService.sortBooksByYear(1);
-        } else if (sortingOption.equals("Year down -> up")){
+        } else if (Objects.equal(sortingOption,"Year down -> up")){
             BookContentDisplayService.sortBooksByYear(-1);
         }
         response.sendRedirect("BookSection.jsp");

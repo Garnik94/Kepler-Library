@@ -5,6 +5,7 @@
 <%@ page import="service.dao.CategoryDAO" %>
 <%@ page import="service.dao.DocumentTypeDAO" %>
 <%@ page import="service.dao.LanguageDAO" %>
+<%@ page import="com.google.common.base.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     User user = (User) session.getAttribute("CurrentUser");
@@ -44,7 +45,7 @@
                         String selectedCategory = "";
                         if (searchingOption == null ||
                                 (searchingOption.getCategory() != null &&
-                                        searchingOption.getCategory().getCategoryName().equals("All Categories"))) {
+                                        Objects.equal(searchingOption.getCategory().getCategoryName(), "All Categories"))) {
                             selectedCategory = "selected";
                         }
                     %>
@@ -53,7 +54,7 @@
                         selectedCategory = "";
                         for (int i = 0; i < CategoryDAO.getCategories().size(); i++) {
                             if (searchingOption != null && searchingOption.getCategory() != null &&
-                                    searchingOption.getCategory().equals(CategoryDAO.getCategories().get(i))) {
+                                    Objects.equal(searchingOption.getCategory(), CategoryDAO.getCategories().get(i))) {
                                 selectedCategory = "selected";
                             }
                     %>
@@ -70,7 +71,7 @@
                         String selectedLanguage = "";
                         if (searchingOption == null ||
                                 (searchingOption.getLanguage() != null &&
-                                        searchingOption.getLanguage().getLanguage().equals("All Languages"))) {
+                                        Objects.equal(searchingOption.getLanguage().getLanguage(), "All Languages"))) {
                             selectedLanguage = "selected";
                         }
                     %>
@@ -79,7 +80,7 @@
                         selectedLanguage = "";
                         for (int i = 0; i < LanguageDAO.getLanguages().size(); i++) {
                             if (searchingOption != null && searchingOption.getLanguage() != null &&
-                                    searchingOption.getLanguage().equals(LanguageDAO.getLanguages().get(i))) {
+                                    Objects.equal(searchingOption.getLanguage(), LanguageDAO.getLanguages().get(i))) {
                                 selectedLanguage = "selected";
                             }
                     %>
@@ -96,7 +97,7 @@
                         String selectedDocumentType = "";
                         if (searchingOption == null ||
                                 (searchingOption.getDocumentType() != null &&
-                                        searchingOption.getDocumentType().getType().equals("All Document Types"))) {
+                                        Objects.equal(searchingOption.getDocumentType().getType(), "All Document Types"))) {
                             selectedDocumentType = "selected";
                         }
                     %>
@@ -105,7 +106,7 @@
                         selectedDocumentType = "";
                         for (int i = 0; i < DocumentTypeDAO.getDocumentTypes().size(); i++) {
                             if (searchingOption != null && searchingOption.getDocumentType() != null &&
-                                    searchingOption.getDocumentType().equals(DocumentTypeDAO.getDocumentTypes().get(i))) {
+                                    Objects.equal(searchingOption.getDocumentType(), DocumentTypeDAO.getDocumentTypes().get(i))) {
                                 selectedDocumentType = "selected";
                             }
                     %>
@@ -132,25 +133,26 @@
 
         <label>
             <select class="multiSelectTextStyle" name="sortingOption">
-<%--                <option disabled>Check sorting option</option>--%>
+                <%--                <option disabled>Check sorting option</option>--%>
                 <%
                     for (int i = 0; i < BookContentDisplayService.sortingOptions.size(); i++) {
                         String selectOptionSelected = "";
                         String selectOptionName = BookContentDisplayService.sortingOptions.get(i);
-                        if (selectOptionName.equals(session.getAttribute("sortingOption"))) {
+                        if (Objects.equal(selectOptionName, session.getAttribute("sortingOption"))) {
                             selectOptionSelected = "selected";
                         }
                 %>
 
-                <option value="<%=selectOptionName%>" <%=selectOptionSelected%>><%=selectOptionName%></option>
+                <option value="<%=selectOptionName%>" <%=selectOptionSelected%>><%=selectOptionName%>
+                </option>
 
-<%--                <option value="Recently added">Recently added</option>--%>
-<%--                <option value="Title (A-Z)">Title (A-Z)</option>--%>
-<%--                <option value="Title (Z-A)">Title (Z-A)</option>--%>
-<%--                <option value="Page up -> down">Page up -> down</option>--%>
-<%--                <option value="Page down -> up">Page down -> up</option>--%>
-<%--                <option value="Year up -> down">Year up -> down</option>--%>
-<%--                <option value="Year down -> up">Year down -> up</option>--%>
+                <%--                <option value="Recently added">Recently added</option>--%>
+                <%--                <option value="Title (A-Z)">Title (A-Z)</option>--%>
+                <%--                <option value="Title (Z-A)">Title (Z-A)</option>--%>
+                <%--                <option value="Page up -> down">Page up -> down</option>--%>
+                <%--                <option value="Page down -> up">Page down -> up</option>--%>
+                <%--                <option value="Year up -> down">Year up -> down</option>--%>
+                <%--                <option value="Year down -> up">Year down -> up</option>--%>
 
                 <%
                     }
@@ -164,6 +166,7 @@
 
     <div class="contentContainer">
         <%
+            int bookListSize = BookContentDisplayService.getBookList().size();
             int currentPage;
             if (request.getParameter("page") == null) {
                 currentPage = 1;
@@ -179,11 +182,11 @@
             for (int i = (currentPage - 1) * coefficient, j = 0; i <= (currentPage - 1) * coefficient + 10 - 1; i++, j++) {
         %>
         <%
-            if (i < BookContentDisplayService.bookList.size()) {
+            if (i < bookListSize) {
         %>
         <div class="contentWindow">
             <div class="contentTextStyle" style="margin-top: 20px">
-                <%Book book = BookContentDisplayService.bookList.get(i);%>
+                <%Book book = BookContentDisplayService.getBookList().get(i);%>
                 <span style="font-weight: bold"><%=book.getAuthor()%></span><br>
                 <span style="font-weight: bold"><%=book.getTitle()%></span><br>
                 <%="Category: " + book.getCategory()%><br>
@@ -218,8 +221,8 @@
 
     <form>
         <%
-            int condition = BookContentDisplayService.bookList.size() % 10 >= 1 ?
-                    BookContentDisplayService.bookList.size() / 10 + 1 : BookContentDisplayService.bookList.size() / 10;
+            int condition = bookListSize % 10 >= 1 ?
+                    bookListSize / 10 + 1 : bookListSize / 10;
 
             for (int i = 1; i <= condition; i++) {
                 String url = "BookSection.jsp?page=" + i;

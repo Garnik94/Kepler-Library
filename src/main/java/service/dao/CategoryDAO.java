@@ -1,5 +1,6 @@
 package service.dao;
 
+import com.google.common.base.Objects;
 import model.content.Category;
 
 import java.sql.Connection;
@@ -49,7 +50,7 @@ public class CategoryDAO {
 
     public static int getCategoryIdByName(Category category) {
         for (Category currentCategory : categories) {
-            if (currentCategory.getCategoryName().equals(category.getCategoryName())) {
+            if (Objects.equal(currentCategory.getCategoryName(), category.getCategoryName())) {
                 return currentCategory.getId();
             }
         }

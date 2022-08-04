@@ -1,5 +1,6 @@
 package service.dao;
 
+import com.google.common.base.Objects;
 import model.content.DocumentType;
 
 import java.sql.Connection;
@@ -49,7 +50,7 @@ public class DocumentTypeDAO {
 
     public static int getDocumentTypeIdByName(DocumentType documentType) {
         for (DocumentType currentDocumentType : documentTypes) {
-            if (currentDocumentType.getType().equals(documentType.getType())) {
+            if (Objects.equal(currentDocumentType.getType(), documentType.getType())) {
                 return currentDocumentType.getId();
             }
         }

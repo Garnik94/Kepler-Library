@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.common.base.Objects;
 import service.UserValidatorService;
 import service.dao.UserDAO;
 
@@ -25,7 +26,7 @@ public class RegistrationController extends HttpServlet {
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         if (!UserValidatorService.checkRegistrationRequiredInputs(username, email, password, confirmPassword) &&
-                password.equals(confirmPassword)) {
+                Objects.equal(password, confirmPassword)) {
             boolean isUserSuccessfullyAdded = UserDAO.addNewUser(connection, username, password, email);
             if (isUserSuccessfullyAdded) {
                 session.removeAttribute("mismatchedPasswords");
@@ -35,7 +36,7 @@ public class RegistrationController extends HttpServlet {
                 session.setAttribute("userIsAlreadyExists", "User is already exists");
                 response.sendRedirect("Registration.jsp");
             }
-        } else if (!password.equals(confirmPassword)) {
+        } else if (!Objects.equal(password, confirmPassword)) {
             session.setAttribute("mismatchedPasswords", "Mismatched passwords");
             response.sendRedirect("Registration.jsp");
         } else {

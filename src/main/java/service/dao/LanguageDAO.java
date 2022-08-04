@@ -1,5 +1,6 @@
 package service.dao;
 
+import com.google.common.base.Objects;
 import model.content.Language;
 
 import java.sql.Connection;
@@ -49,7 +50,7 @@ public class LanguageDAO {
 
     public static int getLanguageIdByName(Language language) {
         for (Language currentLanguage : languages) {
-            if (currentLanguage.getLanguage().equals(language.getLanguage())) {
+            if (Objects.equal(currentLanguage.getLanguage(), language.getLanguage())) {
                 return currentLanguage.getId();
             }
         }

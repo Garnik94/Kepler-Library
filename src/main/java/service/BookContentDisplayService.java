@@ -1,5 +1,7 @@
 package service;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.Ordering;
 import model.SearchingOption;
 import model.content.Book;
 import model.content.Category;
@@ -15,16 +17,27 @@ import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.util.*;
 
-import static service.dao.CategoryDAO.*;
-import static service.dao.LanguageDAO.*;
-import static service.dao.DocumentTypeDAO.*;
+import static service.dao.CategoryDAO.getAllCategories;
+import static service.dao.CategoryDAO.setCategories;
+import static service.dao.DocumentTypeDAO.getAllDocumentTypes;
+import static service.dao.DocumentTypeDAO.setDocumentTypes;
+import static service.dao.LanguageDAO.getAllLanguages;
+import static service.dao.LanguageDAO.setLanguages;
 
 public class BookContentDisplayService {
 
-    public static List<Book> bookList = new ArrayList<>();
+    private static List<Book> bookList = new ArrayList<>();
 
-    public static List<String> sortingOptions = new ArrayList<>(Arrays.asList("Recently added", "Title (A-Z)", "Title (Z-A)",
-            "Page up -> down", "Page down -> up", "Year up -> down", "Year down -> up"));
+    public static List<String> sortingOptions = new ArrayList<>(Arrays.asList("Recently added", "Last added",
+            "Title (A-Z)", "Title (Z-A)", "Page up -> down", "Page down -> up", "Year up -> down", "Year down -> up"));
+
+    public static List<Book> getBookList() {
+        return new ArrayList<>(bookList);
+    }
+
+    public static void setBookList(List<Book> bookList) {
+        BookContentDisplayService.bookList = bookList;
+    }
 
     public static void mainSearch(HttpServletRequest request, Connection connection) {
         HttpSession session = request.getSession();
@@ -34,10 +47,10 @@ public class BookContentDisplayService {
         setLanguages(getAllLanguages(connection));
         setDocumentTypes(getAllDocumentTypes(connection));
         if (searchingOption.getSearchBy() != null &&
-                searchingOption.getSearchBy().equals("Author")) {
+                Objects.equal(searchingOption.getSearchBy(), "Author")) {
             searchBooksByAuthor(connection, searchingOption.getInputSearchOption());
         } else if (searchingOption.getSearchBy() != null &&
-                searchingOption.getSearchBy().equals("Title")) {
+                Objects.equal(searchingOption.getSearchBy(), "Title")) {
             searchBooksByTitle(connection, searchingOption.getInputSearchOption());
         }
         filterBooksByLanguage(searchingOption.getLanguage());
@@ -49,11 +62,11 @@ public class BookContentDisplayService {
     }
 
     public static void searchBooksByAuthor(Connection connection, String author) {
-        bookList = BookDAO.getBooksByAuthor(connection, author);
+        setBookList(BookDAO.getBooksByAuthor(connection, author));
     }
 
     public static void searchBooksByTitle(Connection connection, String title) {
-        bookList = BookDAO.getBooksByTitle(connection, title);
+        setBookList(BookDAO.getBooksByTitle(connection, title));
     }
 
     public static void filterBooksByLanguage(Language language) {
@@ -92,69 +105,93 @@ public class BookContentDisplayService {
         }
     }
 
-    public static void sortBooksByTitle(int askDesk) {
-        if (askDesk == 1) {
-            Collections.sort(bookList, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o2.getTitle().compareTo(o1.getTitle());
-                }
-            });
-        } else if (askDesk == -1) {
-            Collections.sort(bookList, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o1.getTitle().compareTo(o2.getTitle());
-                }
-            });
+    private static Ordering<Book> ascOrderingByTitle = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book1.getTitle().compareTo(book2.getTitle());
+        }
+    };
+
+    private static Ordering<Book> descOrderingByTitle = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book2.getTitle().compareTo(book1.getTitle());
+        }
+    };
+
+    public static void sortBooksByTitle(int ascDesc) {
+        if (ascDesc == 1) {
+            bookList.sort(ascOrderingByTitle);
+        } else if (ascDesc == -1) {
+            bookList.sort(descOrderingByTitle);
         }
     }
 
-    public static void sortBooksByPage(int askDesk) {
-        if (askDesk == 1) {
-            Collections.sort(bookList, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o2.getPages() - o1.getPages();
-                }
-            });
-        } else if (askDesk == -1) {
-            Collections.sort(bookList, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o1.getPages() - o2.getPages();
-                }
-            });
+    private static Ordering<Book> ascOrderingByPage = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book1.getPages() - book2.getPages();
+        }
+    };
+
+    private static Ordering<Book> descOrderingByPage = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book2.getPages() - book1.getPages();
+        }
+    };
+
+    public static void sortBooksByPage(int ascDesc) {
+        if (ascDesc == 1) {
+            bookList.sort(ascOrderingByPage);
+        } else if (ascDesc == -1) {
+            bookList.sort(descOrderingByPage);
         }
     }
 
-    public static void sortBooksByYear(int askDesk) {
-        if (askDesk == 1) {
-            Collections.sort(bookList, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o2.getYear() - o1.getYear();
-                }
-            });
-        } else if (askDesk == -1) {
-            Collections.sort(bookList, new Comparator<Book>() {
-                @Override
-                public int compare(Book o1, Book o2) {
-                    return o1.getYear() - o2.getYear();
-                }
-            });
+    private static Ordering<Book> ascOrderingByYear = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book1.getYear() - book2.getYear();
+        }
+    };
+
+    private static Ordering<Book> descOrderingByYear = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book2.getYear() - book1.getYear();
+        }
+    };
+
+    public static void sortBooksByYear(int ascDesc) {
+        if (ascDesc == 1) {
+           bookList.sort(ascOrderingByYear);
+        } else if (ascDesc == -1) {
+            bookList.sort(descOrderingByYear);
         }
     }
 
-    public static void sortBooksByRecentlyAdded() {
-        Collections.sort(bookList, new Comparator<Book>() {
-            @Override
-            public int compare(Book o1, Book o2) {
-                return o1.getId() - o2.getId();
-            }
-        });
-    }
+    private static Ordering<Book> ascOrderingByRecentlyAdded = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book1.getId() - book2.getId();
+        }
+    };
 
+    private static Ordering<Book> descOrderingByRecentlyAdded = new Ordering<Book>() {
+        @Override
+        public int compare(Book book1, Book book2) {
+            return book2.getId() - book1.getId();
+        }
+    };
+
+    public static void sortBooksByRecentlyAdded(int ascDesc) {
+        if (ascDesc == 1) {
+            bookList.sort(ascOrderingByRecentlyAdded);
+        } else if (ascDesc == -1) {
+            bookList.sort(descOrderingByRecentlyAdded);
+        }
+    }
 
     public static void filterCategories(List<Book> books) {
         List<Category> categories = CategoryDAO.getCategories();
@@ -208,7 +245,7 @@ public class BookContentDisplayService {
     public static Category getSelectedCategory(HttpServletRequest request) {
         Category category = null;
         if (request.getParameter("selectedCategory") != null &&
-                !request.getParameter("selectedCategory").equals("All Categories")) {
+                !Objects.equal(request.getParameter("selectedCategory"), "All Categories")) {
             category = new Category(request.getParameter("selectedCategory"));
             category.setId(CategoryDAO.getCategoryIdByName(category));
         }
@@ -218,7 +255,7 @@ public class BookContentDisplayService {
     public static DocumentType getSelectedDocumentType(HttpServletRequest request) {
         DocumentType documentType = null;
         if (request.getParameter("selectedDocumentType") != null &&
-                !request.getParameter("selectedDocumentType").equals("All Document Types")) {
+                !Objects.equal(request.getParameter("selectedDocumentType"), "All Document Types")) {
             documentType = new DocumentType(request.getParameter("selectedDocumentType"));
             documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
         }
@@ -228,7 +265,7 @@ public class BookContentDisplayService {
     public static Language getSelectedLanguage(HttpServletRequest request) {
         Language language = null;
         if (request.getParameter("selectedLanguage") != null &&
-                !request.getParameter("selectedLanguage").equals("All Languages")) {
+                !Objects.equal(request.getParameter("selectedLanguage"), "All Languages")) {
             language = new Language(request.getParameter("selectedLanguage"));
             language.setId(LanguageDAO.getLanguageIdByName(language));
         }

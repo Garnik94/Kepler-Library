@@ -1,5 +1,6 @@
 package controller.permitedActionController;
 
+import com.google.common.base.Objects;
 import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
@@ -25,13 +26,13 @@ public class UserPermitController extends HttpServlet {
             response.sendRedirect("ManageUser.jsp");
         } else {
             if (request.getParameter("confirmPermitUser") != null &&
-                    request.getParameter("confirmPermitUser").equals("yes")) {
+                    Objects.equal(request.getParameter("confirmPermitUser"), "yes")) {
                 PermittedActionService.permitUser(request, connection);
                 session.removeAttribute("ManageableUser");
                 session.removeAttribute("ConfirmPermitUser");
                 response.sendRedirect("ManageUser.jsp");
             } else if (request.getParameter("confirmPermitUser") != null &&
-                    request.getParameter("confirmPermitUser").equals("no")) {
+                    Objects.equal(request.getParameter("confirmPermitUser"), "no")) {
                 session.removeAttribute("ConfirmPermitUser");
                 response.sendRedirect("ManageUser.jsp");
             } else {
