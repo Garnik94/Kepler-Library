@@ -5,6 +5,7 @@ import java.util.Objects;
 public class DocumentType {
 
     private int Id;
+
     private String type;
 
     public DocumentType(String type) {

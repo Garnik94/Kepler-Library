@@ -1,5 +1,6 @@
 package controller;
 
+import service.UserValidatorService;
 import service.dao.UserDAO;
 
 import javax.servlet.ServletContext;
@@ -23,11 +24,7 @@ public class RegistrationController extends HttpServlet {
         HttpSession session = request.getSession();
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
-//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
-        if ((!username.isEmpty() ||
-                !email.isEmpty() ||
-                !password.isEmpty() ||
-                !confirmPassword.isEmpty()) &&
+        if (!UserValidatorService.checkRegistrationRequiredInputs(username, email, password, confirmPassword) &&
                 password.equals(confirmPassword)) {
             boolean isUserSuccessfullyAdded = UserDAO.addNewUser(connection, username, password, email);
             if (isUserSuccessfullyAdded) {

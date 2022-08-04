@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Language {
 
     private int Id;
+
     private String language;
 
     public Language(String language) {

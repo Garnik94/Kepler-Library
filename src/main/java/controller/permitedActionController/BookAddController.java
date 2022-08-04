@@ -20,11 +20,7 @@ public class BookAddController extends HttpServlet {
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         PermittedActionService.addNewBook(request, connection);
         HttpSession session = request.getSession();
-        if (session.getAttribute("requiredAddBook") != null) {
-            response.sendRedirect("EditBook.jsp");
-        } else {
-            response.sendRedirect("PermittedProfile.jsp");
-        }
+        response.sendRedirect("PermittedProfile.jsp");
     }
 
 }

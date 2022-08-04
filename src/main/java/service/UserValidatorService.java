@@ -21,4 +21,13 @@ public class UserValidatorService {
         return false;
     }
 
+    public static boolean checkRegistrationRequiredInputs(String... inputs) {
+        for (String input : inputs) {
+            if (input.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

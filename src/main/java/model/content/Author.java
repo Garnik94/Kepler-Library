@@ -3,6 +3,7 @@ package model.content;
 public class Author {
 
     private int Id;
+
     private String authorName;
 
     public Author(String name) {

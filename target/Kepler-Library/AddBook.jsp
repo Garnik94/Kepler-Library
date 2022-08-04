@@ -50,17 +50,7 @@
 
     <input class="loginButtonStyle" type="submit" value="Add book">
 
-    <%
-        if (session.getAttribute("requiredAddBook") != null) {
-    %>
-    <span class="errorMessageStyle">${requiredAddBook}</span>
-    <%
-            session.removeAttribute("requiredAddBook");
-        }
-    %>
-
 </form>
-
 
 </body>
 </html>

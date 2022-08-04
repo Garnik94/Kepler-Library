@@ -7,9 +7,13 @@ import model.content.Language;
 public class SearchingOption {
 
     private String inputSearchOption;
+
     private String searchBy;
+
     private Category category;
+
     private DocumentType documentType;
+
     private Language language;
 
     public SearchingOption(String inputSearchOption,

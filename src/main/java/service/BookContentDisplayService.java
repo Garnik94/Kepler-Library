@@ -23,6 +23,9 @@ public class BookContentDisplayService {
 
     public static List<Book> bookList = new ArrayList<>();
 
+    public static List<String> sortingOptions = new ArrayList<>(Arrays.asList("Recently added", "Title (A-Z)", "Title (Z-A)",
+            "Page up -> down", "Page down -> up", "Year up -> down", "Year down -> up"));
+
     public static void mainSearch(HttpServletRequest request, Connection connection) {
         HttpSession session = request.getSession();
         SearchingOption searchingOption = (SearchingOption) session.getAttribute("searchingOption");

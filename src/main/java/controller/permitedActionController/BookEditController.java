@@ -1,9 +1,8 @@
 package controller.permitedActionController;
 
 import model.content.Book;
-import service.PermittedActionService;
 import service.BookContentDisplayService;
-import service.dao.BookDAO;
+import service.PermittedActionService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -24,14 +23,7 @@ public class BookEditController extends HttpServlet {
         Book checkedBook = (Book) session.getAttribute("checkedBook");
         PermittedActionService.updateBook(checkedBook, request, connection);
         BookContentDisplayService.updateBookFromBookList(checkedBook, connection);
-//        for (int i = 0; i < BookContentDisplayService.bookList.size(); i++) {
-//            if (BookContentDisplayService.bookList.get(i).getId() == checkedBook.getId()) {
-//                BookContentDisplayService.bookList.set(i, BookDAO.getBookById(connection, checkedBook.getId()).get(0));
-//                break;
-//            }
-//        }
         session.removeAttribute("checkedBook");
-        session.removeAttribute("ConfirmEditBook");
         response.sendRedirect("BookSection.jsp");
     }
 

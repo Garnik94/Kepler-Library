@@ -16,9 +16,6 @@ import java.sql.Connection;
 
 @WebServlet(name = "SearchManageableUserServlet")
 public class ManageableUserSearchController extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -35,7 +32,7 @@ public class ManageableUserSearchController extends HttpServlet {
             if (session.getAttribute("ManageableUser") != null) {
                 session.removeAttribute("ManageableUser");
             }
-            session.setAttribute("searchingUserNotFound", "true");
+            session.setAttribute("searchingUserNotFound", "User is not found");
             response.sendRedirect("ManageUser.jsp");
         }
     }

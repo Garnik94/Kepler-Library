@@ -23,7 +23,6 @@ public class BookDeleteController extends HttpServlet {
         HttpSession session = request.getSession();
         if (session.getAttribute("ConfirmDeleteBook") == null) {
             session.setAttribute("ConfirmDeleteBook", "Are you really going to delete book");
-            session.removeAttribute("ConfirmEditBook");
             response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
         } else {
             if (request.getParameter("confirmDeleteBook") != null &&

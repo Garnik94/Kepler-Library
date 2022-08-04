@@ -132,14 +132,29 @@
 
         <label>
             <select class="multiSelectTextStyle" name="sortingOption">
-                <option disabled>Check sorting option</option>
-                <option value="recentlyAdded">Recently added</option>
-                <option value="bookTitleUp">Title (A-Z)</option>
-                <option value="bookTitleDown">Title (Z-A)</option>
-                <option value="bookPageUp">Page up -> down</option>
-                <option value="bookPageDown">Page down -> up</option>
-                <option value="bookYearUp">year up -> down</option>
-                <option value="bookYearDown">year down -> up</option>
+<%--                <option disabled>Check sorting option</option>--%>
+                <%
+                    for (int i = 0; i < BookContentDisplayService.sortingOptions.size(); i++) {
+                        String selectOptionSelected = "";
+                        String selectOptionName = BookContentDisplayService.sortingOptions.get(i);
+                        if (selectOptionName.equals(session.getAttribute("sortingOption"))) {
+                            selectOptionSelected = "selected";
+                        }
+                %>
+
+                <option value="<%=selectOptionName%>" <%=selectOptionSelected%>><%=selectOptionName%></option>
+
+<%--                <option value="Recently added">Recently added</option>--%>
+<%--                <option value="Title (A-Z)">Title (A-Z)</option>--%>
+<%--                <option value="Title (Z-A)">Title (Z-A)</option>--%>
+<%--                <option value="Page up -> down">Page up -> down</option>--%>
+<%--                <option value="Page down -> up">Page down -> up</option>--%>
+<%--                <option value="Year up -> down">Year up -> down</option>--%>
+<%--                <option value="Year down -> up">Year down -> up</option>--%>
+
+                <%
+                    }
+                %>
             </select>
         </label>
 

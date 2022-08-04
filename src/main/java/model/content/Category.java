@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Category {
 
     private int Id;
+
     private String categoryName;
 
     public Category(String categoryName) {

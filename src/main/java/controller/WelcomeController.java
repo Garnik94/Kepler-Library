@@ -39,7 +39,6 @@ public class WelcomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("ConfirmDeleteBook");
-        session.removeAttribute("ConfirmEditBook");
         response.sendRedirect("BookSection.jsp");
     }
 

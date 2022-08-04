@@ -55,11 +55,10 @@
 %>
 
 <%
-    if (session.getAttribute("searchingUserNotFound") != null &&
-            session.getAttribute("searchingUserNotFound").equals("true")) {
+    if (session.getAttribute("searchingUserNotFound") != null) {
 %>
 
-<span class="errorMessageStyle">User is not found</span>
+<span class="errorMessageStyle">${searchingUserNotFound}</span>
 
 <%
         session.removeAttribute("searchingUserNotFound");
