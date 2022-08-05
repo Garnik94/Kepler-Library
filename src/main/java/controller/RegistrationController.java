@@ -25,7 +25,7 @@ public class RegistrationController extends HttpServlet {
         HttpSession session = request.getSession();
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
-        if (!UserValidatorService.checkRegistrationRequiredInputs(username, email, password, confirmPassword) &&
+        if (UserValidatorService.checkRegistrationRequiredInputs(username, email, password, confirmPassword) &&
                 Objects.equal(password, confirmPassword)) {
             boolean isUserSuccessfullyAdded = UserDAO.addNewUser(connection, username, password, email);
             if (isUserSuccessfullyAdded) {

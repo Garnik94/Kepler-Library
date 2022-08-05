@@ -18,6 +18,47 @@
         <listener-class>controller.listeners.ContextListener</listener-class>
     </listener>
 
+    <filter>
+        <filter-name>User Authenticate</filter-name>
+        <filter-class>filter.UserAuthenticateFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>User Authenticate</filter-name>
+        <url-pattern>/AddBook.jsp</url-pattern>
+        <url-pattern>/BookSection.jsp</url-pattern>
+        <url-pattern>/EditBook.jsp</url-pattern>
+        <url-pattern>/ManageUser.jsp</url-pattern>
+        <url-pattern>/PermittedProfile.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>User Confirmation</filter-name>
+        <filter-class>filter.UserConfirmationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>User Confirmation</filter-name>
+        <url-pattern>/Login.jsp</url-pattern>
+        <url-pattern>/Registration.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>User profile</filter-name>
+        <filter-class>filter.UserProfileFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>User profile</filter-name>
+        <url-pattern>/UserProfile.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>Cache control</filter-name>
+        <filter-class>filter.CacheControlFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Cache control</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>Login page</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
@@ -134,47 +175,6 @@
         <servlet-name>Sort book content</servlet-name>
         <url-pattern>/sortBooks</url-pattern>
     </servlet-mapping>
-
-    <filter>
-        <filter-name>User Authenticate</filter-name>
-        <filter-class>filter.UserAuthenticateFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>User Authenticate</filter-name>
-        <url-pattern>/AddBook.jsp</url-pattern>
-        <url-pattern>/BookSection.jsp</url-pattern>
-        <url-pattern>/EditBook.jsp</url-pattern>
-        <url-pattern>/ManageUser.jsp</url-pattern>
-        <url-pattern>/PermittedProfile.jsp</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>User Confirmation</filter-name>
-        <filter-class>filter.UserConfirmationFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>User Confirmation</filter-name>
-        <url-pattern>/Login.jsp</url-pattern>
-        <url-pattern>/Registration.jsp</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>User profile</filter-name>
-        <filter-class>filter.UserProfileFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>User profile</filter-name>
-        <url-pattern>/UserProfile.jsp</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>Cache control</filter-name>
-        <filter-class>filter.CacheControlFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>Cache control</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 
     <error-page>
         <error-code>404</error-code>

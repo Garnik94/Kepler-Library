@@ -40,4 +40,5 @@ public class UserPermitController extends HttpServlet {
             }
         }
     }
+
 }

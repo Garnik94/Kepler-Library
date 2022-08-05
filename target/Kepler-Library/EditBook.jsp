@@ -16,9 +16,7 @@
 
     <%
         int currentEditableBookIndex;
-//        if (request.getParameter("editableBook") != null) {
-            currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
-//        }
+        currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
         Book editableBook = (Book) session.getAttribute(String.valueOf(currentEditableBookIndex));
         session.setAttribute("checkedBook", editableBook);
     %>
@@ -63,7 +61,6 @@
                 isDisable = "disabled";
             }
         %>
-
         <input <%=isDisable%> class="loginButtonStyle" type="submit" value="Edit book">
     </form>
 
@@ -71,7 +68,9 @@
         <input <%=isDisable%> class="deleteButtonStyle" type="submit" value="Delete book">
     </form>
 
-    <% if (session.getAttribute("ConfirmDeleteBook") != null) {%>
+    <%
+        if (session.getAttribute("ConfirmDeleteBook") != null) {
+    %>
             <span class="errorMessageStyle">${ConfirmDeleteBook}</span>
 
             <br>
@@ -89,8 +88,7 @@
     %>
 
     <%
-        if (session.getAttribute("ConfirmEditBook") != null)
-        {
+        if (session.getAttribute("ConfirmEditBook") != null) {
     %>
             <span class="errorMessageStyle">Are you really going to edit book</span>
 

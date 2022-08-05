@@ -35,20 +35,20 @@
         }
 %>
 
-<span class="textStyle"><%=manageableUser.getUsername()%></span><br>
-<span class="textStyle"><%=manageableUser.getEmail()%></span><br><br>
+        <span class="textStyle"><%=manageableUser.getUsername()%></span><br>
+        <span class="textStyle"><%=manageableUser.getEmail()%></span><br><br>
 
-<form action="permitUser" method="post">
-    <input <%=disabled%> class="loginButtonStyle" type="submit" value="Permit user">
-</form>
+        <form action="permitUser" method="post">
+            <input <%=disabled%> class="loginButtonStyle" type="submit" value="Permit user">
+        </form>
 
-<form action="forbidUser" method="post">
-    <input <%=disabled%> class="deleteButtonStyle" type="submit" value="Forbid user">
-</form>
+        <form action="forbidUser" method="post">
+            <input <%=disabled%> class="deleteButtonStyle" type="submit" value="Forbid user">
+        </form>
 
-<form action="deleteUser" method="post">
-    <input <%=disabled%> class="deleteButtonStyle" type="submit" value="Delete user">
-</form>
+        <form action="deleteUser" method="post">
+            <input <%=disabled%> class="deleteButtonStyle" type="submit" value="Delete user">
+        </form>
 
 <%
     }
@@ -58,40 +58,14 @@
     if (session.getAttribute("searchingUserNotFound") != null) {
 %>
 
-<span class="errorMessageStyle">${searchingUserNotFound}</span>
+        <span class="errorMessageStyle">${searchingUserNotFound}</span>
 
 <%
         session.removeAttribute("searchingUserNotFound");
     }
 %>
 
-<%--<%--%>
-<%--    if (session.getAttribute("AdminDeleteError") != null &&--%>
-<%--            session.getAttribute("AdminDeleteError").equals("true")) {--%>
-<%--%>--%>
-
-<%--<span class="errorMessageStyle">Admin is not deletable</span>--%>
-
-<%--<%--%>
-<%--        session.removeAttribute("AdminDeleteError");--%>
-<%--    }--%>
-<%--%>--%>
-
-
-<%--<%--%>
-<%--    if (session.getAttribute("AdminForbidError") != null &&--%>
-<%--            session.getAttribute("AdminForbidError").equals("true")) {--%>
-<%--%>--%>
-
-<%--<span class="errorMessageStyle">You cant forbid Admin</span>--%>
-
-<%--<%--%>
-<%--        session.removeAttribute("AdminForbidError");--%>
-<%--    }--%>
-<%--%>--%>
-
 <% if (session.getAttribute("ConfirmPermitUser") != null) {%>
-<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
 <span class="errorMessageStyle">Are you really going to permit user</span>
 
 <form>
@@ -109,7 +83,6 @@
 %>
 
 <% if (session.getAttribute("ConfirmForbidUser") != null) {%>
-<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
 <span class="errorMessageStyle">Are you really going to forbid user</span>
 
 <form>
@@ -127,7 +100,6 @@
 %>
 
 <% if (session.getAttribute("ConfirmDeleteUser") != null) {%>
-<%--        <jsp:include page="ConfirmDeleteBook.jsp"/>--%>
 <span class="errorMessageStyle">Are you really going to delete user</span>
 
 <br>

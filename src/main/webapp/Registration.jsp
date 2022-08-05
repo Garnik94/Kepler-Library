@@ -35,7 +35,7 @@
     <%
         if (session.getAttribute("mismatchedPasswords") != null) {
     %>
-    <span class="errorMessageStyle">${mismatchedPasswords}</span>
+            <span class="errorMessageStyle">${mismatchedPasswords}</span>
     <%
             session.removeAttribute("mismatchedPasswords");
         }
@@ -44,7 +44,7 @@
     <%
         if (session.getAttribute("requiredInputError") != null) {
     %>
-    <span class="errorMessageStyle">${requiredInputError}</span>
+            <span class="errorMessageStyle">${requiredInputError}</span>
     <%
             session.removeAttribute("requiredInputError");
         }
@@ -53,7 +53,7 @@
     <%
         if (session.getAttribute("userIsAlreadyExists") != null) {
     %>
-    <span class="errorMessageStyle">${userIsAlreadyExists}</span>
+            <span class="errorMessageStyle">${userIsAlreadyExists}</span>
     <%
             session.removeAttribute("userIsAlreadyExists");
         }

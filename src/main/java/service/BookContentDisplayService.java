@@ -105,14 +105,14 @@ public class BookContentDisplayService {
         }
     }
 
-    private static Ordering<Book> ascOrderingByTitle = new Ordering<Book>() {
+    private static final Ordering<Book> ascOrderingByTitle = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book1.getTitle().compareTo(book2.getTitle());
         }
     };
 
-    private static Ordering<Book> descOrderingByTitle = new Ordering<Book>() {
+    private static final Ordering<Book> descOrderingByTitle = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book2.getTitle().compareTo(book1.getTitle());
@@ -127,14 +127,14 @@ public class BookContentDisplayService {
         }
     }
 
-    private static Ordering<Book> ascOrderingByPage = new Ordering<Book>() {
+    private static final Ordering<Book> ascOrderingByPage = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book1.getPages() - book2.getPages();
         }
     };
 
-    private static Ordering<Book> descOrderingByPage = new Ordering<Book>() {
+    private static final Ordering<Book> descOrderingByPage = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book2.getPages() - book1.getPages();
@@ -149,14 +149,14 @@ public class BookContentDisplayService {
         }
     }
 
-    private static Ordering<Book> ascOrderingByYear = new Ordering<Book>() {
+    private static final Ordering<Book> ascOrderingByYear = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book1.getYear() - book2.getYear();
         }
     };
 
-    private static Ordering<Book> descOrderingByYear = new Ordering<Book>() {
+    private static final Ordering<Book> descOrderingByYear = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book2.getYear() - book1.getYear();
@@ -171,14 +171,14 @@ public class BookContentDisplayService {
         }
     }
 
-    private static Ordering<Book> ascOrderingByRecentlyAdded = new Ordering<Book>() {
+    private static final Ordering<Book> ascOrderingByRecentlyAdded = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book1.getId() - book2.getId();
         }
     };
 
-    private static Ordering<Book> descOrderingByRecentlyAdded = new Ordering<Book>() {
+    private static final Ordering<Book> descOrderingByRecentlyAdded = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
             return book2.getId() - book1.getId();

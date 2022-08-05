@@ -34,7 +34,6 @@
             <span class="textStyle">Search by</span><br><br>
             <label>
                 <select class="multiSelectTextStyle" name="searchBy">
-
                     <option>Author</option>
                     <option>Title</option>
                 </select>
@@ -57,9 +56,9 @@
                                     Objects.equal(searchingOption.getCategory(), CategoryDAO.getCategories().get(i))) {
                                 selectedCategory = "selected";
                             }
+                            String categoryName = CategoryDAO.getCategories().get(i).getCategoryName();
                     %>
-                    <option value="<%=CategoryDAO.getCategories().get(i).getCategoryName()%>" <%=selectedCategory%>><%=CategoryDAO.getCategories().get(i).getCategoryName()%>
-                    </option>
+                    <option value="<%=categoryName%>" <%=selectedCategory%>><%=categoryName%></option>
                     <%
                         }
                     %>
@@ -83,9 +82,9 @@
                                     Objects.equal(searchingOption.getLanguage(), LanguageDAO.getLanguages().get(i))) {
                                 selectedLanguage = "selected";
                             }
+                            String languageName = LanguageDAO.getLanguages().get(i).getLanguage();
                     %>
-                    <option value="<%=LanguageDAO.getLanguages().get(i).getLanguage()%>" <%=selectedLanguage%>><%=LanguageDAO.getLanguages().get(i).getLanguage()%>
-                    </option>
+                    <option value="<%=languageName%>" <%=selectedLanguage%>><%=languageName%></option>
                     <%
                         }
                     %>
@@ -109,9 +108,9 @@
                                     Objects.equal(searchingOption.getDocumentType(), DocumentTypeDAO.getDocumentTypes().get(i))) {
                                 selectedDocumentType = "selected";
                             }
+                            String documentTypename = DocumentTypeDAO.getDocumentTypes().get(i).getType();
                     %>
-                    <option value="<%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>" <%=selectedDocumentType%>><%=DocumentTypeDAO.getDocumentTypes().get(i).getType()%>
-                    </option>
+                    <option value="<%=documentTypename%>" <%=selectedDocumentType%>><%=documentTypename%></option>
                     <%
                         }
                     %>
@@ -133,7 +132,6 @@
 
         <label>
             <select class="multiSelectTextStyle" name="sortingOption">
-                <%--                <option disabled>Check sorting option</option>--%>
                 <%
                     for (int i = 0; i < BookContentDisplayService.sortingOptions.size(); i++) {
                         String selectOptionSelected = "";
@@ -145,14 +143,6 @@
 
                 <option value="<%=selectOptionName%>" <%=selectOptionSelected%>><%=selectOptionName%>
                 </option>
-
-                <%--                <option value="Recently added">Recently added</option>--%>
-                <%--                <option value="Title (A-Z)">Title (A-Z)</option>--%>
-                <%--                <option value="Title (Z-A)">Title (Z-A)</option>--%>
-                <%--                <option value="Page up -> down">Page up -> down</option>--%>
-                <%--                <option value="Page down -> up">Page down -> up</option>--%>
-                <%--                <option value="Year up -> down">Year up -> down</option>--%>
-                <%--                <option value="Year down -> up">Year down -> up</option>--%>
 
                 <%
                     }
@@ -198,14 +188,11 @@
             <br>
             <a class="linksLikeButton" href="<%=book.getDownloadUrl()%>"
                target="_blank">Download</a><br><br>
-
             <%
                 if (user.isHasEditPermission() == 1) {
                     session.setAttribute(String.valueOf(i), book);
             %>
-
-            <a class="linksLikeButton" href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>
-
+                <a class="linksLikeButton" href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>
             <%
                 }
             %>
@@ -230,13 +217,11 @@
         <%
             if (i == currentPage) {
         %>
-        <a class="selectedPage" href="<%=url%>"><%=i%>
-        </a>
+            <a class="selectedPage" href="<%=url%>"><%=i%></a>
         <%
-        } else {
+            } else {
         %>
-        <a class="paginationButton" href="<%=url%>"><%=i%>
-        </a>
+            <a class="paginationButton" href="<%=url%>"><%=i%></a>
         <%
             }
         %>
@@ -248,7 +233,7 @@
     <%
     } else if (session.getAttribute("inputValidationError") != null) {
     %>
-    <h1 class="errorMessageStyle">input value min length must be more than 3</h1>
+        <h1 class="errorMessageStyle">input value min length must be more than 3</h1>
     <%
         }
     %>

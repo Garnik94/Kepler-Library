@@ -27,7 +27,4 @@ public class BookEditController extends HttpServlet {
         response.sendRedirect("BookSection.jsp");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }
