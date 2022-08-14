@@ -1,12 +1,3 @@
-/*body {*/
-/*    !*background-image: url('graphic/mainWallpaper.jpg');*!*/
-/*    !*background-image: url('../graphic/mainCover.jpg');*!*/
-/*    background-image: url('../graphic/top-view-different-books-arrangement.jpg');*/
-/*    background-repeat: no-repeat;*/
-/*    background-size: cover;*/
-/*    text-align: center;*/
-/*}*/
-
 .mainPageBackground {
     background-image: url('graphic/mainCover.jpg');
     background-repeat: no-repeat;
@@ -223,7 +214,6 @@
 
 .contentWindow {
     background-image: url('graphic/bookCover.jpg');
-    /*background-repeat: no-repeat;*/
     background-size: cover;
     display: inline-block;
     margin-top: 30px;
@@ -231,6 +221,5 @@
     width: 220px;
     height: 260px;
     text-align: center;
-    /*background: antiquewhite;*/
 }
 

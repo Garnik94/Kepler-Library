@@ -97,7 +97,7 @@
 
     <servlet>
         <servlet-name>Search manageable user</servlet-name>
-        <servlet-class>controller.permitedActionController.ManageableUserSearchController</servlet-class>
+        <servlet-class>controller.permittedActionController.ManageableUserSearchController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Search manageable user</servlet-name>
@@ -106,7 +106,7 @@
 
     <servlet>
         <servlet-name>Delete user</servlet-name>
-        <servlet-class>controller.permitedActionController.UserDeleteController</servlet-class>
+        <servlet-class>controller.permittedActionController.UserDeleteController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete user</servlet-name>
@@ -115,7 +115,7 @@
 
     <servlet>
         <servlet-name>Permit user</servlet-name>
-        <servlet-class>controller.permitedActionController.UserPermitController</servlet-class>
+        <servlet-class>controller.permittedActionController.UserPermitController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Permit user</servlet-name>
@@ -124,7 +124,7 @@
 
     <servlet>
         <servlet-name>Forbid user</servlet-name>
-        <servlet-class>controller.permitedActionController.UserForbidController</servlet-class>
+        <servlet-class>controller.permittedActionController.UserForbidController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Forbid user</servlet-name>
@@ -142,7 +142,7 @@
 
     <servlet>
         <servlet-name>Add new book</servlet-name>
-        <servlet-class>controller.permitedActionController.BookAddController</servlet-class>
+        <servlet-class>controller.permittedActionController.BookAddController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Add new book</servlet-name>
@@ -151,7 +151,7 @@
 
     <servlet>
         <servlet-name>Edit book</servlet-name>
-        <servlet-class>controller.permitedActionController.BookEditController</servlet-class>
+        <servlet-class>controller.permittedActionController.BookEditController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Edit book</servlet-name>
@@ -160,7 +160,7 @@
 
     <servlet>
         <servlet-name>Delete book</servlet-name>
-        <servlet-class>controller.permitedActionController.BookDeleteController</servlet-class>
+        <servlet-class>controller.permittedActionController.BookDeleteController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete book</servlet-name>
@@ -174,6 +174,15 @@
     <servlet-mapping>
         <servlet-name>Sort book content</servlet-name>
         <url-pattern>/sortBooks</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Book select content</servlet-name>
+        <servlet-class>controller.permittedActionController.BookSelectController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Book select content</servlet-name>
+        <url-pattern>/selectBook</url-pattern>
     </servlet-mapping>
 
     <error-page>

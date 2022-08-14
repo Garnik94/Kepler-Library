@@ -15,10 +15,13 @@
 <br><br><br><br><br><br><br><br><br><br><br>
 
     <%
-        int currentEditableBookIndex;
-        currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
-        Book editableBook = (Book) session.getAttribute(String.valueOf(currentEditableBookIndex));
-        session.setAttribute("checkedBook", editableBook);
+        if (session.getAttribute("alreadyDeleted") != null){
+            response.sendRedirect("BookSection.jsp");
+        }
+
+        int currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
+        Book editableBook = (Book) session.getAttribute("checkedBook");
+
     %>
 
     <form action="editBook" method="post">
@@ -90,14 +93,14 @@
     <%
         if (session.getAttribute("ConfirmEditBook") != null) {
     %>
-            <span class="errorMessageStyle">Are you really going to edit book</span>
+            <span class="errorMessageStyle">Are you really going to edit book</span><br><br>
 
             <form>
                 <label>
-                    <input type="submit" formaction="editBook?editableBook=<%=currentEditableBookIndex%>&&confirmEditBook=yes" formmethod="post" value="Yes">
+                    <input type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmEditBook=yes" formmethod="post" value="Yes">
                 </label>
                 <label>
-                    <input type="submit" formaction="editBook?editableBook=<%=currentEditableBookIndex%>&&confirmEditBook=no" formmethod="post" value="No">
+                    <input type="submit" formaction="deleteBook?editableBook=<%=currentEditableBookIndex%>&&confirmEditBook=no" formmethod="post" value="No">
                 </label>
             </form>
     <%

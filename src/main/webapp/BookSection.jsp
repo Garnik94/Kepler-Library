@@ -192,7 +192,11 @@
                 if (user.isHasEditPermission() == 1) {
                     session.setAttribute(String.valueOf(i), book);
             %>
-                <a class="linksLikeButton" href="EditBook.jsp?editableBook=<%=i%>">Edit book</a>
+                <a class="linksLikeButton" href="selectBook?editableBook=<%=i%>">Edit book</a>
+<%--                <a class="linksLikeButton" href="deleteBook?editableBook=<%=i%>">Edit book</a>--%>
+<%--                <form method="post" action="deleteBook?editableBook=<%=i%>">--%>
+<%--                    <input type="submit" value="Edit book">--%>
+<%--                </form>--%>
             <%
                 }
             %>
