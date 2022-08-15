@@ -15,13 +15,8 @@
 <br><br><br><br><br><br><br><br><br><br><br>
 
     <%
-        if (session.getAttribute("alreadyDeleted") != null){
-            response.sendRedirect("BookSection.jsp");
-        }
-
         int currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
         Book editableBook = (Book) session.getAttribute("checkedBook");
-
     %>
 
     <form action="editBook" method="post">

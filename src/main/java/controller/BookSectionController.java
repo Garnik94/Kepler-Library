@@ -3,6 +3,7 @@ package controller;
 import model.SearchingOption;
 import service.BookContentDisplayService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +26,8 @@ public class BookSectionController extends HttpServlet {
         if (session.getAttribute("CurrentUser") != null) {
             BookContentDisplayService.mainSearch(request, connection);
         }
+//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+//        requestDispatcher.forward(request, response);
         response.sendRedirect("BookSection.jsp");
     }
 

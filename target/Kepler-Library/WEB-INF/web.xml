@@ -19,11 +19,11 @@
     </listener>
 
     <filter>
-        <filter-name>User Authenticate</filter-name>
+        <filter-name>User authenticate filter</filter-name>
         <filter-class>filter.UserAuthenticateFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>User Authenticate</filter-name>
+        <filter-name>User authenticate filter</filter-name>
         <url-pattern>/AddBook.jsp</url-pattern>
         <url-pattern>/BookSection.jsp</url-pattern>
         <url-pattern>/EditBook.jsp</url-pattern>
@@ -32,22 +32,31 @@
     </filter-mapping>
 
     <filter>
-        <filter-name>User Confirmation</filter-name>
+        <filter-name>User confirmation filter</filter-name>
         <filter-class>filter.UserConfirmationFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>User Confirmation</filter-name>
+        <filter-name>User confirmation filter</filter-name>
         <url-pattern>/Login.jsp</url-pattern>
         <url-pattern>/Registration.jsp</url-pattern>
     </filter-mapping>
 
     <filter>
-        <filter-name>User profile</filter-name>
+        <filter-name>User profile filter</filter-name>
         <filter-class>filter.UserProfileFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>User profile</filter-name>
+        <filter-name>User profile filter</filter-name>
         <url-pattern>/UserProfile.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>Deleted book filter</filter-name>
+        <filter-class>filter.DeletedBookFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Deleted book filter</filter-name>
+        <url-pattern>/EditBook.jsp</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -59,14 +68,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <servlet>
-        <servlet-name>Login page</servlet-name>
-        <servlet-class>controller.LoginController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Login page</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>Login page</servlet-name>-->
+<!--        <servlet-class>controller.LoginController</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>Login page</servlet-name>-->
+<!--        <url-pattern>/login</url-pattern>-->
+<!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>Logout</servlet-name>

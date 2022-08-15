@@ -3,6 +3,7 @@ package controller;
 import com.google.common.base.Objects;
 import service.BookContentDisplayService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +39,8 @@ public class BookSortController extends HttpServlet {
         } else if (Objects.equal(sortingOption,"Year down -> up")){
             BookContentDisplayService.sortBooksByYear(-1);
         }
-        response.sendRedirect("BookSection.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+        requestDispatcher.forward(request, response);
+//        response.sendRedirect("BookSection.jsp");
     }
 }

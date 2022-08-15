@@ -19,7 +19,6 @@ public class BookAddController extends HttpServlet {
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         PermittedActionService.addNewBook(request, connection);
-        HttpSession session = request.getSession();
         response.sendRedirect("PermittedProfile.jsp");
     }
 

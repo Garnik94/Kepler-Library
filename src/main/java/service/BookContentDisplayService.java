@@ -62,10 +62,12 @@ public class BookContentDisplayService {
     }
 
     public static void searchBooksByAuthor(Connection connection, String author) {
+//        String processedAuthor = author == null ? "" : author;
         setBookList(BookDAO.getBooksByAuthor(connection, author));
     }
 
     public static void searchBooksByTitle(Connection connection, String title) {
+//        String processedTitle = title == null ? "" : title;
         setBookList(BookDAO.getBooksByTitle(connection, title));
     }
 
@@ -165,7 +167,7 @@ public class BookContentDisplayService {
 
     public static void sortBooksByYear(int ascDesc) {
         if (ascDesc == 1) {
-           bookList.sort(ascOrderingByYear);
+            bookList.sort(ascOrderingByYear);
         } else if (ascDesc == -1) {
             bookList.sort(descOrderingByYear);
         }
@@ -236,12 +238,14 @@ public class BookContentDisplayService {
         Category category = getSelectedCategory(request);
         DocumentType documentType = getSelectedDocumentType(request);
         Language language = getSelectedLanguage(request);
+//        String searchBy = request.getParameter("searchBy") == null ? "Author" : request.getParameter("searchBy");
         return new SearchingOption(request.getParameter("searchBook"),
                 request.getParameter("searchBy"),
                 category,
                 documentType,
                 language);
     }
+
     public static Category getSelectedCategory(HttpServletRequest request) {
         Category category = null;
         if (request.getParameter("selectedCategory") != null &&
