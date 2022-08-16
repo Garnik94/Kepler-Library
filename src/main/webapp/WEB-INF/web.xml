@@ -26,6 +26,7 @@
         <filter-name>User authenticate filter</filter-name>
         <url-pattern>/AddBook.jsp</url-pattern>
         <url-pattern>/BookSection.jsp</url-pattern>
+        <url-pattern>/books/*</url-pattern>
         <url-pattern>/EditBook.jsp</url-pattern>
         <url-pattern>/ManageUser.jsp</url-pattern>
         <url-pattern>/PermittedProfile.jsp</url-pattern>

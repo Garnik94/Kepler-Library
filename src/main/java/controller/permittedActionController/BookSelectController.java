@@ -24,9 +24,6 @@ public class BookSelectController extends HttpServlet {
         int currentEditableBookIndex = Integer.parseInt(request.getParameter("editableBook"));
         Book editableBook = (Book) session.getAttribute(String.valueOf(currentEditableBookIndex));
         session.setAttribute("checkedBook", editableBook);
-//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("EditBook.jsp?editableBook="
-//                + request.getParameter("editableBook"));
-//        requestDispatcher.forward(request, response);
         response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
     }
 

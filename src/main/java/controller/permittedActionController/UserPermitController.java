@@ -3,6 +3,7 @@ package controller.permittedActionController;
 import com.google.common.base.Objects;
 import service.PermittedActionService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import java.sql.Connection;
 
 @WebServlet(name = "PermitUserServlet")
 public class UserPermitController extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
@@ -39,6 +41,11 @@ public class UserPermitController extends HttpServlet {
                 response.sendRedirect("ManageUser.jsp");
             }
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Error.jsp");
+        requestDispatcher.forward(request, response);
     }
 
 }

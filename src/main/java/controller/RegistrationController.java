@@ -35,19 +35,13 @@ public class RegistrationController extends HttpServlet {
                 response.sendRedirect("Login.jsp");
             } else {
                 session.setAttribute("userIsAlreadyExists", "User is already exists");
-//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
-//                requestDispatcher.forward(request, response);
                 response.sendRedirect("Registration.jsp");
             }
         } else if (!Objects.equal(password, confirmPassword)) {
             session.setAttribute("mismatchedPasswords", "Mismatched passwords");
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
-//            requestDispatcher.forward(request, response);
             response.sendRedirect("Registration.jsp");
         } else {
             session.setAttribute("requiredInputError", "All inputs are required");
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("Registration.jsp");
-//            requestDispatcher.forward(request, response);
             response.sendRedirect("Registration.jsp");
         }
     }

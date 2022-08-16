@@ -5,6 +5,7 @@ import model.content.Book;
 import service.PermittedActionService;
 import service.BookContentDisplayService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +32,6 @@ public class BookDeleteController extends HttpServlet {
                 Book checkedBook = (Book) session.getAttribute("checkedBook");
                 PermittedActionService.deleteBook(checkedBook, connection);
                 BookContentDisplayService.deleteBookFromBookList(checkedBook);
-//                session.removeAttribute("checkedBook");
                 session.removeAttribute("ConfirmDeleteBook");
                 session.setAttribute("alreadyDeleted", true);
                 response.sendRedirect("BookSection.jsp");
@@ -43,6 +43,11 @@ public class BookDeleteController extends HttpServlet {
                 response.sendRedirect("EditBook.jsp?editableBook=" + request.getParameter("editableBook"));
             }
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Error.jsp");
+        requestDispatcher.forward(request, response);
     }
 
 }

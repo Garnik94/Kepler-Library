@@ -4,6 +4,7 @@ import model.content.Book;
 import service.BookContentDisplayService;
 import service.PermittedActionService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +26,11 @@ public class BookEditController extends HttpServlet {
         BookContentDisplayService.updateBookFromBookList(checkedBook, connection);
         session.removeAttribute("checkedBook");
         response.sendRedirect("BookSection.jsp");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Error.jsp");
+        requestDispatcher.forward(request, response);
     }
 
 }

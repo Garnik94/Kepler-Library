@@ -26,19 +26,17 @@ public class WelcomeController extends HttpServlet {
         try {
             if (UserValidatorService.validateUser(connection, username, password, request)) {
                 session.removeAttribute("searchingOption");
-//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
+                session.setAttribute("welcome", true);
+
+//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/books");
 //                requestDispatcher.forward(request, response);
                 response.sendRedirect("BookSection.jsp");
             } else {
                 session.setAttribute("invalidLogin", "Username or password is wrong");
-//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Login.jsp");
-//                requestDispatcher.forward(request, response);
                 response.sendRedirect("Login.jsp");
             }
         } catch (AbsentUserException e) {
             session.setAttribute("invalidLogin", "Username or password is wrong");
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("Login.jsp");
-//            requestDispatcher.forward(request, response);
             response.sendRedirect("Login.jsp");
         }
     }
@@ -46,8 +44,6 @@ public class WelcomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("ConfirmDeleteBook");
-//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
-//        requestDispatcher.forward(request, response);
         response.sendRedirect("BookSection.jsp");
     }
 

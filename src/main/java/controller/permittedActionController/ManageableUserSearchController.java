@@ -28,16 +28,12 @@ public class ManageableUserSearchController extends HttpServlet {
             if (session.getAttribute("searchingUserNotFound") != null) {
                 session.removeAttribute("searchingUserNotFound");
             }
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("ManageUser.jsp");
-//            requestDispatcher.forward(request, response);
             response.sendRedirect("ManageUser.jsp");
         } catch (AbsentUserException e) {
             if (session.getAttribute("ManageableUser") != null) {
                 session.removeAttribute("ManageableUser");
             }
             session.setAttribute("searchingUserNotFound", "User is not found");
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("ManageUser.jsp");
-//            requestDispatcher.forward(request, response);
             response.sendRedirect("ManageUser.jsp");
         }
     }

@@ -2,6 +2,7 @@ package controller.permittedActionController;
 
 import service.PermittedActionService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,11 @@ public class BookAddController extends HttpServlet {
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         PermittedActionService.addNewBook(request, connection);
         response.sendRedirect("PermittedProfile.jsp");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Error.jsp");
+        requestDispatcher.forward(request, response);
     }
 
 }

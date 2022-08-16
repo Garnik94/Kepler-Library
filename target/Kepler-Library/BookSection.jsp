@@ -29,6 +29,9 @@
         <form action="books" method="get">
             <%
                 SearchingOption searchingOption = (SearchingOption) session.getAttribute("searchingOption");
+                if (session.getAttribute("welcome") == null && session.getAttribute("searchingOption") != null) {
+                    searchingOption.setSearchBy("");
+                }
             %>
 
             <span class="textStyle">Search by</span><br><br>
