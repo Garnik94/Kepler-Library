@@ -4,6 +4,7 @@ import service.dao.DbConnectionManager;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -14,6 +15,7 @@ import static service.dao.DocumentTypeDAO.setDocumentTypes;
 import static service.dao.LanguageDAO.getAllLanguages;
 import static service.dao.LanguageDAO.setLanguages;
 
+//@WebListener()
 public class ContextListener implements ServletContextListener {
 
     @Override

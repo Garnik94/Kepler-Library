@@ -12,7 +12,9 @@
 
 <div style="float: right; text-align: center; width: 300px">
     <span class="textStyle">
-        <jsp:useBean id="CurrentUser" type="model.User" scope="session"/>
+        <jsp:useBean id="CurrentUser" class="model.User" scope="session"/>
+<%--        <jsp:setProperty name="CurrentUser" property="*"/>--%>
+<%--        <jsp:setProperty name="CurrentUser" property="username"/>--%>
         <jsp:getProperty name="CurrentUser" property="username"/>
     </span> <br><br>
 

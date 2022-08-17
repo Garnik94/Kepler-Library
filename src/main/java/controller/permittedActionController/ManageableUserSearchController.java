@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "SearchManageableUserServlet")
+@WebServlet(/*value = "/searchManageableUser",*/ name = "ManageableUserSearchController")
 public class ManageableUserSearchController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "DeleteBookServlet")
+@WebServlet(/*value = "/deleteBook",*/ name = "BookDeleteController")
 public class BookDeleteController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

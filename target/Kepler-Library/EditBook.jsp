@@ -69,7 +69,7 @@
     <%
         if (session.getAttribute("ConfirmDeleteBook") != null) {
     %>
-            <span class="errorMessageStyle">${ConfirmDeleteBook}</span>
+            <span class="errorMessageStyle">${sessionScope.ConfirmDeleteBook}</span>
 
             <br>
 

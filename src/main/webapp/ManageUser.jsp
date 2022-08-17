@@ -58,7 +58,7 @@
     if (session.getAttribute("searchingUserNotFound") != null) {
 %>
 
-        <span class="errorMessageStyle">${searchingUserNotFound}</span>
+        <span class="errorMessageStyle">${sessionScope.searchingUserNotFound}</span>
 
 <%
         session.removeAttribute("searchingUserNotFound");

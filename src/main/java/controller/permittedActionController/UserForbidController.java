@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "ForbidUserServlet")
+@WebServlet(/*value = "/forbidUser",*/ name = "UserForbidController")
 public class UserForbidController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

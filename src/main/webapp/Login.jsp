@@ -35,7 +35,7 @@
         <%
             if (session.getAttribute("invalidLogin") != null) {
         %>
-                <span class="errorMessageStyle">${invalidLogin}</span>
+                <span class="errorMessageStyle">${sessionScope.invalidLogin}</span>
         <%
                 session.removeAttribute("invalidLogin");
             }

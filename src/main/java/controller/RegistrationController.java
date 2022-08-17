@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import service.UserValidatorService;
 import service.dao.UserDAO;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "RegistrationServlet")
+@WebServlet(/*value = "/registration",*/ name = "RegistrationController")
 public class RegistrationController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
