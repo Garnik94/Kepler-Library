@@ -189,7 +189,7 @@
             <a class="linksLikeButton" href="<%=book.getDownloadUrl()%>"
                target="_blank">Download</a><br><br>
             <%
-                if (user.isHasEditPermission() == 1) {
+                if (user.hasEditPermission() == 1) {
                     session.setAttribute(String.valueOf(i), book);
             %>
                 <a class="linksLikeButton" href="selectBook?editableBook=<%=i%>">Edit book</a>
@@ -238,7 +238,7 @@
         }
     %>
 
-    <form action="SessionProperties.jsp">
+    <form action="exsamples/SessionProperties.jsp">
         <input class="registrationButtonStyle" type="submit" formmethod="get" value="Session properties"><br>
     </form>
 

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import com.google.common.base.Optional;
 
 public class UserDAO {
 
@@ -23,7 +24,7 @@ public class UserDAO {
                         resultSet.getString("Password"),
                         resultSet.getString("Email"));
                 foundUser.setId(resultSet.getInt("ID"));
-                foundUser.setHasEditPermission(resultSet.getInt("Has_Edit_Permission"));
+                foundUser.setEditPermission(resultSet.getInt("Has_Edit_Permission"));
                 return foundUser;
             }
         } catch (SQLException e) {
@@ -37,7 +38,7 @@ public class UserDAO {
                                      String password,
                                      String email) {
         try {
-            getUser(connection, new User(username));
+            getUser(connection, new User(Optional.of(username).get()));
             return false;
         } catch (AbsentUserException e) {
             try {

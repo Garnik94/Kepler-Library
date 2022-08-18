@@ -41,7 +41,7 @@
             }
         %>
 
-        <form action="DatabaseMetadata.jsp">
+        <form action="exsamples/DatabaseMetadata.jsp">
             <input class="registrationButtonStyle" type="submit" formmethod="get" value="Database Metadata"><br>
         </form>
 

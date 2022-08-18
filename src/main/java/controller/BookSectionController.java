@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.common.base.Optional;
 import model.SearchingOption;
 import service.BookContentDisplayService;
 
@@ -17,10 +18,11 @@ import java.sql.Connection;
 @WebServlet(/*value = "/books",*/name = "BookSectionController")
 public class BookSectionController extends HttpServlet {
 
+    @SuppressWarnings("unchecked")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         ServletContext servletContext = getServletContext();
-        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
+        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
         SearchingOption searchingOption = BookContentDisplayService.cacheSearchingOptions(request);
         session.setAttribute("searchingOption", searchingOption);
         if (session.getAttribute("CurrentUser") != null) {

@@ -1,5 +1,6 @@
 package controller.listeners;
 
+import com.google.common.base.Optional;
 import service.dao.DbConnectionManager;
 
 import javax.servlet.ServletContextEvent;
@@ -19,14 +20,15 @@ import static service.dao.LanguageDAO.setLanguages;
 public class ContextListener implements ServletContextListener {
 
     @Override
+    @SuppressWarnings("unchecked")
     public void contextInitialized(ServletContextEvent sce) {
         String url = sce.getServletContext().getInitParameter("dbConnectionUrl");
         try {
-            Connection connection = DbConnectionManager.getConnection(url);
+            Optional<Connection> connection = Optional.of(DbConnectionManager.getConnection(url));
             sce.getServletContext().setAttribute("dbConnection", connection);
-            setCategories(getAllCategories(connection));
-            setDocumentTypes(getAllDocumentTypes(connection));
-            setLanguages(getAllLanguages(connection));
+            setCategories(getAllCategories(connection.get()));
+            setDocumentTypes(getAllDocumentTypes(connection.get()));
+            setLanguages(getAllLanguages(connection.get()));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

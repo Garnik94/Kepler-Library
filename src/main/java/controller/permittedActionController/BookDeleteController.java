@@ -1,6 +1,7 @@
 package controller.permittedActionController;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
 import model.content.Book;
 import service.PermittedActionService;
 import service.BookContentDisplayService;
@@ -19,9 +20,10 @@ import java.sql.Connection;
 @WebServlet(/*value = "/deleteBook",*/ name = "BookDeleteController")
 public class BookDeleteController extends HttpServlet {
 
+    @SuppressWarnings("unchecked")
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
+        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
         HttpSession session = request.getSession();
         if (session.getAttribute("ConfirmDeleteBook") == null) {
             session.setAttribute("ConfirmDeleteBook", "Are you really going to delete book");

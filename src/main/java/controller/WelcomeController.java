@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.common.base.Optional;
 import exceptions.AbsentUserException;
 import service.UserValidatorService;
 
@@ -17,12 +18,13 @@ import java.sql.Connection;
 @WebServlet(/*value = "/welcome",*/ name = "WelcomeController")
 public class WelcomeController extends HttpServlet {
 
+    @SuppressWarnings("unchecked")
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = request.getParameter("inputUsername");
         String password = request.getParameter("inputPassword");
         ServletContext servletContext = getServletContext();
-        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
+        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
         try {
             if (UserValidatorService.validateUser(connection, username, password, request)) {
                 session.removeAttribute("searchingOption");

@@ -1,5 +1,6 @@
 package service;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import exceptions.AbsentUserException;
 import model.User;
@@ -49,7 +50,7 @@ public class PermittedActionService {
 
     public static User getUserFromDb(HttpServletRequest request, Connection connection) throws AbsentUserException {
         Preconditions.checkNotNull(connection);
-        User user = new User(request.getParameter("searchingUser"));
+        User user = new User(Optional.of(request.getParameter("searchingUser")).get());
         return UserDAO.getUser(connection, user);
     }
 

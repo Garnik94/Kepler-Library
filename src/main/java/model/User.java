@@ -63,11 +63,11 @@ public class User {
         Id = id;
     }
 
-    public int isHasEditPermission() {
+    public int hasEditPermission() {
         return hasEditPermission;
     }
 
-    public void setHasEditPermission(int hasEditPermission) {
+    public void setEditPermission(int hasEditPermission) {
         this.hasEditPermission = hasEditPermission;
     }
 

@@ -25,7 +25,7 @@
 
     <%
         User user = (User) session.getAttribute("CurrentUser");
-        if (user.isHasEditPermission() == 1) {
+        if (user.hasEditPermission() == 1) {
     %>
             <form action="PermittedProfile.jsp" method="get">
                 <input class="navigationButtons" type="submit" value="Manage">
