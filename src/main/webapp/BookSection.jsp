@@ -238,6 +238,10 @@
         }
     %>
 
+    <form action="SessionProperties.jsp">
+        <input class="registrationButtonStyle" type="submit" formmethod="get" value="Session properties"><br>
+    </form>
+
 </div>
 
 </body>

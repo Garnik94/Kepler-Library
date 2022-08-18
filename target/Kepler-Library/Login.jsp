@@ -41,6 +41,10 @@
             }
         %>
 
+        <form action="DatabaseMetadata.jsp">
+            <input class="registrationButtonStyle" type="submit" formmethod="get" value="Database Metadata"><br>
+        </form>
+
     </div>
 </div>
 
