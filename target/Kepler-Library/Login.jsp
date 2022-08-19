@@ -12,11 +12,12 @@
 
 <div class="loginPage">
 
-    <div>
-        <span class="mainLabel">WELCOME TO</span><br>
-        <span class="mainLabel">KEPLER LIBRARY</span>
-    </div>
+<%--    <div>--%>
+<%--        <span class="mainLabel">WELCOME TO</span><br>--%>
+<%--        <span class="mainLabel">KEPLER LIBRARY</span>--%>
+<%--    </div>--%>
 
+    <br><br><br><br><br><br>
     <div class="formDivStyle">
 
         <form>
@@ -41,7 +42,7 @@
             }
         %>
 
-        <form action="exsamples/DatabaseMetadata.jsp">
+        <form action="jdbcExamples/DatabaseMetadata.jsp">
             <input class="registrationButtonStyle" type="submit" formmethod="get" value="Database Metadata"><br>
         </form>
 
