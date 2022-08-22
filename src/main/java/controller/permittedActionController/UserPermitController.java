@@ -1,7 +1,6 @@
 package controller.permittedActionController;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import service.PermittedActionService;
 
 import javax.servlet.RequestDispatcher;
@@ -18,10 +17,10 @@ import java.sql.Connection;
 @WebServlet(/*value = "/permitUser",*/ name = "UserPermitController")
 public class UserPermitController extends HttpServlet {
 
-    @SuppressWarnings("unchecked")
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         HttpSession session = request.getSession();
         if (session.getAttribute("ConfirmPermitUser") == null) {
             session.setAttribute("ConfirmPermitUser", true);

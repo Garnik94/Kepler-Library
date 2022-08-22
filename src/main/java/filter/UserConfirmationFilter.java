@@ -9,6 +9,7 @@ import java.io.IOException;
 
 //@WebFilter(urlPatterns = {"/Login.jsp", "/Registration.jsp"})
 public class UserConfirmationFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

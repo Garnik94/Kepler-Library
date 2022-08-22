@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<h1>404 Error</h1>
+<div style="text-align: center;"><h1 style="color: red">404 Error</h1></div>
 
 </body>
 </html>

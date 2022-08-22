@@ -133,14 +133,14 @@ public class BookContentDisplayService {
     private static final Ordering<Book> ascOrderingByPage = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
-            return book1.getPages() - book2.getPages();
+            return book2.getPages() - book1.getPages();
         }
     };
 
     private static final Ordering<Book> descOrderingByPage = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
-            return book2.getPages() - book1.getPages();
+            return book1.getPages() - book2.getPages();
         }
     };
 
@@ -153,18 +153,18 @@ public class BookContentDisplayService {
     }
 
     private static final Ordering<Book> ascOrderingByYear = new Ordering<Book>() {
-        @Override
-        public int compare(Book book1, Book book2) {
-            return book1.getYear() - book2.getYear();
+        @Override        public int compare(Book book1, Book book2) {
+            return book2.getYear() - book1.getYear();
         }
     };
 
     private static final Ordering<Book> descOrderingByYear = new Ordering<Book>() {
         @Override
         public int compare(Book book1, Book book2) {
-            return book2.getYear() - book1.getYear();
+            return book1.getYear() - book2.getYear();
         }
     };
+
 
     public static void sortBooksByYear(int ascDesc) {
         if (ascDesc == 1) {

@@ -1,18 +1,15 @@
 package controller.permittedActionController;
 
-import com.google.common.base.Optional;
 import service.PermittedActionService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebListener;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -23,10 +20,10 @@ initParams = {
 )
 public class BookAddController extends HttpServlet {
 
-    @SuppressWarnings("unchecked")
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         PermittedActionService.addNewBook(request, connection);
         response.sendRedirect("PermittedProfile.jsp");
     }

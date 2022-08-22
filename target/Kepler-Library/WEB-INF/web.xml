@@ -99,11 +99,11 @@
 
     <servlet>
         <servlet-name>Welcome page</servlet-name>
-        <servlet-class>controller.WelcomeController</servlet-class>
+        <servlet-class>controller.LoginController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Welcome page</servlet-name>
-        <url-pattern>/welcome</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <servlet>

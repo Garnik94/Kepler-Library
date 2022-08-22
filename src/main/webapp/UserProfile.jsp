@@ -13,13 +13,13 @@
 <div style="float: right; text-align: center; width: 300px">
     <span class="textStyle">
         <jsp:useBean id="CurrentUser" class="model.User" scope="session"/>
+        <jsp:getProperty name="CurrentUser" property="username"/>
+
 <%--        <jsp:setProperty name="CurrentUser" property="*"/>--%>
 <%--        <jsp:setProperty name="CurrentUser" property="username"/>--%>
-        <jsp:getProperty name="CurrentUser" property="username"/>
     </span> <br><br>
-
-    <form action="welcome" method="get">
-<%--    <form action="books" method="get">--%>
+<%--    <form action="welcome" method="get">--%>
+    <form action="BookSection.jsp" method="get">
         <input class="navigationButtons" type="submit" value="Home">
     </form>
 

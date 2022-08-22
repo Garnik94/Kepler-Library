@@ -12,11 +12,6 @@
 
 <div class="loginPage">
 
-<%--    <div>--%>
-<%--        <span class="mainLabel">WELCOME TO</span><br>--%>
-<%--        <span class="mainLabel">KEPLER LIBRARY</span>--%>
-<%--    </div>--%>
-
     <br><br><br><br><br><br>
     <div class="formDivStyle">
 
@@ -28,7 +23,7 @@
             <label class="textStyle">
                 <input name="inputPassword" class="inputAreaStyle" type="password">
             </label><br>
-            <input formmethod="post" formaction="welcome" class="loginButtonStyle" type="submit" value="Login"><br>
+            <input formmethod="post" formaction="login" class="loginButtonStyle" type="submit" value="Login"><br>
             <input formmethod="post" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
                    value="Registration">
         </form>
@@ -41,10 +36,6 @@
                 session.removeAttribute("invalidLogin");
             }
         %>
-
-        <form action="jdbcExamples/DatabaseMetadata.jsp">
-            <input class="registrationButtonStyle" type="submit" formmethod="get" value="Database Metadata"><br>
-        </form>
 
     </div>
 </div>

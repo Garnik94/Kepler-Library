@@ -23,16 +23,16 @@ import static service.dao.LanguageDAO.setLanguages;
 //@WebListener()
 public class ContextListener implements ServletContextListener {
 
+
     @Override
-    @SuppressWarnings("unchecked")
     public void contextInitialized(ServletContextEvent sce) {
         String url = sce.getServletContext().getInitParameter("dbConnectionUrl");
         try {
-            Optional<Connection> connection = Optional.of(DbConnectionManager.getConnection(url));
-            sce.getServletContext().setAttribute("dbConnection", connection);
-            setCategories(getAllCategories(connection.get()));
-            setDocumentTypes(getAllDocumentTypes(connection.get()));
-            setLanguages(getAllLanguages(connection.get()));
+            Connection connection = DbConnectionManager.getConnection(url);
+            sce.getServletContext().setAttribute("dbConnection", Optional.of(connection).get());
+            setCategories(getAllCategories(connection));
+            setDocumentTypes(getAllDocumentTypes(connection));
+            setLanguages(getAllLanguages(connection));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

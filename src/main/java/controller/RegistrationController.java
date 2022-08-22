@@ -1,7 +1,6 @@
 package controller;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import service.UserValidatorService;
 import service.dao.UserDAO;
 
@@ -18,7 +17,7 @@ import java.sql.Connection;
 @WebServlet(/*value = "/registration",*/ name = "RegistrationController")
 public class RegistrationController extends HttpServlet {
 
-    @SuppressWarnings("unchecked")
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -26,7 +25,7 @@ public class RegistrationController extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
         HttpSession session = request.getSession();
         ServletContext servletContext = getServletContext();
-        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         if (UserValidatorService.checkRegistrationRequiredInputs(username, email, password, confirmPassword) &&
                 Objects.equal(password, confirmPassword)) {
             boolean isUserSuccessfullyAdded = UserDAO.addNewUser(connection, username, password, email);

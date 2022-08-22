@@ -69,16 +69,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>Login page</servlet-name>-->
-<!--        <servlet-class>controller.LoginController</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>Login page</servlet-name>-->
-<!--        <url-pattern>/login</url-pattern>-->
-<!--    </servlet-mapping>-->
-
-<!--    @WebServlet(value="/registration")-->
     <servlet>
         <servlet-name>Registration page</servlet-name>
         <servlet-class>controller.RegistrationController</servlet-class>
@@ -99,11 +89,11 @@
 
     <servlet>
         <servlet-name>Welcome page</servlet-name>
-        <servlet-class>controller.WelcomeController</servlet-class>
+        <servlet-class>controller.LoginController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Welcome page</servlet-name>
-        <url-pattern>/welcome</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <servlet>

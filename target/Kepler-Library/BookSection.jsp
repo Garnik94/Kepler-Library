@@ -157,18 +157,18 @@
     <div class="contentContainer">
         <%
             int bookListSize = BookContentDisplayService.getBookList().size();
-            int currentPage;
-            if (request.getParameter("page") == null) {
-                currentPage = 1;
-            } else {
-                currentPage = Integer.parseInt(request.getParameter("page"));
-            }
-            int coefficient;
-            if (currentPage == 1) {
-                coefficient = 0;
-            } else {
-                coefficient = 10;
-            }
+            int currentPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+//            if (request.getParameter("page") == null) {
+//                currentPage = 1;
+//            } else {
+//                currentPage = Integer.parseInt(request.getParameter("page"));
+//            }
+            int coefficient = currentPage == 1 ? 0 : 10;
+//            if (currentPage == 1) {
+//                coefficient = 0;
+//            } else {
+//                coefficient = 10;
+//            }
             for (int i = (currentPage - 1) * coefficient, j = 0; i <= (currentPage - 1) * coefficient + 10 - 1; i++, j++) {
         %>
         <%
@@ -208,9 +208,7 @@
 
     <form>
         <%
-            int condition = bookListSize % 10 >= 1 ?
-                    bookListSize / 10 + 1 : bookListSize / 10;
-
+            int condition = bookListSize % 10 >= 1 ? bookListSize / 10 + 1 : bookListSize / 10;
             for (int i = 1; i <= condition; i++) {
                 String url = "BookSection.jsp?page=" + i;
         %>
@@ -231,16 +229,9 @@
     </form>
 
     <%
-    } else if (session.getAttribute("inputValidationError") != null) {
-    %>
-        <h1 class="errorMessageStyle">input value min length must be more than 3</h1>
-    <%
         }
     %>
 
-    <form action="exsamples/SessionProperties.jsp">
-        <input class="registrationButtonStyle" type="submit" formmethod="get" value="Session properties"><br>
-    </form>
 
 </div>
 

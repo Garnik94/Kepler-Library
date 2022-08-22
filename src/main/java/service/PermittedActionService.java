@@ -50,7 +50,7 @@ public class PermittedActionService {
 
     public static User getUserFromDb(HttpServletRequest request, Connection connection) throws AbsentUserException {
         Preconditions.checkNotNull(connection);
-        User user = new User(Optional.of(request.getParameter("searchingUser")).get());
+        User user = new User(request.getParameter("searchingUser"));
         return UserDAO.getUser(connection, user);
     }
 

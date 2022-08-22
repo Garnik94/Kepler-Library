@@ -2,10 +2,7 @@ package service.dao;
 
 import model.content.Author;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +25,16 @@ public class AuthorDAO {
 
     public static int getAuthorIdByName(Connection connection, Author author) {
         try {
-            String query = "SELECT * FROM Authors WHERE Author_Name = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, author.getAuthorName());
-            ResultSet resultSet = preparedStatement.executeQuery();
+//            String query = "SELECT * FROM Authors WHERE Author_Name = ?";
+//            PreparedStatement preparedStatement = connection.prepareStatement(query);
+//            preparedStatement.setString(1, author.getAuthorName());
+//            ResultSet resultSet = preparedStatement.executeQuery();
+
+            String query = "SELECT * FROM Authors WHERE Author_Name = " + "'" + author.getAuthorName() + "'";
+            Statement statement = connection.createStatement();
+            statement.executeQuery(query);
+            ResultSet resultSet = statement.getResultSet();
+
             if (resultSet.next()) {
                 return resultSet.getInt("Author_Id");
             }

@@ -1,11 +1,9 @@
 package controller.permittedActionController;
 
-import com.google.common.base.Optional;
 import exceptions.AbsentUserException;
 import model.User;
 import service.PermittedActionService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +17,11 @@ import java.sql.Connection;
 @WebServlet(/*value = "/searchManageableUser",*/ name = "ManageableUserSearchController")
 public class ManageableUserSearchController extends HttpServlet {
 
-    @SuppressWarnings("unchecked")
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         ServletContext servletContext = getServletContext();
-        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         try {
             User user = PermittedActionService.getUserFromDb(request, connection);
             session.setAttribute("ManageableUser", user);

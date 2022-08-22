@@ -1,6 +1,5 @@
 package controller.permittedActionController;
 
-import com.google.common.base.Optional;
 import model.content.Book;
 import service.BookContentDisplayService;
 import service.PermittedActionService;
@@ -18,11 +17,12 @@ import java.sql.Connection;
 
 @WebServlet(/*value = "/editBook",*/ name = "BookEditController")
 public class BookEditController extends HttpServlet {
-    @SuppressWarnings("unchecked")
+
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         ServletContext servletContext = getServletContext();
-        Connection connection = ((Optional<Connection>) servletContext.getAttribute("dbConnection")).get();
+        Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         Book checkedBook = (Book) session.getAttribute("checkedBook");
         PermittedActionService.updateBook(checkedBook, request, connection);
         BookContentDisplayService.updateBookFromBookList(checkedBook, connection);
