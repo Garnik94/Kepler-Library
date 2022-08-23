@@ -249,33 +249,33 @@ public class BookContentDisplayService {
     }
 
     public static Category getSelectedCategory(HttpServletRequest request) {
-        Optional<Category> category = Optional.absent();
+        Category category = null;
         if (request.getParameter("selectedCategory") != null &&
                 !Objects.equal(request.getParameter("selectedCategory"), "All Categories")) {
-            category = Optional.of(new Category(request.getParameter("selectedCategory")));
-            category.get().setId(CategoryDAO.getCategoryIdByName(category.get()));
+            category = new Category(request.getParameter("selectedCategory"));
+            category.setId(CategoryDAO.getCategoryIdByName(category));
         }
-        return category.orNull();
+        return category;
     }
 
     public static DocumentType getSelectedDocumentType(HttpServletRequest request) {
-        Optional<DocumentType> documentType = Optional.absent();
+        DocumentType documentType = null;
         if (request.getParameter("selectedDocumentType") != null &&
                 !Objects.equal(request.getParameter("selectedDocumentType"), "All Document Types")) {
-            documentType = Optional.of(new DocumentType(request.getParameter("selectedDocumentType")));
-            documentType.get().setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType.get()));
+            documentType = new DocumentType(request.getParameter("selectedDocumentType"));
+            documentType.setId(DocumentTypeDAO.getDocumentTypeIdByName(documentType));
         }
-        return documentType.orNull();
+        return documentType;
     }
 
     public static Language getSelectedLanguage(HttpServletRequest request) {
-        Optional<Language> language = Optional.absent();
+        Language language = null;
         if (request.getParameter("selectedLanguage") != null &&
                 !Objects.equal(request.getParameter("selectedLanguage"), "All Languages")) {
-            language = Optional.of(new Language(request.getParameter("selectedLanguage")));
-            language.get().setId(LanguageDAO.getLanguageIdByName(language.get()));
+            language = new Language(request.getParameter("selectedLanguage"));
+            language.setId(LanguageDAO.getLanguageIdByName(language));
         }
-        return language.orNull();
+        return language;
     }
 
     public static void deleteBookFromBookList(Book checkedBook) {
