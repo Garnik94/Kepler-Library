@@ -24,8 +24,11 @@
 <%
     if (session.getAttribute("ManageableUser") != null) {
         User manageableUser = (User) (session.getAttribute("ManageableUser"));
+        User currentUser = (User) (session.getAttribute("CurrentUser"));
         String disabled = "";
-        if (manageableUser.getId() == 1) {
+        if (manageableUser.getId() == 1 ||
+                manageableUser.getId() == currentUser.getId()
+        ) {
             disabled = "disabled";
         }
         if (session.getAttribute("ConfirmPermitUser") != null ||

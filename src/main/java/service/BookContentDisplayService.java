@@ -63,13 +63,13 @@ public class BookContentDisplayService {
     }
 
     public static void searchBooksByAuthor(Connection connection, String author) {
-//        String processedAuthor = author == null ? "" : author;
-        setBookList(BookDAO.getBooksByAuthor(connection, author));
+        String processedAuthor = author == null ? "" : author;
+        setBookList(BookDAO.getBooksByAuthor(connection, processedAuthor));
     }
 
     public static void searchBooksByTitle(Connection connection, String title) {
-//        String processedTitle = title == null ? "" : title;
-        setBookList(BookDAO.getBooksByTitle(connection, title));
+        String processedTitle = title == null ? "" : title;
+        setBookList(BookDAO.getBooksByTitle(connection, processedTitle));
     }
 
     public static void filterBooksByLanguage(Language language) {
@@ -239,9 +239,10 @@ public class BookContentDisplayService {
         Category category = getSelectedCategory(request);
         DocumentType documentType = getSelectedDocumentType(request);
         Language language = getSelectedLanguage(request);
-//        String searchBy = request.getParameter("searchBy") == null ? "Author" : request.getParameter("searchBy");
+        String searchBy = request.getParameter("searchBy") == null ? "Author" : request.getParameter("searchBy");
         return new SearchingOption(request.getParameter("searchBook"),
-                request.getParameter("searchBy"),
+//                request.getParameter("searchBy"),
+                searchBy,
                 category,
                 documentType,
                 language);

@@ -32,7 +32,7 @@ public class UserForbidController extends HttpServlet {
                     Objects.equal(request.getParameter("confirmForbidUser"), "yes")) {
                 PermittedActionService.forbidUser(request, connection);
                 session.removeAttribute("ManageableUser");
-                session.removeAttribute("confirmForbidUser");
+                session.removeAttribute("ConfirmForbidUser");
                 response.sendRedirect("ManageUser.jsp");
             } else if (request.getParameter("confirmForbidUser") != null &&
                     Objects.equal(request.getParameter("confirmForbidUser"), "no")) {

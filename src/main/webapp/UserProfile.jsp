@@ -18,7 +18,7 @@
 <%--        <jsp:setProperty name="CurrentUser" property="*"/>--%>
 <%--        <jsp:setProperty name="CurrentUser" property="username"/>--%>
     </span> <br><br>
-<%--    <form action="welcome" method="get">--%>
+<%--    <form action="books" method="get">--%>
     <form action="BookSection.jsp" method="get">
         <input class="navigationButtons" type="submit" value="Home">
     </form>
