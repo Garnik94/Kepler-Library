@@ -23,7 +23,6 @@ import static service.dao.LanguageDAO.setLanguages;
 //@WebListener()
 public class ContextListener implements ServletContextListener {
 
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         String url = sce.getServletContext().getInitParameter("dbConnectionUrl");

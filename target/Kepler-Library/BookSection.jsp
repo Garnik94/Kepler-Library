@@ -158,17 +158,7 @@
         <%
             int bookListSize = BookContentDisplayService.getBookList().size();
             int currentPage = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-//            if (request.getParameter("page") == null) {
-//                currentPage = 1;
-//            } else {
-//                currentPage = Integer.parseInt(request.getParameter("page"));
-//            }
             int coefficient = currentPage == 1 ? 0 : 10;
-//            if (currentPage == 1) {
-//                coefficient = 0;
-//            } else {
-//                coefficient = 10;
-//            }
             for (int i = (currentPage - 1) * coefficient, j = 0; i <= (currentPage - 1) * coefficient + 10 - 1; i++, j++) {
         %>
         <%
