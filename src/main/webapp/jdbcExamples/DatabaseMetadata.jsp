@@ -1,5 +1,6 @@
 <%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DatabaseMetaData" %><%--
+<%@ page import="java.sql.DatabaseMetaData" %>
+<%@ page import="service.dao.JdbcExamples.DatabaseMetadataExample" %><%--
   Created by IntelliJ IDEA.
   User: garnik.haydosyan
   Date: 2022-08-23
@@ -14,15 +15,14 @@
 <body>
 
   <%
-      Connection connection = (Connection) application.getAttribute("dbConnection");
-      DatabaseMetaData databaseMetaData = connection.getMetaData();
+      DatabaseMetadataExample databaseMetadataExample = new DatabaseMetadataExample(application);
   %>
 
-  <%= "getDriverName() - " + databaseMetaData.getDriverName() %> <br><br>
-  <%= "getDriverVersion() - " + databaseMetaData.getDriverVersion() %> <br><br>
-  <%= "getUserName() - " + databaseMetaData.getUserName() %> <br><br>
-  <%= "getDatabaseProductName() - " + databaseMetaData.getDatabaseProductName() %> <br><br>
-  <%= "getDatabaseProductVersion() - " + databaseMetaData.getDatabaseProductVersion() %>
+  <%= "getDriverName() - " + databaseMetadataExample.getDriverName() %> <br><br>
+  <%= "getDriverVersion() - " + databaseMetadataExample.getDriverVersion() %> <br><br>
+  <%= "getUserName() - " + databaseMetadataExample.getUserName() %> <br><br>
+  <%= "getDatabaseProductName() - " + databaseMetadataExample.getDatabaseProductName() %> <br><br>
+  <%= "getDatabaseProductVersion() - " + databaseMetadataExample.getDatabaseProductVersion() %>
 
 </body>
 </html>
