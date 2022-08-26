@@ -8,13 +8,12 @@ import service.dao.UserDAO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Connection;
-import com.google.common.base.Optional;
 
 public class UserValidatorService {
 
     public static boolean validateUser(Connection connection, String username, String password, HttpServletRequest request)
             throws AbsentUserException {
-        User user = UserDAO.getUser(connection, new User(Optional.of(username).get(), Optional.of(password).get()));
+        User user = UserDAO.getUser(connection, new User(username, password));
         HttpSession session = request.getSession();
         if (Objects.equal(user.getUsername(), username) && Objects.equal(user.getPassword(), UserDAO.md5Converter(password))){
             session.setAttribute("CurrentUser", user);

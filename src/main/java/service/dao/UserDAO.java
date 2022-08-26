@@ -38,7 +38,7 @@ public class UserDAO {
                                      String password,
                                      String email) {
         try {
-            getUser(connection, new User(Optional.of(username).get()));
+            getUser(connection, new User(username));
             return false;
         } catch (AbsentUserException e) {
             try {

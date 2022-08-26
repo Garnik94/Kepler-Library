@@ -14,12 +14,18 @@ public class DocumentTypeDAO {
 
     private static List<DocumentType> documentTypes;
 
+    private static List<DocumentType> allDocumentTypes;
+
     public static List<DocumentType> getDocumentTypes() {
         return new ArrayList<>(documentTypes);
     }
 
     public static void setDocumentTypes(List<DocumentType> documentTypes) {
         DocumentTypeDAO.documentTypes = documentTypes;
+    }
+
+    public static void setAllDocumentTypes(List<DocumentType> documentTypes) {
+        DocumentTypeDAO.allDocumentTypes = documentTypes;
     }
 
     public static List<DocumentType> getAllDocumentTypes(Connection connection) {
@@ -40,7 +46,7 @@ public class DocumentTypeDAO {
     }
 
     public static DocumentType getDocumentTypeById(int id) {
-        for (DocumentType currentDocumentType : documentTypes) {
+        for (DocumentType currentDocumentType : allDocumentTypes) {
             if (currentDocumentType.getId() == id) {
                 return currentDocumentType;
             }
@@ -49,7 +55,7 @@ public class DocumentTypeDAO {
     }
 
     public static int getDocumentTypeIdByName(DocumentType documentType) {
-        for (DocumentType currentDocumentType : documentTypes) {
+        for (DocumentType currentDocumentType : allDocumentTypes) {
             if (Objects.equal(currentDocumentType.getType(), documentType.getType())) {
                 return currentDocumentType.getId();
             }

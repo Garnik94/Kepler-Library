@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="graphic/icon.png"
           type="image/x-icon">
     <title>Kepler library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body class="mainPageBackground">
 
@@ -24,7 +24,7 @@
                 <input name="inputPassword" class="inputAreaStyle" type="password">
             </label><br>
             <input formmethod="post" formaction="login" class="loginButtonStyle" type="submit" value="Login"><br>
-            <input formmethod="post" formaction="Registration.jsp" class="registrationButtonStyle" type="submit"
+            <input formmethod="get" formaction="registration" class="registrationButtonStyle" type="submit"
                    value="Registration">
         </form>
 

@@ -14,6 +14,8 @@ public class CategoryDAO {
 
     private static List<Category> categories;
 
+    private static List<Category> allCategories;
+
     public static List<Category> getCategories() {
         return new ArrayList<>(categories);
     }
@@ -21,6 +23,8 @@ public class CategoryDAO {
     public static void setCategories(List<Category> categories) {
         CategoryDAO.categories = categories;
     }
+
+    public static void setAllCategories(List<Category> categories) {CategoryDAO.allCategories = categories;}
 
     public static List<Category> getAllCategories(Connection connection) {
         List<Category> categories = new ArrayList<>();
@@ -40,7 +44,7 @@ public class CategoryDAO {
     }
 
     public static Category getCategoryById(int id) {
-        for (Category currentCategory : categories) {
+        for (Category currentCategory : allCategories) {
             if (currentCategory.getId() == id) {
                 return currentCategory;
             }
@@ -49,7 +53,7 @@ public class CategoryDAO {
     }
 
     public static int getCategoryIdByName(Category category) {
-        for (Category currentCategory : categories) {
+        for (Category currentCategory : allCategories) {
             if (Objects.equal(currentCategory.getCategoryName(), category.getCategoryName())) {
                 return currentCategory.getId();
             }

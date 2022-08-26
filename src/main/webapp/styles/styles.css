@@ -1,5 +1,5 @@
 .mainPageBackground {
-    background-image: url('graphic/mainCover.jpg');
+    background-image: url('../graphic/mainCover.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -12,7 +12,7 @@
 }
 
 .standardPageBody {
-    background-image: url('graphic/cover.jpg');
+    background-image: url('../graphic/cover.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
@@ -213,7 +213,7 @@
 }
 
 .contentWindow {
-    background-image: url('graphic/bookCover.jpg');
+    background-image: url('../graphic/bookCover.jpg');
     background-size: cover;
     display: inline-block;
     margin-top: 30px;

@@ -153,7 +153,8 @@ public class BookContentDisplayService {
     }
 
     private static final Ordering<Book> ascOrderingByYear = new Ordering<Book>() {
-        @Override        public int compare(Book book1, Book book2) {
+        @Override
+        public int compare(Book book1, Book book2) {
             return book2.getYear() - book1.getYear();
         }
     };
@@ -241,7 +242,6 @@ public class BookContentDisplayService {
         Language language = getSelectedLanguage(request);
         String searchBy = request.getParameter("searchBy") == null ? "Author" : request.getParameter("searchBy");
         return new SearchingOption(request.getParameter("searchBook"),
-//                request.getParameter("searchBy"),
                 searchBy,
                 category,
                 documentType,

@@ -29,7 +29,6 @@ public class BookSectionController extends HttpServlet {
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("BookSection.jsp");
         requestDispatcher.forward(request, response);
-//        response.sendRedirect("BookSection.jsp");
     }
 
 }

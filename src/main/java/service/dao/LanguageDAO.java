@@ -14,12 +14,18 @@ public class LanguageDAO {
 
     private static List<Language> languages;
 
+    private static List<Language> allLanguages;
+
     public static List<Language> getLanguages() {
         return new ArrayList<>(languages);
     }
 
     public static void setLanguages(List<Language> languages) {
         LanguageDAO.languages = languages;
+    }
+
+    public static void setAllLanguages(List<Language> languages) {
+        LanguageDAO.allLanguages = languages;
     }
 
     public static List<Language> getAllLanguages(Connection connection) {
@@ -40,7 +46,7 @@ public class LanguageDAO {
     }
 
     public static Language getLanguageById(int id) {
-            for (Language currentLanguage : languages) {
+            for (Language currentLanguage : allLanguages) {
                 if (currentLanguage.getId() == id) {
                     return currentLanguage;
                 }
@@ -49,7 +55,7 @@ public class LanguageDAO {
     }
 
     public static int getLanguageIdByName(Language language) {
-        for (Language currentLanguage : languages) {
+        for (Language currentLanguage : allLanguages) {
             if (Objects.equal(currentLanguage.getLanguage(), language.getLanguage())) {
                 return currentLanguage.getId();
             }
