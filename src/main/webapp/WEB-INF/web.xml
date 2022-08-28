@@ -196,4 +196,21 @@
         <location>/Error.jsp</location>
     </error-page>
 
+
+
+
+
+<!--    <servlet>-->
+<!--        <servlet-name>HelloServlet</servlet-name>-->
+<!--        <jsp-file>HelloServlet.jsp</jsp-file >-->
+<!--        <init-param>-->
+<!--            <param-name>message</param-name>-->
+<!--            <param-value>Hello Servlets</param-value>-->
+<!--        </init-param>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name> HelloServlet </servlet-name>-->
+<!--        <url-pattern>/HelloServlet.jsp </url-pattern>-->
+<!--    </servlet-mapping >-->
+
 </web-app>

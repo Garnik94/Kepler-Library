@@ -26,6 +26,7 @@ public class LoginController extends HttpServlet {
         Connection connection = (Connection) servletContext.getAttribute("dbConnection");
         try {
             if (UserValidatorService.validateUser(connection, username, password, request)) {
+                session.setMaxInactiveInterval(5400);
                 session.removeAttribute("searchingOption");
                 response.sendRedirect("BookSection.jsp");
             } else {

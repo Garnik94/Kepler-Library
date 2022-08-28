@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(/*value = "/addNewBook", */ name = "BookAddController"/*,
+@WebServlet(/*value = "/addNewBook",  */name = "BookAddController"/*,
 initParams = {
         @WebInitParam(name = "message", value = "Hello Servlet")
 }*/

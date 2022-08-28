@@ -3,6 +3,7 @@ package service.dao.JdbcExamples;
 import javax.servlet.ServletContext;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 
 public class TransactionExample {
@@ -23,9 +24,11 @@ public class TransactionExample {
             Statement statement = connection.createStatement();
             statement.executeUpdate(query1);
             statement.executeUpdate(query2);
+//            Savepoint savepoint = connection.setSavepoint();
             statement.executeUpdate(query3);
             statement.executeUpdate(query4);
             connection.commit();
+//            connection.releaseSavepoint(savepoint);
         } catch (SQLException e){
             try {
                 connection.rollback();
