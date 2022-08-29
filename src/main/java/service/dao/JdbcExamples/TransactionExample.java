@@ -17,10 +17,10 @@ public class TransactionExample {
     public void transactionFailed() {
         try {
             connection.setAutoCommit(false);
-            String query1 = "INSERT INTO Languages VALUES ('Arabic')";
-            String query2 = "INSERT INTO Languages VALUES ('Georgian')";
-            String query3 = "INSERT INTO Languages VALUES ('French'..............)";
-            String query4 = "INSERT INTO Languages VALUES ('German')";
+            String query1 = "INSERT INTO JdbcExamples VALUES ('First transaction')";
+            String query2 = "INSERT INTO JdbcExamples VALUES ('Second transaction')";
+            String query3 = "INSERT INTO JdbcExamples VALUES ('third transaction'..............)";
+            String query4 = "INSERT INTO JdbcExamples VALUES ('Fourth transaction')";
             Statement statement = connection.createStatement();
             statement.executeUpdate(query1);
             statement.executeUpdate(query2);
@@ -41,10 +41,10 @@ public class TransactionExample {
     public void transactionSucceeded() {
         try {
             connection.setAutoCommit(false);
-            String query1 = "INSERT INTO Languages VALUES ('Arabic')";
-            String query2 = "INSERT INTO Languages VALUES ('Georgian')";
-            String query3 = "INSERT INTO Languages VALUES ('French')";
-            String query4 = "INSERT INTO Languages VALUES ('German')";
+            String query1 = "INSERT INTO JdbcExamples VALUES ('First transaction')";
+            String query2 = "INSERT INTO JdbcExamples VALUES ('Second transaction')";
+            String query3 = "INSERT INTO JdbcExamples VALUES ('third transaction')";
+            String query4 = "INSERT INTO JdbcExamples VALUES ('Fourth transaction')";
             Statement statement = connection.createStatement();
             statement.executeUpdate(query1);
             statement.executeUpdate(query2);

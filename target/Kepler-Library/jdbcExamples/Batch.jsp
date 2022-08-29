@@ -20,25 +20,14 @@
 </head>
 <body>
 
-<%--    <%--%>
-<%--        BatchExample batchExample = new BatchExample(application);--%>
-<%--        batchExample.batchWithPreparedStatement();--%>
-<%--        batchExample.batchWithStatement();--%>
-<%--    %>--%>
-
     <%
-//        Connection connection = (Connection) application.getAttribute("dbConnection");
-//        Statement statement = connection.createStatement();
-//        ResultSet resultSet = statement.executeQuery("select * from Books");
-//        RowSet rowSet = new JdbcRowSetImpl(resultSet);
-//        rowSet.
-//        if (rowSet.next()) {
-//            String title2 = rowSet.getString(3);
-//        }
-//        int a;
-        CachedRowSetExample cachedRowSetExample = new CachedRowSetExample();
-        cachedRowSetExample.main(application);
+        BatchExample batchExample = new BatchExample(application);
+        batchExample.batchWithPreparedStatement();
+//        batchExample.batchWithStatement();
     %>
+
+    <h1>Batch completed</h1>
+
 
 
 </body>

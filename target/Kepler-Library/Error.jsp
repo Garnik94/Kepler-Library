@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<div style="text-align: center;"><h1 style="color: red">Something went wrong</h1></div>
+<div style="text-align: center;"><h1>Something went wrong</h1></div>
 
 </body>
 </html>

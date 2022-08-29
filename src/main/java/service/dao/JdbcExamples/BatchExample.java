@@ -15,10 +15,10 @@ public class BatchExample {
     }
 
     public void batchWithStatement() {
-        String query1 = "INSERT INTO Languages VALUES ('Arabic')";
-        String query2 = "INSERT INTO Languages VALUES ('Georgian')";
-        String query3 = "INSERT INTO Languages VALUES ('French')";
-        String query4 = "INSERT INTO Languages VALUES ('German')";
+        String query1 = "INSERT INTO JdbcExamples VALUES ('First batch')";
+        String query2 = "INSERT INTO JdbcExamples VALUES ('Second batch')";
+        String query3 = "INSERT INTO JdbcExamples VALUES ('Third batch')";
+        String query4 = "INSERT INTO JdbcExamples VALUES ('Fourth batch')";
         try {
             Statement statement = connection.createStatement();
             statement.addBatch(query1);
@@ -33,19 +33,21 @@ public class BatchExample {
     }
 
     public void batchWithPreparedStatement() {
-        String query = "INSERT INTO Languages VALUES (?)";
+        String query = "INSERT INTO JdbcExamples VALUES (?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "Arabic");
+            connection.setAutoCommit(false);
+            preparedStatement.setString(1, "First batch");
             preparedStatement.addBatch();
-            preparedStatement.setString(1, "Georgian");
+            preparedStatement.setString(1, "Second batch");
             preparedStatement.addBatch();
-            preparedStatement.setString(1, "French");
+            preparedStatement.setString(1, "Third batch");
             preparedStatement.addBatch();
-            preparedStatement.setString(1, "German");
+            preparedStatement.setString(1, "Fourth batch");
             preparedStatement.addBatch();
 
             preparedStatement.executeBatch();
+            connection.commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

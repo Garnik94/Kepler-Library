@@ -26,5 +26,9 @@
 //        batchExample.batchWithStatement();
     %>
 
+    <h1>Batch completed</h1>
+
+
+
 </body>
 </html>

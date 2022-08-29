@@ -9,9 +9,8 @@ import java.util.List;
 public class AuthorDAO {
 
     public static Author getAuthorById(Connection connection, int id) {
-        try {
-            String query = "SELECT * FROM Authors WHERE Author_Id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        String query = "SELECT * FROM Authors WHERE Author_Id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setString(1, Integer.toString(id));
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
