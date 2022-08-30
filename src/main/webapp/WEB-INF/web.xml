@@ -30,6 +30,7 @@
         <url-pattern>/EditBook.jsp</url-pattern>
         <url-pattern>/ManageUser.jsp</url-pattern>
         <url-pattern>/PermittedProfile.jsp</url-pattern>
+        <url-pattern>/jdbc/Demo.jsp</url-pattern>
     </filter-mapping>
 
     <filter>
